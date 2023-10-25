@@ -83,7 +83,7 @@ export const addActorToAdharId = async (req, res) => {
     return res.status(200).json({ success: true, message: 'Actor ID added to actor_ids', adharId: existingAdharId });
   } catch (error) {
     console.log(error)
-    return res.status(500).json({ success: false, error: error });
+    return res.status(500).json({ success: false, error: error,  message:  `error in addActorToAdharId`});
   }
 };
 

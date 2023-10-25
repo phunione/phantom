@@ -36,7 +36,7 @@ const banker_schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref : "BankEmployee"
     }],
-    comapany_ids:[{
+    company_ids:[{
         type : mongoose.Schema.Types.unique_company_id,
         ref : "Company"
     }],

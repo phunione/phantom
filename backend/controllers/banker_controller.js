@@ -66,12 +66,24 @@ const add_banker_employee_ids = async(req, res)=>{
 const add_comany_id_to_banker = async( req , res)=>{
     const {id} = req.query;
     const {company_id,banker_id} = req.body;
-    const existingCompanyid = await Company_A.find({unique_id_company_a: company_id})
+    try{const CA = true;
+    const existingCompanyid = await Company_A.findOne({unique_id_company_a: company_id})
     if(!existingCompanyid){
-        existingCompanyid = await Company_B.find({unique_id_company_b: company_id})
+        CA = false;
+        existingCompanyid = await Company_B.findOne({unique_id_company_b: company_id})
     } 
     if(!existingCompanyid){
         return res.status(400).json({success:false,message:"Company not found"})
+    }
+    const existingBanker = await Banker.findOne({unique_banker_id:banker_id});
+
+    
+    await existingBanker.company_ids.push(existingCompanyid._id)
+    await existingCompanyid.update({banker_id: existingBanker._id})
+    }
+    catch(error){
+        return res.status(500).json({success: false, message: `error in add_comany_id_to_banker ${error}`})
+        
     }
     
 
