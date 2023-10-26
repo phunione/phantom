@@ -17,7 +17,7 @@ const table_set_up = new mongoose.Schema({
         type: String,
         enum:["Company_A", "Company_B"]
     },
-    personal_id:{
+    only_adhar_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"OnlyAdhar"
     },
@@ -25,10 +25,10 @@ const table_set_up = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"DummyId"
     },
-    personal_id:{
+    adhar_otp_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"AdharOtpId"
     },
-
+    
 })
 export default mongoose.model("UniqueRelation",table_set_up)

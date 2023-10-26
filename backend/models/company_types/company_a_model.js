@@ -75,10 +75,9 @@ const company_a_model = new mongoose.Schema({
 
     },
 
-    actor_ids: {
-        type: [{type: mongoose.Schema.Types.unique_actor_id, ref:'Actor'}]
-         
-    },
+    actor_ids: [{type: mongoose.Schema.Types.unique_actor_id, ref:'Actor'}]
+
+    ,
     owner_details:[{
         type:mongoose.Schema.Types.Oject_id,
         required: true,

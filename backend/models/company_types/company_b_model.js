@@ -74,13 +74,11 @@ const company_b_model = new mongoose.Schema({
         }
 
     },
-    actor_ids: {
-        type: [{
+    actor_ids: [{
             type: mongoose.Schema.Types.unique_actor_id,
             ref:'Actor'
         }]
-         
-    },
+    ,
     owner_details:[{
         type:mongoose.Schema.Types.Object_id,
         required: true,

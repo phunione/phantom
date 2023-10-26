@@ -18,7 +18,7 @@ const get_owner_details = async (req, res)=>{
     if(!company){
         return res.status(404).json({
             message: "company not found"
-        })
+        }) 
     }
      //find owner and if owner not found add one
      const owner = await Actor.findOne({adhar_otp_ids: company.owner_details})
@@ -34,6 +34,7 @@ const get_owner_details = async (req, res)=>{
         })
     
     }
+    
 
 
     
