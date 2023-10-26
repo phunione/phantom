@@ -12,7 +12,7 @@ const bank_schema = new mongoose.Schema({
     },
     comapany_ids:[{
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Company"
+         ref : "Company"
     }],
     ifsc : {
         type:String,

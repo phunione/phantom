@@ -71,7 +71,7 @@ const add_comany_id_to_banker = async( req , res)=>{
     if(!existingCompanyid){
         CA = false;
         existingCompanyid = await Company_B.findOne({unique_id_company_b: company_id})
-    } 
+    }
     if(!existingCompanyid){
         return res.status(400).json({success:false,message:"Company not found"})
     }
@@ -83,11 +83,10 @@ const add_comany_id_to_banker = async( req , res)=>{
     }
     catch(error){
         return res.status(500).json({success: false, message: `error in add_comany_id_to_banker ${error}`})
-        
     }
     
 
 
 }
 
-export { createBanker,add_banker_employee_ids }; 
+export { createBanker,add_banker_employee_ids,add_comany_id_to_banker }; 
