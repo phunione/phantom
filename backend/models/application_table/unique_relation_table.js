@@ -11,24 +11,17 @@ const table_set_up = new mongoose.Schema({
     },
     company:{
         type:mongoose.Schema.Types.ObjectId,
-        ref: "Company_B"
+        ref: "Company"
     },
     company_type:{
         type: String,
         enum:["Company_A", "Company_B"]
     },
-    only_adhar_id:{
+    owner_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"OnlyAdhar"
-    },
-    dummy_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"DummyId"
-    },
-    adhar_otp_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"AdharOtpId"
+        ref:"Owner"
     },
     
+
 })
 export default mongoose.model("UniqueRelation",table_set_up)

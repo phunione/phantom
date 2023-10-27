@@ -1,8 +1,9 @@
+import only_adhar from "../models/Id_types/only_adhar";
 import OnlyAdhar from "../models/Id_types/only_adhar";
 import Actor from '../models/actor_model.js';
 import duplicateCheck from './genericFunctions/duplicateCheck.js';
 import updateDocument from "./genericFunctions/updateDocument.js"
-
+import Owner from "../models/owner_id.js"
 
 const unique = ["adhar_number_id","pan_numeber_id","din_number","email","address"]
 export const addUsertoProp = async (req, res,next) => {
@@ -27,7 +28,7 @@ export const addUsertoProp = async (req, res,next) => {
 
   try {
     // Create a new PropId document
-    const newProp = new PropId({
+    const newProp = new OnlyAdhar({
         unique_id_only,
         name,
         adhar_number_id,
@@ -42,6 +43,12 @@ export const addUsertoProp = async (req, res,next) => {
 
     // Save the document to the database
     await newProp.save();
+    const newUser = OnlyAdhar.findOne({unique_id_only:unique_id_only});
+    const newOwner = new Owner({
+      only_adhar_id: newUser._id,
+      type: "OnlyAdharId"
+    })
+    newOwner.save();
 
     return res.status(201).json({ success: true, message: 'PropId created successfully', prop: newProp });
   } catch (error) {

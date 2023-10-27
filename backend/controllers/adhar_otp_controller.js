@@ -52,6 +52,12 @@ export const add_adhar_user = async (req, res,next) => {
 
     // Save the document to the database
     await newProp.save();
+    const newUser = Adhar_id.findOne({unique_id_adhar:unique_id_adhar});
+    const newOwner = new Owner({
+      only_adhar_id: newUser._id,
+      type: "AdharId"
+    })
+    newOwner.save();
  
     return res.status(201).json({ success: true, message: 'adhar_otp_id created successfully', prop: newProp });
   } catch (error) {
@@ -91,7 +97,7 @@ export const get_adhar_users = async (req,  res)=>{
   try {
     // Retrieve all users from the Prop_id collection
     const users = await Adhar_id .find();
-
+    
     return res.status(200).json({ success: true, users });
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
@@ -114,7 +120,7 @@ export const update_adhar_details = async (req,res) =>{
             return res.send({ success: false, message: `Duplicate found ${updateData}` });
         }
     }
-    
+
     await updateDocument(Adhar_id, id, updateData, res);
 
 } catch (error) {

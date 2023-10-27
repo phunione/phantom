@@ -81,14 +81,9 @@ const company_a_model = new mongoose.Schema({
     owner_details:[{
         type:mongoose.Schema.Types.Oject_id,
         required: true,
-
+        ref:'Owner'
     }],
     
-
-
-
-
-
 })
 
 export default mongoose.model( "Company_A",company_a_model)

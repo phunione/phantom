@@ -33,6 +33,7 @@ export const post_company = async (req, res) => {
     });
 
     const savedCompanyA = await newCompanyA.save();
+    //
     res.status(201).json(savedCompanyA);
   } catch (error) {
     console.error(error);

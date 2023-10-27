@@ -5,7 +5,7 @@ import PropId from '../models/Id_types/prop_id.js'; // Adjust the path to your m
 import Actor from '../models/actor_model.js';
 import duplicateCheck from './genericFunctions/duplicateCheck.js';
 import updateDocument from "./genericFunctions/updateDocument.js"
-
+import OwnerId from '../models/owner_id.js';
 
 const unique = ["adhar_number_id","pan_numeber_id","din_number","email","address"]
 export const addUsertoProp = async (req, res,next) => {
@@ -49,6 +49,13 @@ export const addUsertoProp = async (req, res,next) => {
 
     // Save the document to the database
     await newProp.save();
+
+    const newUser = PropId.findOne({unique_id_prop:unique_id_prop});
+    const newOwner = new OwnerId({
+      prop_id: newUser._id,
+      type: "ProperId"
+    })
+    newOwner.save();
 
     return res.status(201).json({ success: true, message: 'PropId created successfully', prop: newProp });
   } catch (error) {

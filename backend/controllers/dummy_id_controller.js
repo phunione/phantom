@@ -52,7 +52,12 @@ export const add_dummy_user = async (req, res,next) => {
 
     // Save the document to the database
     await newProp.save();
- 
+    const newUser = DummyId.findOne({unique_id_dummy:unique_id_dummy});
+    const newOwner = new Owner({
+      only_adhar_id: newUser._id,
+      type: "DummyId"
+    })
+    newOwner.save();
     return res.status(201).json({ success: true, message: 'adhar_otp_id created successfully', prop: newProp });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
