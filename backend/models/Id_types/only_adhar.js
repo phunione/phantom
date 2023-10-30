@@ -44,7 +44,7 @@ const adhar_otp_schema = new mongoose.Schema({
     //instancse.actor_ids.push('mongo id of Actor)
     //add doccuments later
     company_ids: [
-        {type: mongoose.Schema.Types.ObjectId,ref :"Company"}
+        {type: mongoose.Schema.Types.ObjectId, ref :"Company"}
     ],
     banker_ids: [
         {type: mongoose.Schema.Types.ObjectId , ref : "Banker"}

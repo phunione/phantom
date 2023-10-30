@@ -9,4 +9,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 )
 
-export const url = 'http://localhost:8800/api/v1'
+export const BACKEND_URL = 'http://localhost:8800/api/v1'

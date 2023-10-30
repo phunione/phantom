@@ -22,6 +22,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import mainRoute from "./routes/index.js";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -41,6 +42,7 @@ const connect = () => {
     });
 };
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 // app.use("/api/users", userRoutes);

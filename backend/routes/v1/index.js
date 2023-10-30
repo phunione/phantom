@@ -5,7 +5,7 @@ import dummy_id_router from "./dummy_id_routes.js";
 import only_otp_router from "./only_otp_routes.js";
 import actorRouter from "./actor_routes.js";
 import bankerRouter from "./banker_routes.js";
-import BankRouter from "./bank_route.js";
+import bankRouter from "./bank_routes.js";
 const v1router = express.Router();
 
 v1router.use("/adharotp", adhar_otp_router);
@@ -20,6 +20,6 @@ v1router.use("/actor", actorRouter);
 
 v1router.use("/banker", bankerRouter);
 
-v1router.use("/bank",BankRouter);
+v1router.use("/bank", bankRouter);
 
 export default v1router;
