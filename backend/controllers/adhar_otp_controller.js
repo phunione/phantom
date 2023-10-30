@@ -132,6 +132,22 @@ export const update_adhar_details = async (req,res) =>{
     }
 
 }
+export const adfs = async(req,res)=>{ 
+  //req.body will conatian path of the pdf in the following format
+  //push path of the pdf_file
+  const id = req.query;
+  const path = req.body;
+  try {
+    await add_pdfs(id,path,Adhar_id);
+    return res.status(201).json({ success: true, message: 'adhar otp pdfs uploaded successfully', Actor: newProp });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+  
+
+
+}
+
 
 
 

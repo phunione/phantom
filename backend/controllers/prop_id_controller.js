@@ -6,6 +6,7 @@ import Actor from '../models/actor_model.js';
 import duplicateCheck from './genericFunctions/duplicateCheck.js';
 import updateDocument from "./genericFunctions/updateDocument.js"
 import OwnerId from '../models/owner_id.js';
+import add_pdfs from "../controllers/genericFunctions/addpdf.js"
 
 const unique = ["adhar_number_id","pan_numeber_id","din_number","email","address"]
 export const addUsertoProp = async (req, res,next) => {
@@ -21,7 +22,8 @@ export const addUsertoProp = async (req, res,next) => {
     per_phone,
     mother_name,
     address,
-    actor_ids
+    actor_ids,
+    pdfs
   } = req.body;
 
   var arr = PropId.find({adhar_number_id :  adhar_number_id});
@@ -44,7 +46,8 @@ export const addUsertoProp = async (req, res,next) => {
       per_phone,
       mother_name,
       address,
-      actor_ids
+      actor_ids,
+      pdfs
     });
 
     // Save the document to the database
@@ -123,6 +126,15 @@ export const update_prop_details = async (req,res) =>{
   console.log(error);
   res.status(500).send({ success: false, message: 'An error occurred' });
 }
+
+}
+
+export const adfs = async(req,res)=>{ 
+  //req.body will conatian path of the pdf in the following format
+  //push path of the pdf_file
+  const id = req.query;
+  const path = req.body;
+  await add_pdfs(id,path,PropId);
 
 }
 

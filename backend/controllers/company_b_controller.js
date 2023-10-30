@@ -1,6 +1,6 @@
 
 import Company_B from "../models/company_types/company_b_model.js"; // Import the "Company_B" model
-
+import { add_pdfs } from "./genericFunctions/addpdf.js";
 
 // Create a new Company B
 export const postCompanyB = async (req, res) => {
@@ -115,3 +115,12 @@ export const deleteCompanyB = async (req, res) => {
 };
 
 
+export const adfs = async(req,res)=>{ 
+  //req.body will conatian path of the pdf in the following format
+  //push path of the pdf_file
+  const id = req.query;
+  const path = req.body;
+  await add_pdfs(id,path,Company_B);
+
+
+}

@@ -70,6 +70,13 @@ const dummy_id_schema = new mongoose.Schema({
     ],
     banker_ids: [
         {type: mongoose.Schema.Types.ObjectId , ref : "Banker"}
+    ],
+    pdfs: [
+        {
+            title: String,        // Title for the PDF
+            pdfData: Buffer,      // Store the PDF binary data
+            contentType: String, // Content type of the PDF, e.g., 'application/pdf'
+        }
     ]
     
 } )

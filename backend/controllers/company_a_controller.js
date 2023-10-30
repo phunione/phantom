@@ -1,5 +1,5 @@
 import Company_A from "../models/company_types/company_a_model.js"; // Import the "Company_B" model
-
+import { add_pdfs } from "./genericFunctions/addpdf.js";
 
 // Create a new Company A
 export const post_company = async (req, res) => {
@@ -107,5 +107,13 @@ export const detelet_company = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while deleting Company A.' });
   }
 };
+export const adfs = async(req,res)=>{ 
+  //req.body will conatian path of the pdf in the following format
+  //push path of the pdf_file
+  const id = req.query;
+  const path = req.body;
+  await add_pdfs(id,path,Company_A);
 
+
+}
 

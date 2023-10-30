@@ -1,10 +1,9 @@
-import only_adhar from "../models/Id_types/only_adhar";
 import OnlyAdhar from "../models/Id_types/only_adhar";
 import Actor from '../models/actor_model.js';
 import duplicateCheck from './genericFunctions/duplicateCheck.js';
 import updateDocument from "./genericFunctions/updateDocument.js"
 import Owner from "../models/owner_id.js"
-
+import { add_pdfs } from "./genericFunctions/addpdf";
 const unique = ["adhar_number_id","pan_numeber_id","din_number","email","address"]
 export const addUsertoProp = async (req, res,next) => {
   const {
@@ -60,20 +59,20 @@ export const addUsertoProp = async (req, res,next) => {
 export const addActorToPropId = async (req, res) => {
   const { onlyid, actorId } = req.body;
   try {
-    // Retrieve the existing Prop_id document based on _id
+    // Retrieve the existing onlyAdhar document based on _id
     const existingOnlyId = await OnlyAdhar.find({unique_id_only : onlyid});
-    const existingActorId = await Actor.find({unique_id_prop:  actorId});
+    const existingActorId = await Actor.find({unique_id_actor:  actorId});
     if (!existingOnlyId) {
-      return res.status(404).json({ success: false, message: 'Prop_id not found' });
+      return res.status(404).json({ success: false, message: 'onlyAdhar not found' });
     }
     if (!existingActorId) {
-      return res.status(404).json({ success: false, message: 'Prop_id not found' });
+      return res.status(404).json({ success: false, message: 'onlyAdhar not found' });
     }
     console.log("Actor Id",existingActorId[0]._id)
 
     // Push the new Actor ID into the actor_ids array
     existingOnlyId[0].actor_ids.push(existingActorId[0]._id);
-    existingActorId[0].prop_ids.push(existingOnlyId[0]._id);
+    existingActorId[0].onlyAdhars.push(existingOnlyId[0]._id);
     // Save the updated document
     await existingOnlyId[0].save();
     await existingActorId[0].save();
@@ -86,7 +85,7 @@ export const addActorToPropId = async (req, res) => {
 
 export const get_only_adhar_users = async (req,  res)=>{
   try {
-    // Retrieve all users from the Prop_id collection
+    // Retrieve all users from the onlyAdhar collection
     const users = await PropId.find();
 
     return res.status(200).json({ success: true, users });
@@ -118,6 +117,21 @@ export const update_only_adhar_details = async (req,res) =>{
 }
 
 }
+
+export const adfs = async(req,res)=>{ 
+  //req.body will conatian path of the pdf in the following format
+  //push path of the pdf_file
+  const id = req.query;
+  const path = req.body;
+  await add_pdfs(id,path,OnlyAdhar);
+
+
+}
+
+
+
+
+
 
 
 

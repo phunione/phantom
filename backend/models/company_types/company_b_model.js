@@ -98,7 +98,14 @@ const company_b_model = new mongoose.Schema({
     account_number:{
         type:String,
         required: true
-    }
+    },
+    pdfs: [
+        {
+            title: String,        // Title for the PDF
+            pdfData: Buffer,      // Store the PDF binary data
+            contentType: String, // Content type of the PDF, e.g., 'application/pdf'
+        }
+    ]
 
 
 })

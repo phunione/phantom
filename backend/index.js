@@ -18,13 +18,10 @@
 // app.listen(8800,()=>{
 //     console.log("server started")
 // })
-
-
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-// import testRoute from "./routes/v1/test.js"
 import mainRoute from "./routes/index.js"
 const app = express();
 dotenv.config();
