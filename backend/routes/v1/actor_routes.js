@@ -4,7 +4,7 @@ import {
   addActor,
   get_all_actors,
   update_actor_details,
-} from "../../controllers/actor_id_controller";
+} from "../../controllers/actor_id_controller.js";
 
 const actorRouter = express.Router();
 
