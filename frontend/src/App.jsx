@@ -24,11 +24,11 @@ function App() {
 
       <div className="mt-6 flex flex-wrap items-center justify-center">
         {formType === 'actor' ? (
-          <Form fields={fields.actor} />
+          <Form fields={fields.actor} name="actor" />
         ) : formType === 'bank' ? (
-          <Form fields={fields.bank} />
+          <Form fields={fields.bank} name="bank" />
         ) : formType === 'banker' ? (
-          <Form fields={fields.banker} />
+          <Form fields={fields.banker} name="banker" />
         ) : (
           <h1 className="mt-48 text-center text-5xl">
             Please select a type of Form you want to Fill

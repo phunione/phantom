@@ -14,7 +14,7 @@ const banker_employee_schema = new mongoose.Schema({
         required : true
     },
     banker_id:{
-        type:mongoose.Schema.Types.unique_banker_id,
+        type:mongoose.Schema.Types.ObjectId,
         ref : 'Banker'
     }
     

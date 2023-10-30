@@ -27,7 +27,7 @@ const app = express();
 dotenv.config();
 
 const uri =
-  "mongodb+srv://kush0347:Dv0kipPnU77RH7Sr@phantom.wtwvhwm.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://kush0347:Dv0kipPnU77RH7Sr@phantom.wtwvhwm.mongodb.net/phantom?retryWrites=true&w=majority";
 
 const connect = () => {
   mongoose.set("strictQuery", false);
