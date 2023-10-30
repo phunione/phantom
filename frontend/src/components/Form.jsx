@@ -1,22 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { url } from '../main'
+import { BACKEND_URL } from '../main'
 
 function Form({ fields, name }) {
   const [vals, setVals] = useState({})
 
   const handleSubmition = (e) => {
     e.preventDefault()
-
-    if (vals['rtds'] === undefined) {
-      vals['rtds'] = false
-    }
-    if (vals['rt'] === undefined) {
-      vals['rt'] = false
-    }
-    if (vals['forex'] === undefined) {
-      vals['forex'] = false
-    }
 
     const config = {
       headers: {
@@ -35,9 +25,13 @@ function Form({ fields, name }) {
         vals['forex'] = false
       }
 
-      url += '/banker/add'
+      const url = BACKEND_URL + '/banker'
 
-      axios.post(url, vals, config)
+      axios.post(`${url}/add`, vals, config)
+    } else if (name === 'bank') {
+      const url = BACKEND_URL + '/bank'
+
+      axios.post(`${url}/add`, vals, config)
     }
 
     console.log(e.target.name, vals)

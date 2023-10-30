@@ -9,7 +9,6 @@ import updateDocument from "./genericFunctions/updateDocument.js";
 const createBanker = async (req, res) => {
   try {
     const {
-      unique_banker_id,
       name,
       rtds,
       rt,
@@ -20,6 +19,10 @@ const createBanker = async (req, res) => {
       actor_ids,
       bank_ids,
     } = req.body;
+
+    const unique_banker_id = Date.now().toString();
+
+    console.log(unique_banker_id);
 
     const newBanker = new Banker({
       unique_banker_id,
@@ -68,12 +71,10 @@ const add_banker_employee_ids = async (req, res) => {
             banker_employee_ids: existingBankerEmployee[0]._id,
           })
         ) {
-          return res
-            .status(400)
-            .json({
-              success: false,
-              message: "Employee already have a banker",
-            });
+          return res.status(400).json({
+            success: false,
+            message: "Employee already have a banker",
+          });
         } else {
           banker_list.banker_employee_ids.push(existingBankerEmployee[0]._id);
         }
@@ -114,12 +115,10 @@ const add_comany_id_to_banker = async (req, res) => {
     await existingBanker.company_ids.push(existingCompanyid._id);
     await existingCompanyid.update({ banker_id: existingBanker._id });
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: `error in add_comany_id_to_banker ${error}`,
-      });
+    return res.status(500).json({
+      success: false,
+      message: `error in add_comany_id_to_banker ${error}`,
+    });
   }
 };
 
