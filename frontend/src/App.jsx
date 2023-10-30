@@ -10,12 +10,11 @@ function App() {
       <div className="flex w-full flex-wrap items-center justify-end pr-10 pt-10">
         <select
           id="form_type"
+          value={formType}
           onChange={(e) => setFormType(e.target.value)}
-          class="inline-block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
+          className="inline-block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
         >
-          <option value="" selected>
-            Choose Form Type
-          </option>
+          <option value="">Choose Form Type</option>
           <option value="actor">Actor</option>
           <option value="bank">Bank</option>
           <option value="banker">Banker</option>

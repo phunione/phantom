@@ -1,12 +1,12 @@
 const fields = {
   actor: [
-    {
-      title: 'actor id',
-      id: 'actor_id',
-      name: 'actor_id',
-      required: true,
-      type: 'text',
-    },
+    // {
+    //   title: 'actor id',
+    //   id: 'actor_id',
+    //   name: 'actor_id',
+    //   required: true,
+    //   type: 'text',
+    // },
     {
       title: 'name',
       id: 'actor_name',
@@ -107,13 +107,13 @@ const fields = {
     },
   ],
   bank: [
-    {
-      title: 'unique bank id',
-      id: 'unique_bank_id',
-      name: 'unique_bank_id',
-      required: true,
-      type: 'number',
-    },
+    // {
+    //   title: 'unique bank id',
+    //   id: 'unique_bank_id',
+    //   name: 'unique_bank_id',
+    //   required: true,
+    //   type: 'number',
+    // },
     {
       title: 'account numbers',
       id: 'account_numbers',
@@ -158,13 +158,13 @@ const fields = {
     },
   ],
   banker: [
-    {
-      title: 'unique banker id',
-      id: 'unique_banker_id',
-      name: 'unique_banker_id',
-      required: true,
-      type: 'number',
-    },
+    // {
+    //   title: 'unique banker id',
+    //   id: 'unique_banker_id',
+    //   name: 'unique_banker_id',
+    //   required: true,
+    //   type: 'number',
+    // },
     {
       title: 'banker name',
       id: 'banker_name',
@@ -177,21 +177,21 @@ const fields = {
       id: 'rtds',
       name: 'rtds',
       required: true,
-      type: 'number',
+      type: 'boolean',
     },
     {
       title: 'rt',
       id: 'rt',
       name: 'rt',
       required: true,
-      type: 'number',
+      type: 'boolean',
     },
     {
       title: 'forex',
       id: 'forex',
       name: 'forex',
       required: true,
-      type: 'number',
+      type: 'boolean',
     },
     {
       title: 'demand',
