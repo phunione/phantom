@@ -37,17 +37,17 @@ const banker_schema = new mongoose.Schema({
         ref : "BankEmployee"
     }],
     company_ids:[{
-        type : mongoose.Schema.Types.unique_company_id,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "Company"
     }],
 
     actor_ids : [{
-        type:mongoose.Schema.Types.unique_actor_id,
+        type:mongoose.Schema.Types.ObjectId,
         ref : 'Actor'
     }],//one actor for one comapny
 
     bank_ids:[{
-        type:mongoose.Schema.Types.unique_bank_id,
+        type:mongoose.Schema.Types.ObjectId,
         ref : 'Bank'
     }],
 
