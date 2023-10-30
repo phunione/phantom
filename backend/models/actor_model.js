@@ -62,8 +62,7 @@ const actor_schema = new mongoose.Schema({
     banker_ids:[{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Banker"
-    }]
-    ,
+    }],
     prop_ids:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"PropId"
