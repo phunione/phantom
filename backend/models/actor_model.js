@@ -16,15 +16,18 @@ const actor_schema = new mongoose.Schema({
     },
     adhar_number_id:{
         type: String,
-        required: [true,"please enter adharNumber"]
+        required: [true,"please enter adharNumber"],
+        unique:true
     },
     pan_numeber_id:{
         type:String,
-        required: [true,"please enter pan number"]
+        required: [true,"please enter pan number"],
+        unique:true
     },
     din_number:{
         type:String,
-        required: [true,"please enter DIN"]
+        required: [true,"please enter DIN"],
+        unique:true
     },
     otp_phoneNr: {
         type: String,
