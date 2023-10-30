@@ -62,7 +62,24 @@ const actor_schema = new mongoose.Schema({
     banker_ids:[{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Banker"
-    }]
+    }],
+    prop_ids:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Prop_id'
+    }],
+    only_adhar_ids:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'OnlyAdhar'
+    }],
+    dummy_ids:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'DummyId'
+    }],
+    adhar_ids:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Adhar_id'
+    }],
+
     
     //add multiple forigen keys after the bank and banker id is made
     //instancse.actor_ids.push('mongo id of Actor)
