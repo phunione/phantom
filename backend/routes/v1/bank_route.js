@@ -3,6 +3,6 @@ import { addBank } from "../../controllers/bank_controller.js";
 
 const BankRouter = express.Router();
 
-BankRouter.post('/addbank',addBank)
+BankRouter.post('/add',addBank)
 
 export default BankRouter;

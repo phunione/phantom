@@ -32,6 +32,14 @@ function Form({ fields, name }) {
       const url = BACKEND_URL + '/bank'
 
       axios.post(`${url}/add`, vals, config)
+    } else if (name === 'actor') {
+      const url = BACKEND_URL + '/actor'
+
+      try {
+        axios.post(`${url}/add`, vals, config)
+      } catch (err) {
+        console.log(err)
+      }
     }
 
     console.log(e.target.name, vals)
@@ -49,7 +57,7 @@ function Form({ fields, name }) {
           const inpName = field.name
 
           return (
-            <div className="relative mb-6 w-1/3" key={idx}>
+            <div className="relative mb-3 w-1/3" key={idx}>
               {field.type === 'boolean' ? (
                 <label className="relative mr-5 inline-flex cursor-pointer items-center">
                   <input
