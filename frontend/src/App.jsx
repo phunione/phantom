@@ -18,7 +18,8 @@ function App() {
           <option value="actor">Actor</option>
           <option value="bank">Bank</option>
           <option value="banker">Banker</option>
-          <option value="DE">Germany</option>
+          <option value="id">ID</option>
+          <option value="company">Company</option>
         </select>
       </div>
 
@@ -29,6 +30,10 @@ function App() {
           <Form fields={fields.bank} name="bank" />
         ) : formType === 'banker' ? (
           <Form fields={fields.banker} name="banker" />
+        ) : formType === 'id' ? (
+          <Form fields={fields.id} name="id" />
+        ) : formType === 'company' ? (
+          <Form fields={fields.company} name="company" />
         ) : (
           <h1 className="mt-48 text-center text-5xl">
             Please select a type of Form you want to Fill

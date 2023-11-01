@@ -17,7 +17,7 @@ const prop_schema = new mongoose.Schema({
         unique:true,
         required: [true,"please enter adharNumber"]
     },
-    pan_numeber_id:{
+    pan_number_id:{
         type:String,
         unique:true,
         required: [true,"please enter pan number"]
@@ -27,7 +27,6 @@ const prop_schema = new mongoose.Schema({
         unique:true,
         required: [true,"please enter DIN"]
     },
-
     otp_phoneNr: {
         type: String,
         unique:true,

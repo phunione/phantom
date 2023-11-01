@@ -5,6 +5,18 @@ import { BACKEND_URL } from '../main'
 function Form({ fields, name }) {
   const [vals, setVals] = useState({})
 
+  const getValue = (str) => {
+    let newStr = str.toLowerCase()
+
+    if (newStr.substr(0, 6) === 'select') {
+      return ''
+    }
+
+    newStr = newStr.replace(' ', '_')
+
+    return newStr
+  }
+
   const handleSubmition = (e) => {
     e.preventDefault()
 
@@ -40,9 +52,24 @@ function Form({ fields, name }) {
       } catch (err) {
         console.log(err)
       }
+    } else if (name === 'id') {
+    } else if (name === 'company') {
+      if (vals['isMaharashtra'] === undefined) {
+        vals['isMaharashtra'] = false
+      }
+
+      const url = BACKEND_URL + '/company'
+
+      // try {
+      //   axios.post(`${url}/add`, vals, config)
+      // } catch (err) {
+      //   console.log(err)
+      // }
     }
 
     console.log(e.target.name, vals)
+
+    setVals({})
     // axios.post('/api', vals, config)
   }
 
@@ -78,6 +105,76 @@ function Form({ fields, name }) {
                     )}
                   </span>
                 </label>
+              ) : field.type === 'select' ? (
+                <div className="w-full flex-col flex-wrap items-center justify-start pr-10 ">
+                  <label
+                    htmlFor={field.id}
+                    className="mb-2 block text-sm capitalize"
+                  >
+                    {field.title}
+                    {field.required && (
+                      <sup className="font-bold text-red-600">*</sup>
+                    )}
+                  </label>
+                  <select
+                    value={vals[field.name]}
+                    name={field.name}
+                    id={field.id}
+                    onChange={(e) => setFormType(e.target.value)}
+                    required={field.required}
+                    className="block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
+                  >
+                    {field.options.map((option, idx) => (
+                      <option
+                        value={getValue(option)}
+                        className="capitalize"
+                        key={idx}
+                      >
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : field.type === 'radio' ? (
+                <>
+                  <h3 className="mb-2 text-sm capitalize text-gray-900">
+                    {field.title}
+                    {field.required && (
+                      <sup className="font-bold text-red-600">*</sup>
+                    )}
+                  </h3>
+                  <ul
+                    style={{ width: field.width }}
+                    className="w-full items-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 sm:flex"
+                  >
+                    {field.options.map((option, idx) => (
+                      <li
+                        key={idx}
+                        className="flex w-full items-center justify-center border-b border-gray-200 sm:border-b-0 sm:border-r"
+                      >
+                        <div className="flex w-full items-center justify-center capitalize">
+                          <input
+                            id={field.id + idx}
+                            type={field.type}
+                            value={option}
+                            required={field.required}
+                            onChange={(e) =>
+                              setVals({ ...vals, [inpName]: e.target.value })
+                            }
+                            name={inpName}
+                            className="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600"
+                          />
+                          <label
+                            htmlFor={field.id + idx}
+                            className="ml-2 py-3 text-sm font-medium text-gray-900"
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
               ) : (
                 <>
                   <input

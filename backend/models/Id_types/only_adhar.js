@@ -18,7 +18,7 @@ const adhar_otp_schema = new mongoose.Schema({
         unique:true,
         required: [true,"please enter adharNumber"]
     },
-    pan_numeber_id:{
+    pan_number_id:{
         type:String,
         unique:true,
         required: [true,"please enter pan number"]
@@ -57,6 +57,5 @@ const adhar_otp_schema = new mongoose.Schema({
         }
     ]
     //for banker connections 
-
 } )
 export default mongoose.model('OnlyAdhar',only_adhar_schema);
