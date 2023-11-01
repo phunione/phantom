@@ -12,6 +12,6 @@ actorRouter.use(bodyParser.json());
 
 actorRouter.post("/add", addActor);
 actorRouter.get("/all", get_all_actors);
-actorRouter.put("/edit", update_actor_details);
+actorRouter.put("/edit/:id", update_actor_details);
 
 export default actorRouter;
