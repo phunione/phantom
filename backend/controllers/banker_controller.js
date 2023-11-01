@@ -46,8 +46,16 @@ const createBanker = async (req, res) => {
       .json({ error: "An error occurred while creating the banker." });
   }
 };
-const update_Banker_details = async(req, res) => {
+export const update_Banker_details = async(req, res) => {
+    const {id} = req.querry;
+    const update_details = req.body;
+    try {
+      const banker = await Banker.findOne({unique_banker_id: id});
+      await updateDocument(Banker,banker._id,update_details,res);
+    } catch (error) {
+      return res.status(300).json({success:false, message: "error in updating anker details"})
 
+    }
 }
 const add_banker_employee_ids = async (req, res) => {
   const { id } = req.query;

@@ -51,7 +51,6 @@ const fill_information = async(req,res)=>{
     const company = await Company_A.findOne({unique_id_company_a:unique_id_company_a});
     if(!company){
         company = await Company_B.findOne({unique_id_company_b:unique_id_company_b});
-
     }
     const owner = Owner.findOne({unique_id_owner:owner_id})
     //check if actor , banker and owner is already in one on one relation
@@ -73,3 +72,4 @@ const fill_information = async(req,res)=>{
     })
     
 }
+

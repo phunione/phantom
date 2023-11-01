@@ -55,8 +55,9 @@ export const get_companies =  async (req, res) => {
 // Get a single Company A by unique ID
 export const get_company_id = async (req, res) => {
   try {
-    const companyId = req.params.id;
-    const company = await Company_A.findOne({ unique_id_company_a: companyId });
+    const {id} = req.querry;
+    const companyid = id;
+    const company = await Company_A.findOne({ unique_id_company_a: companyid });
 
     if (!company) {
       res.status(404).json({ error: 'Company A not found' });
@@ -92,7 +93,7 @@ const update_compnay_from_id = async (req, res) => {
 };
 
 // Delete a Company A record by unique ID
-export const detelet_company = async (req, res) => {
+export const delete_company = async (req, res) => {
   try {
     const companyId = req.params.id;
     const deletedCompany = await Company_A.findOneAndDelete({ unique_id_company_a: companyId });
