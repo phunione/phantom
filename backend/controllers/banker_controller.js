@@ -46,7 +46,9 @@ const createBanker = async (req, res) => {
       .json({ error: "An error occurred while creating the banker." });
   }
 };
+const update_Banker_details = async(req, res) => {
 
+}
 const add_banker_employee_ids = async (req, res) => {
   const { id } = req.query;
   const { banker_id, banker_employee_id } = req.body;

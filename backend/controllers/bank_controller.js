@@ -81,7 +81,7 @@ export const update_bank_details = async (req, res) => {
   }
 };
 
-const add_banker_id = async (req, res) => {
+export const add_banker_id = async (req, res) => {
   const { bankerId, bankId } = req.body;
   try {
     // Retrieve the existing Prop_id document based on _id

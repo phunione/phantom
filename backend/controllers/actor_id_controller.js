@@ -38,7 +38,7 @@ export const addActor = async (req, res, next) => {
       prop_ids,
       adhar_otp_ids,
       only_adhar_ids,
-      dummy_ids,
+      dummy_ids,   
     });
 
     // Save the document to the database
