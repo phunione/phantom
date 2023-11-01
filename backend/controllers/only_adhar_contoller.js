@@ -5,7 +5,7 @@ import updateDocument from "./genericFunctions/updateDocument.js"
 import Owner from "../models/owner_id.js"
 import { add_pdfs } from "./genericFunctions/addpdf";
 const unique = ["adhar_number_id","pan_numeber_id","din_number","email","address"]
-export const addUsertoProp = async (req, res,next) => {
+export const addUsertoOnly = async (req, res,next) => {
   const {
         unique_id_only,
         name,
@@ -56,7 +56,7 @@ export const addUsertoProp = async (req, res,next) => {
 };
  // Adjust the path to your model file
 
-export const addActorToPropId = async (req, res) => {
+export const addActorToOnlyId = async (req, res) => {
   const { onlyid, actorId } = req.body;
   try {
     // Retrieve the existing onlyAdhar document based on _id

@@ -15,6 +15,6 @@ adhar_otp_router.put('/edit', addActorToAdharId)
 
 adhar_otp_router.put('/edit/:id', update_adhar_details)
 
-adhar_otp_router.put('addpdf', adfs);
+adhar_otp_router.put('/addpdf', adfs);
 
 export default adhar_otp_router

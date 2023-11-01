@@ -6,11 +6,11 @@ const dummy_id_router = express.Router();
 
 dummy_id_router.use(bodyParser.json())
 
-dummy_id_router.post("/adduser",add_dummy_user)
+dummy_id_router.post("/add",add_dummy_user)
 
-dummy_id_router.put("/updatedetails",update_dummy_details)
+dummy_id_router.put("/edit/:id",update_dummy_details)
 
-dummy_id_router.get("/getusers",get_dummy_users)
+dummy_id_router.get("/all",get_dummy_users)
 
 dummy_id_router.put("/addactortodummy", addActorToDummyId)
 

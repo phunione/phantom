@@ -120,7 +120,7 @@ export const update_adhar_details = async (req,res) =>{
             return res.send({ success: false, message: `Duplicate found ${updateData}` });
         }
     }
-
+    
     await updateDocument(Adhar_id, id, updateData, res);
 
 } catch (error) {

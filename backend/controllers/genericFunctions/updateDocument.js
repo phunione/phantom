@@ -2,7 +2,7 @@ const updateDocument = async (Model ,id , updateData , res)=>{
     try {
         console.log(id)
         const updatedDocument = await Model.findByIdAndUpdate(id, updateData, { new: true });
-
+        
         if (!updatedDocument) {
           return res.status(404).json({ success: false, message: 'Document not found' });
         }
