@@ -18,7 +18,7 @@ const actor_schema = new mongoose.Schema({
         type: String,
         required: [true,"please enter adharNumber"]
     },
-    pan_numeber_id:{
+    pan_number_id:{
         type:String,
         required: [true,"please enter pan number"]
     },

@@ -16,7 +16,7 @@ const company_a_model = new mongoose.Schema({
         required : [true,"please enter Pan Number"]
     },
     pan_dob:{
-        type: Date(),
+        type: Date,
         required:[true,"please enter Pan DOB"]
     },
     company_status:{
@@ -25,7 +25,7 @@ const company_a_model = new mongoose.Schema({
         
     },
     querry_filled:{
-        type:Date(),
+        type:Date,
         required:[true,,"please enter querry Filled date"], 
     },
     //add querry expire in frontend using querry filed value

@@ -4,7 +4,7 @@ var validateEmail = function(email) {
     return re.test(email)
 };
 const Schema = mongoose.Schema()
-const adhar_otp_schema = new mongoose.Schema({
+const only_adhar_schema = new mongoose.Schema({
     unique_id_only :{
         type: String,
         required: true

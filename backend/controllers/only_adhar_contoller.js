@@ -1,5 +1,5 @@
-import only_adhar from "../models/Id_types/only_adhar";
-import OnlyAdhar from "../models/Id_types/only_adhar";
+
+import OnlyAdhar from "../models/Id_types/only_adhar.js";
 import Actor from '../models/actor_model.js';
 import duplicateCheck from './genericFunctions/duplicateCheck.js';
 import updateDocument from "./genericFunctions/updateDocument.js"
