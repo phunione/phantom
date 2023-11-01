@@ -7,6 +7,6 @@ const bankerRouter = express.Router();
 bankerRouter.use(bodyParser.json());
 
 bankerRouter.post("/add", createBanker);
-bankerRouter.put('/edit/:id', update_Banker_details);
+bankerRouter.put('/edit/:id', update_Banker_details); 
 
 export default bankerRouter;
