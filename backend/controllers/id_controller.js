@@ -12,7 +12,7 @@ const unique = [
   "email",
   "address",
 ];
-export const addUsertoProp = async (req, res, next) => {
+export const addUsertoId = async (req, res, next) => {
   const {
     unique_id,
     name,
