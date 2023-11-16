@@ -3,7 +3,7 @@ var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 };
-const Schema = mongoose.Schema()
+
 const adhar_otp_schema = new mongoose.Schema({
     unique_id_adhar :{
         type: String,

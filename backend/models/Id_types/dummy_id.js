@@ -3,7 +3,6 @@ var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 };
-const Schema = mongoose.Schema()
 const dummy_id_schema = new mongoose.Schema({
     unique_id_dummy :{
         type: String,

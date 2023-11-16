@@ -1,9 +1,9 @@
-import OnlyAdhar from "../models/Id_types/only_adhar";
+import OnlyAdhar from "../models/Id_types/only_adhar.js";
 import Actor from '../models/actor_model.js';
 import duplicateCheck from './genericFunctions/duplicateCheck.js';
 import updateDocument from "./genericFunctions/updateDocument.js"
 import Owner from "../models/owner_id.js"
-import { add_pdfs } from "./genericFunctions/addpdf";
+import { add_pdfs } from "./genericFunctions/addpdf.js";
 const unique = ["adhar_number_id","pan_numeber_id","din_number","email","address"]
 export const addUsertoOnly = async (req, res,next) => {
   const {

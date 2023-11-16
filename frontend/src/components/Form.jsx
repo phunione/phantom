@@ -92,9 +92,14 @@ function Form({ fields, name }) {
                     id={field.id}
                     name={inpName}
                     value={vals[inpName] === undefined ? '' : vals[inpName]}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setVals({ ...vals, [inpName]: e.target.checked })
-                    }
+                      if (inpName === 'isMaharashtra') {
+                        if (e.target.checked)
+                          setVals({ ...vals, location: 'maharashtra' })
+                        else setVals({ ...vals, location: '' })
+                      }
+                    }}
                     className="peer sr-only"
                   />
                   <div className="peer h-6 w-11 rounded-full bg-red-500 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
@@ -120,7 +125,9 @@ function Form({ fields, name }) {
                     value={vals[field.name]}
                     name={field.name}
                     id={field.id}
-                    onChange={(e) => setFormType(e.target.value)}
+                    onChange={(e) =>
+                      setVals({ ...vals, [inpName]: e.target.value })
+                    }
                     required={field.required}
                     className="block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
                   >
