@@ -1,6 +1,6 @@
 import Banker from "../models/banker_model.js"; // Assuming you have a "Banker" model defined
-import Company_A from "../models/company_types/company_a_model.js";
-import Company_B from "../models/company_types/company_b_model.js";
+import Company from "../models/company.js";
+// import Company_B from "../models/company_types/company_b_model.js";
 
 import BankerEmployee from "../models/bank_employee_model.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
@@ -103,16 +103,16 @@ const add_comany_id_to_banker = async (req, res) => {
   const { id } = req.query;
   const { company_id, banker_id } = req.body;
   try {
-    const CA = true;
-    const existingCompanyid = await Company_A.findOne({
-      unique_id_company_a: company_id,
+    
+    const existingCompanyid = await Company.findOne({
+      unique_id_company: company_id,
     });
-    if (!existingCompanyid) {
-      CA = false;
-      existingCompanyid = await Company_B.findOne({
-        unique_id_company_b: company_id,
-      });
-    }
+    // if (!existingCompanyid) {
+    //   CA = false;
+    //   existingCompanyid = await Company_B.findOne({
+    //     unique_id_company_b: company_id,
+    //   });
+    // }
     if (!existingCompanyid) {
       return res
         .status(400)

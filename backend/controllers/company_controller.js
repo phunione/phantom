@@ -74,7 +74,7 @@ export const get_company_id = async (req, res) => {
 };
 
 // Update a Company A record by unique ID
-const update_compnay_from_id = async (req, res) => {
+export const update_company_from_id = async (req, res) => {
   try {
     const companyId = req.params.id;
     const updatedCompanyData = req.body;//sends in json format to in key value pairs which needs to be changed
