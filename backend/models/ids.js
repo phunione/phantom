@@ -3,8 +3,8 @@ var validateEmail = function (email) {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email);
 };
-const prop_schema = new mongoose.Schema({
-  unique_id_prop: {
+const IdSchema = new mongoose.Schema({
+  unique_id: {
     type: String,
     required: true,
   },
@@ -12,6 +12,7 @@ const prop_schema = new mongoose.Schema({
     type: String,
     required: [true, "please enter Name"],
   },
+  
   adhar_number_id: {
     type: String,
     unique: true,
@@ -68,7 +69,10 @@ const prop_schema = new mongoose.Schema({
   //forigen key maany to many relations
   //instancse.actor_ids.push('mongo id of Actor)
   //add doccuments later
-
+  type:{
+    type:String,
+    enum:["ProperId","AdharOtpId","OnlyOtpId","DummyId"]
+  },
   company_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Company" }],
   banker_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Banker" }],
   pdfs: [
@@ -79,4 +83,4 @@ const prop_schema = new mongoose.Schema({
     },
   ],
 });
-export default mongoose.model("Prop_id", prop_schema);
+export default mongoose.model("Ids", IdSchema);

@@ -1,4 +1,4 @@
-import Company_A from "../models/company_types/company_a_model.js"; // Import the "Company_B" model
+import Company from "../models/company.js"; // Import the "Company_B" model
 import { add_pdfs } from "./genericFunctions/addpdf.js";
 
 // Create a new Company A
@@ -16,10 +16,11 @@ export const post_company = async (req, res) => {
       location,
       actor_ids,
       owner_details,
+      type
     } = req.body;
 
-    const newCompanyA = new Company_A({
-      unique_id_company_a,
+    const newCompany = new Company({
+      unique_id_company,
       company_name,
       pan_no,
       pan_dob,
@@ -30,11 +31,12 @@ export const post_company = async (req, res) => {
       location,
       actor_ids,
       owner_details,
+      type
     });
 
-    const savedCompanyA = await newCompanyA.save();
+    const savedCompany = await newCompany.save();
     //
-    res.status(201).json(savedCompanyA);
+    res.status(201).json(savedCompany);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while creating Company A.' });
@@ -44,7 +46,8 @@ export const post_company = async (req, res) => {
 // Get a list of Company A
 export const get_companies =  async (req, res) => {
   try {
-    const companies = await Company_A.find();
+    const {type} = req.body;
+    const companies = await Company.find({type:type});
     res.json(companies);
   } catch (error) {
     console.error(error);
@@ -57,7 +60,7 @@ export const get_company_id = async (req, res) => {
   try {
     const {id} = req.querry;
     const companyid = id;
-    const company = await Company_A.findOne({ unique_id_company_a: companyid });
+    const company = await Company.findOne({ unique_id_company: companyid });
 
     if (!company) {
       res.status(404).json({ error: 'Company A not found' });
@@ -75,14 +78,14 @@ const update_compnay_from_id = async (req, res) => {
   try {
     const companyId = req.params.id;
     const updatedCompanyData = req.body;//sends in json format to in key value pairs which needs to be changed
-    const updatedCompany = await Company_A.findOneAndUpdate(
-      { unique_id_company_a: companyId },
+    const updatedCompany = await Company.findOneAndUpdate(
+      { unique_id_company: companyId },
       updatedCompanyData,
       { new: true }
     );
 
     if (!updatedCompany) {
-      res.status(404).json({ error: 'Company A not found' });
+      res.status(404).json({ error: 'Company not found' });
     } else {
       res.json(updatedCompany);
     }
@@ -96,10 +99,10 @@ const update_compnay_from_id = async (req, res) => {
 export const delete_company = async (req, res) => {
   try {
     const companyId = req.params.id;
-    const deletedCompany = await Company_A.findOneAndDelete({ unique_id_company_a: companyId });
+    const deletedCompany = await Company.findOneAndDelete({ unique_id_company_a: companyId });
 
     if (!deletedCompany) {
-      res.status(404).json({ error: 'Company A not found' });
+      res.status(404).json({ error: 'Company not found' });
     } else {
       res.json(deletedCompany);
     }
@@ -113,7 +116,7 @@ export const adfs = async(req,res)=>{
   //push path of the pdf_file
   const id = req.query;
   const path = req.body;
-  await add_pdfs(id,path,Company_A);
+  await add_pdfs(id,path,Company);
 
 
 }

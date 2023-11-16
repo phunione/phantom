@@ -71,4 +71,4 @@ const available_actor_for_id_and_banker = async(ownerId,bankerId)=>{
     const Arr = await UniqueRelation.find({owner_id: ownerId,banker_id: bankerId})
     if(!Arr) Arr = await actor_model.find();
     return Arr
-} 
+}

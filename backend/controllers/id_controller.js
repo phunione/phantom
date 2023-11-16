@@ -1,4 +1,4 @@
-import PropId from "../models/Id_types/prop_id.js"; // Adjust the path to your model file
+import IdSchema from  '../models/ids.js' // Adjust the path to your model file
 import Actor from "../models/actor_model.js";
 import duplicateCheck from "./genericFunctions/duplicateCheck.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
@@ -14,7 +14,7 @@ const unique = [
 ];
 export const addUsertoProp = async (req, res, next) => {
   const {
-    unique_id_prop,
+    unique_id,
     name,
     adhar_number_id,
     pan_numeber_id,
@@ -26,17 +26,20 @@ export const addUsertoProp = async (req, res, next) => {
     mother_name,
     address,
     actor_ids,
+    type,
+    company_ids,
+    banker_ids,
     pdfs,
   } = req.body;
 
-  var arr = PropId.find({ adhar_number_id: adhar_number_id });
+  var arr = IdSchema.find({ adhar_number_id: adhar_number_id,type:type });
   if (arr.size() > 0) {
     res.send("User Already exists.");
   }
 
   try {
     // Create a new PropId document
-    const newProp = new PropId({
+    const newId = new IdSchema({
       unique_id_prop,
       name,
       adhar_number_id,
@@ -49,16 +52,19 @@ export const addUsertoProp = async (req, res, next) => {
       mother_name,
       address,
       actor_ids,
+      type,
+      company_ids,
+      banker_ids,
       pdfs,
     });
 
     // Save the document to the database
-    await newProp.save();
+    await newId.save();
 
-    const newUser = PropId.findOne({ unique_id_prop: unique_id_prop });
+    const newUser = IdSchema.findOne({ unique_id: unique_id });
     const newOwner = new OwnerId({
-      prop_id: newUser._id,
-      type: "ProperId",
+      id: newUser._id,
+      type:type
     });
     newOwner.save();
 
@@ -66,8 +72,8 @@ export const addUsertoProp = async (req, res, next) => {
       .status(201)
       .json({
         success: true,
-        message: "PropId created successfully",
-        prop: newProp,
+        message: `id of type ${type} created`,
+        usr: newId,
       });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
@@ -75,26 +81,26 @@ export const addUsertoProp = async (req, res, next) => {
 };
 // Adjust the path to your model file
 
-export const addActorToPropId = async (req, res) => {
-  const { propId, actorId } = req.body;
+export const addActorToId = async (req, res) => {
+  const { unique_id, actorId } = req.body;
   try {
     // Retrieve the existing Prop_id document based on _id
-    const existingPropId = await PropId.find({ unique_id_prop: propId });
+    const existingId = await IdSchema.find({ unique_id: unique_id });
     const existingActorId = await Actor.find({ unique_id_prop: actorId });
-    if (!existingPropId) {
+    if (!existingId) {
       return res
         .status(404)
-        .json({ success: false, message: "Prop_id not found" });
+        .json({ success: false, message: "id not found" });
     }
     if (!existingActorId) {
       return res
         .status(404)
-        .json({ success: false, message: "Prop_id not found" });
+        .json({ success: false, message: "id not found" });
     }
     console.log("Actor Id", existingActorId[0]._id);
 
     // Push the new Actor ID into the actor_ids array
-    existingPropId[0].actor_ids.push(existingActorId[0]._id);
+    existingId[0].actor_ids.push(existingActorId[0]._id);
     existingActorId[0].prop_ids.push(existingPropId[0]._id);
     // Save the updated document
     await existingPropId[0].save();
@@ -112,10 +118,11 @@ export const addActorToPropId = async (req, res) => {
   }
 };
 
-export const get_prop_users = async (req, res) => {
+export const get_ids = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
-    const users = await PropId.find();
+    const {type} = req.body
+    const users = await Id.find({type:type});
 
     return res.status(200).json({ success: true, users });
   } catch (error) {
@@ -124,7 +131,7 @@ export const get_prop_users = async (req, res) => {
 };
 
 //this can update multiple details at same time
-export const update_prop_details = async (req, res) => {
+export const update_details = async (req, res) => {
   const { id } = req.query;
   const updateData = req.body;
   try {
@@ -132,7 +139,7 @@ export const update_prop_details = async (req, res) => {
     const index = unique.indexOf(key);
 
     if (index !== -1) {
-      const isDuplicate = await duplicateCheck(PropId, id, updateData); //this will check if the updated details already exits in the database
+      const isDuplicate = await duplicateCheck(IdSchema, id, updateData); //this will check if the updated details already exits in the database
 
       if (isDuplicate) {
         return res.send({
@@ -142,7 +149,7 @@ export const update_prop_details = async (req, res) => {
       }
     }
 
-    await updateDocument(PropId, id, updateData, res);
+    await updateDocument(IdSchema, id, updateData, res);
   } catch (error) {
     console.log(error);
     res.status(500).send({ success: false, message: "An error occurred" });
@@ -154,7 +161,7 @@ export const adfs = async (req, res) => {
   //push path of the pdf_file
   const id = req.query;
   const path = req.body;
-  await add_pdfs(id, path, PropId);
+  await add_pdfs(id, path, IdSchema);
 };
 
 // export default module = addUser
