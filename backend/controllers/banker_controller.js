@@ -1,15 +1,14 @@
 import Banker from "../models/banker_model.js"; // Assuming you have a "Banker" model defined
-import Bank from "../models/bank_model.js";
 import Company_A from "../models/company_types/company_a_model.js";
 import Company_B from "../models/company_types/company_b_model.js";
 
 import BankerEmployee from "../models/bank_employee_model.js";
-import actor_model from "../models/actor_model.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
+
 const createBanker = async (req, res) => {
   try {
     const {
-      name,
+      banker_name,
       rtds,
       rt,
       forex,
@@ -26,7 +25,7 @@ const createBanker = async (req, res) => {
 
     const newBanker = new Banker({
       unique_banker_id,
-      name,
+      name: banker_name,
       rtds: rtds || false, // Default values if not provided in the request
       rt: rt || false,
       forex: forex || false,
@@ -46,17 +45,18 @@ const createBanker = async (req, res) => {
       .json({ error: "An error occurred while creating the banker." });
   }
 };
-export const update_Banker_details = async(req, res) => {
-    const {id} = req.querry;
-    const update_details = req.body;
-    try {
-      const banker = await Banker.findOne({unique_banker_id: id});
-      await updateDocument(Banker,banker._id,update_details,res);
-    } catch (error) {
-      return res.status(300).json({success:false, message: "error in updating anker details"})
-
-    }
-}
+export const update_Banker_details = async (req, res) => {
+  const { id } = req.querry;
+  const update_details = req.body;
+  try {
+    const banker = await Banker.findOne({ unique_banker_id: id });
+    await updateDocument(Banker, banker._id, update_details, res);
+  } catch (error) {
+    return res
+      .status(300)
+      .json({ success: false, message: "error in updating anker details" });
+  }
+};
 const add_banker_employee_ids = async (req, res) => {
   const { id } = req.query;
   const { banker_id, banker_employee_id } = req.body;

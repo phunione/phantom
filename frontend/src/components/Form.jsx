@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { BACKEND_URL } from '../main'
+import { useDispatch } from 'react-redux'
+import { addDataToTheForm } from '../redux/actions/dataActions'
 
 function Form({ fields, name }) {
   const [vals, setVals] = useState({})
+  const dispatch = useDispatch()
 
   const getValue = (str) => {
     let newStr = str.toLowerCase()
@@ -20,57 +23,11 @@ function Form({ fields, name }) {
   const handleSubmition = (e) => {
     e.preventDefault()
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+    console.log(vals)
 
-    if (name === 'banker') {
-      if (vals['rtds'] === undefined) {
-        vals['rtds'] = false
-      }
-      if (vals['rt'] === undefined) {
-        vals['rt'] = false
-      }
-      if (vals['forex'] === undefined) {
-        vals['forex'] = false
-      }
-
-      const url = BACKEND_URL + '/banker'
-
-      axios.post(`${url}/add`, vals, config)
-    } else if (name === 'bank') {
-      const url = BACKEND_URL + '/bank'
-
-      axios.post(`${url}/add`, vals, config)
-    } else if (name === 'actor') {
-      const url = BACKEND_URL + '/actor'
-
-      try {
-        axios.post(`${url}/add`, vals, config)
-      } catch (err) {
-        console.log(err)
-      }
-    } else if (name === 'id') {
-    } else if (name === 'company') {
-      if (vals['isMaharashtra'] === undefined) {
-        vals['isMaharashtra'] = false
-      }
-
-      const url = BACKEND_URL + '/company'
-
-      // try {
-      //   axios.post(`${url}/add`, vals, config)
-      // } catch (err) {
-      //   console.log(err)
-      // }
-    }
-
-    console.log(e.target.name, vals)
+    dispatch(addDataToTheForm(vals, name))
 
     setVals({})
-    // axios.post('/api', vals, config)
   }
 
   return (
@@ -129,7 +86,7 @@ function Form({ fields, name }) {
                       setVals({ ...vals, [inpName]: e.target.value })
                     }
                     required={field.required}
-                    className="block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
+                    className="block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm capitalize text-gray-900 focus:border-gray-300 focus:ring-0"
                   >
                     {field.options.map((option, idx) => (
                       <option
