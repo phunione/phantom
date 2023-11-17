@@ -21,8 +21,6 @@ const createBanker = async (req, res) => {
 
     const unique_banker_id = Date.now().toString();
 
-    console.log(unique_banker_id);
-
     const newBanker = new Banker({
       unique_banker_id,
       name: banker_name,
