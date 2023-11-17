@@ -1,7 +1,6 @@
 import Company from "../models/company.js"; // Import the "Company_B" model
 import { add_pdfs } from "./genericFunctions/addpdf.js";
 
-// Create a new Company A
 export const post_company = async (req, res) => {
   try {
     const {
