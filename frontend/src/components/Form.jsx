@@ -9,15 +9,11 @@ function Form({ fields, name }) {
   const dispatch = useDispatch()
 
   const getValue = (str) => {
-    let newStr = str.toLowerCase()
-
-    if (newStr.substr(0, 6) === 'select') {
+    if (str.substr(0, 6) === 'select') {
       return ''
     }
 
-    newStr = newStr.replace(' ', '_')
-
-    return newStr
+    return str
   }
 
   const handleSubmition = (e) => {
@@ -48,13 +44,21 @@ function Form({ fields, name }) {
                     type="checkbox"
                     id={field.id}
                     name={inpName}
-                    value={vals[inpName] === undefined ? '' : vals[inpName]}
+                    value={vals[inpName] === undefined ? false : vals[inpName]}
                     onChange={(e) => {
-                      setVals({ ...vals, [inpName]: e.target.checked })
                       if (inpName === 'isMaharashtra') {
                         if (e.target.checked)
-                          setVals({ ...vals, location: 'maharashtra' })
-                        else setVals({ ...vals, location: '' })
+                          setVals({
+                            ...vals,
+                            [inpName]: e.target.checked,
+                            location: 'Maharashtra',
+                          })
+                        else
+                          setVals({
+                            ...vals,
+                            [inpName]: e.target.checked,
+                            location: '',
+                          })
                       }
                     }}
                     className="peer sr-only"
@@ -79,12 +83,12 @@ function Form({ fields, name }) {
                     )}
                   </label>
                   <select
-                    value={vals[field.name]}
-                    name={field.name}
+                    value={vals[inpName] === undefined ? '' : vals[inpName]}
+                    name={inpName}
                     id={field.id}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setVals({ ...vals, [inpName]: e.target.value })
-                    }
+                    }}
                     required={field.required}
                     className="block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm capitalize text-gray-900 focus:border-gray-300 focus:ring-0"
                   >

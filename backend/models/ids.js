@@ -12,7 +12,7 @@ const IdSchema = new mongoose.Schema({
     type: String,
     required: [true, "please enter Name"],
   },
-  
+
   adhar_number_id: {
     type: String,
     unique: true,
@@ -69,9 +69,9 @@ const IdSchema = new mongoose.Schema({
   //forigen key maany to many relations
   //instancse.actor_ids.push('mongo id of Actor)
   //add doccuments later
-  type:{
-    type:String,
-    enum:["ProperId","AdharOtpId","OnlyOtpId","DummyId"]
+  type: {
+    type: String,
+    enum: ["prop", "only_aadhar", "dummy", "aadhar_otp"],
   },
   company_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Company" }],
   banker_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Banker" }],

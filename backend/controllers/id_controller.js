@@ -1,4 +1,4 @@
-import IdSchema from  '../models/ids.js' // Adjust the path to your model file
+import IdSchema from "../models/ids.js"; // Adjust the path to your model file
 import Actor from "../models/actor_model.js";
 import duplicateCheck from "./genericFunctions/duplicateCheck.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
@@ -14,10 +14,9 @@ const unique = [
 ];
 export const addUsertoId = async (req, res, next) => {
   const {
-    unique_id,
-    name,
+    id_name,
     adhar_number_id,
-    pan_numeber_id,
+    pan_number_id,
     din_number,
     otp_phoneNr,
     sim_number,
@@ -32,18 +31,20 @@ export const addUsertoId = async (req, res, next) => {
     pdfs,
   } = req.body;
 
-  var arr = IdSchema.find({ adhar_number_id: adhar_number_id,type:type });
+  var arr = IdSchema.find({ adhar_number_id: adhar_number_id, type: type });
   if (arr.size() > 0) {
     res.send("User Already exists.");
   }
 
+  const unique_id = Date.now().toString();
+
   try {
     // Create a new PropId document
     const newId = new IdSchema({
-      unique_id_prop,
-      name,
+      unique_id,
+      name: id_name,
       adhar_number_id,
-      pan_numeber_id,
+      pan_number_id,
       din_number,
       otp_phoneNr,
       sim_number,
@@ -64,18 +65,17 @@ export const addUsertoId = async (req, res, next) => {
     const newUser = IdSchema.findOne({ unique_id: unique_id });
     const newOwner = new OwnerId({
       id: newUser._id,
-      type:type
+      type: type,
     });
     newOwner.save();
 
-    return res
-      .status(201)
-      .json({
-        success: true,
-        message: `id of type ${type} created`,
-        usr: newId,
-      });
+    return res.status(201).json({
+      success: true,
+      message: `id of type ${type} created`,
+      usr: newId,
+    });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -88,14 +88,10 @@ export const addActorToId = async (req, res) => {
     const existingId = await IdSchema.find({ unique_id: unique_id });
     const existingActorId = await Actor.find({ unique_id_prop: actorId });
     if (!existingId) {
-      return res
-        .status(404)
-        .json({ success: false, message: "id not found" });
+      return res.status(404).json({ success: false, message: "id not found" });
     }
     if (!existingActorId) {
-      return res
-        .status(404)
-        .json({ success: false, message: "id not found" });
+      return res.status(404).json({ success: false, message: "id not found" });
     }
     console.log("Actor Id", existingActorId[0]._id);
 
@@ -105,13 +101,11 @@ export const addActorToId = async (req, res) => {
     // Save the updated document
     await existingPropId[0].save();
     await existingActorId[0].save();
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "Actor ID added to actor_ids",
-        propId: existingPropId,
-      });
+    return res.status(200).json({
+      success: true,
+      message: "Actor ID added to actor_ids",
+      propId: existingPropId,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false, error: error });
@@ -121,8 +115,8 @@ export const addActorToId = async (req, res) => {
 export const get_ids = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
-    const {type} = req.body
-    const users = await Id.find({type:type});
+    const { type } = req.body;
+    const users = await Id.find({ type: type });
 
     return res.status(200).json({ success: true, users });
   } catch (error) {
