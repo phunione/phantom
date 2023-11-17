@@ -14,4 +14,4 @@ id_router.put("/addactor",addActorToId)//add middleware to check the permissions
 
 id_router.put("/edit/:id",update_details)//add middleware to check the permissions
 
-export default prop_id_router
+export default id_router
