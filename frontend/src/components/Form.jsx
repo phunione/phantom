@@ -113,7 +113,7 @@ function Form({ fields, name }) {
                   </h3>
                   <ul
                     style={{ width: field.width }}
-                    className="w-full items-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 sm:flex"
+                    className="w-1/3 items-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 sm:flex"
                   >
                     {field.options.map((option, idx) => (
                       <li

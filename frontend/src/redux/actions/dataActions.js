@@ -4,6 +4,9 @@ import {
   ADD_DATA_ERROR,
   ADD_DATA_REQUEST,
   ADD_DATA_SUCCESS,
+  GET_ALL_DATA_ERROR,
+  GET_ALL_DATA_REQUEST,
+  GET_ALL_DATA_SUCCESS,
 } from '../constants/data'
 
 export const addDataToTheForm = (details, name) => async (dispatch) => {
@@ -41,7 +44,35 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
     dispatch({
       type: ADD_DATA_ERROR,
       payload:
-        e.response && e.response.data.detail ? e.response.data.detail : e.error,
+        e.response && e.response.data.detail
+          ? e.response.data.detail
+          : e.message,
+    })
+  }
+}
+
+export const getAllData = (dataFor) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_DATA_REQUEST })
+
+    const url = `${BACKEND_URL}/${dataFor}/all`
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.get(url, config)
+
+    dispatch({ type: GET_ALL_DATA_SUCCESS, payload: data })
+  } catch (e) {
+    dispatch({
+      type: GET_ALL_DATA_ERROR,
+      payload:
+        e.response && e.response.data.detail
+          ? e.response.data.detail
+          : e.message,
     })
   }
 }

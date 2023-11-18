@@ -1,18 +1,17 @@
 import Actor from "../models/actor_model.js"; // Adjust the path to your model file
 
 export const addActor = async (req, res, next) => {
-  console.log(req.body);
   const {
-    actor_name,
+    name,
     adhar_number_id,
     pan_number_id,
-    din_number_id,
+    din_number,
     otp_phoneNr,
-    sim_number_id,
+    sim_number,
     email,
     per_phone,
     mother_name,
-    address_id,
+    address,
     prop_ids,
     adhar_otp_ids,
     only_adhar_ids,
@@ -25,20 +24,20 @@ export const addActor = async (req, res, next) => {
     // Create a new PropId document
     const actorObj = new Actor({
       unique_id_actor,
-      name: actor_name,
+      name,
       adhar_number_id,
       pan_number_id,
-      din_number: din_number_id,
+      din_number,
       otp_phoneNr,
-      sim_number: sim_number_id,
+      sim_number,
       email,
       per_phone,
       mother_name,
-      address: address_id,
+      address,
       prop_ids,
       adhar_otp_ids,
       only_adhar_ids,
-      dummy_ids,   
+      dummy_ids,
     });
 
     // Save the document to the database
@@ -60,7 +59,7 @@ export const get_all_actors = async (req, res) => {
     // Retrieve all users from the Prop_id collection
     const users = await Actor.find();
 
-    return res.status(200).json({ success: true, users });
+    return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
   }

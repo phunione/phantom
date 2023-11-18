@@ -1,44 +1,39 @@
-import { useState } from 'react'
-import Form from './components/Form'
-import fields from './utility/fields'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import AddDataScreen from './screens/AddDataScreen'
+import ActorScreen from './screens/ActorScreen'
+import SideNavBar from './components/SideNavbar'
+import BankScreen from './screens/BankScreen'
+import BankerScreen from './screens/BankerScreen'
+import CompanyScreen from './screens/CompanyScreen'
+import IdScreen from './screens/IdScreen'
 
 function App() {
-  const [formType, setFormType] = useState('')
-
   return (
-    <div className="min-h-screen">
-      <div className="flex w-full flex-wrap items-center justify-end pr-10 pt-10">
-        <select
-          id="form_type"
-          value={formType}
-          onChange={(e) => setFormType(e.target.value)}
-          className="inline-block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
-        >
-          <option value="">Choose Form Type</option>
-          <option value="actor">Actor</option>
-          <option value="bank">Bank</option>
-          <option value="banker">Banker</option>
-          <option value="id">ID</option>
-          <option value="company">Company</option>
-        </select>
-      </div>
+    <div className="min-h-screen max-w-full overflow-y-hidden overflow-x-visible">
+      <div className="flex items-start">
+        <Router>
+          <SideNavBar />
 
-      <div className="mt-6 flex flex-wrap items-center justify-center">
-        {formType === 'actor' ? (
-          <Form fields={fields.actor} name="actor" />
-        ) : formType === 'bank' ? (
-          <Form fields={fields.bank} name="bank" />
-        ) : formType === 'banker' ? (
-          <Form fields={fields.banker} name="banker" />
-        ) : formType === 'id' ? (
-          <Form fields={fields.id} name="id" />
-        ) : formType === 'company' ? (
-          <Form fields={fields.company} name="company" />
-        ) : (
-          <h1 className="mt-48 text-center text-5xl">
-            Please select a type of Form you want to Fill
-          </h1>
-        )}
+          <div className="w-4/5">
+            <Routes>
+              <Route
+                path="/actor"
+                element={<ActorScreen dataFor={'actor'} />}
+              />
+              <Route path="/add" element={<AddDataScreen />} />
+              <Route
+                path="/bankers"
+                element={<BankerScreen dataFor={'banker'} />}
+              />
+              <Route path="/banks" element={<BankScreen dataFor={'bank'} />} />
+              <Route
+                path="/companies"
+                element={<CompanyScreen dataFor={'company'} />}
+              />
+              <Route path="/ids" element={<IdScreen dataFor={'id'} />} />
+            </Routes>
+          </div>
+        </Router>
       </div>
     </div>
   )

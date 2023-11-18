@@ -15,7 +15,7 @@ export const post_company = async (req, res) => {
       location,
       actor_ids,
       owner_details,
-      company_type,
+      type,
     } = req.body;
 
     const unique_id_company = Date.now().toString();
@@ -32,7 +32,7 @@ export const post_company = async (req, res) => {
       location,
       actor_ids,
       owner_details,
-      type: company_type,
+      type,
     });
 
     const savedCompany = await newCompany.save();

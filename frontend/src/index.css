@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -11,6 +10,22 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  @apply rounded-xl;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-quaternary rounded-xl;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary hover:bg-secondary rounded-xl bg-opacity-90 transition-colors duration-200 ease-in-out;
 }

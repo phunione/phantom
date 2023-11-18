@@ -71,7 +71,7 @@ const IdSchema = new mongoose.Schema({
   //add doccuments later
   type: {
     type: String,
-    enum: ["prop", "only_aadhar", "dummy", "aadhar_otp"],
+    enum: ["prop", "only aadhar", "dummy", "aadhar otp"],
   },
   company_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Company" }],
   banker_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Banker" }],
