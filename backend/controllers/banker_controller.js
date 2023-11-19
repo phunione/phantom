@@ -96,6 +96,17 @@ const add_banker_employee_ids = async (req, res) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 };
+const get_all_banker = async(req, res) => {
+  try {
+    // Retrieve all users from the Prop_id collection
+    
+    const users = await Banker.find();
+    console.log(users)
+    return res.status(200).json( users );
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+}
 
 const add_comany_id_to_banker = async (req, res) => {
   const { id } = req.query;
@@ -130,4 +141,4 @@ const add_comany_id_to_banker = async (req, res) => {
   }
 };
 
-export { createBanker, add_banker_employee_ids, add_comany_id_to_banker };
+export { createBanker, add_banker_employee_ids, add_comany_id_to_banker , get_all_banker};

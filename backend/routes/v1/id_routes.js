@@ -13,7 +13,7 @@ id_router.use(bodyParser.json());
 
 id_router.post("/add", addUsertoId); //add middleware to check the permissions
 
-id_router.get("/get", get_ids); //add middleware to check the permissions
+id_router.get("/all", get_ids); //add middleware to check the permissions
 
 id_router.put("/addactor", addActorToId); //add middleware to check the permissions
 

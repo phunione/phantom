@@ -115,10 +115,10 @@ export const addActorToId = async (req, res) => {
 export const get_ids = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
-    const { type } = req.body;
-    const users = await Id.find({ type: type });
-
-    return res.status(200).json({ success: true, users });
+    
+    const users = await IdSchema.find();
+    console.log(users)
+    return res.status(200).json( users );
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
   }
