@@ -4,7 +4,7 @@ const CompanyRouter = express.Router();
 
 CompanyRouter.post('/add',post_company);
 CompanyRouter.get('/all',get_companies);
-CompanyRouter.get('/all/:id',get_company_id);
+CompanyRouter.get('/:id',get_company_id);
 CompanyRouter.put('/pdf/:id',adfs)
 CompanyRouter.put('/edit/:id',update_company_from_id);
 CompanyRouter.delete('/delete',delete_company)

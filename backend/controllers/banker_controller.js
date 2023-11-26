@@ -141,4 +141,14 @@ const add_comany_id_to_banker = async (req, res) => {
   }
 };
 
-export { createBanker, add_banker_employee_ids, add_comany_id_to_banker , get_all_banker};
+const get_banker_by_id = async(req,res)=>{
+  try {
+    const Banker = await Banker.findOne({unique_banker_id:req.query.banker_id})
+    if(!Banker) return res.status(400).json({message:"Banker not found"})
+    return res.status(200).json(Banker);
+  } catch (error) {
+    return res.status(302).json(error);
+  }
+}
+
+export { createBanker, add_banker_employee_ids, add_comany_id_to_banker , get_banker_by_id,get_all_banker,};
