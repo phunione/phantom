@@ -6,6 +6,7 @@ import BankScreen from './screens/BankScreen'
 import BankerScreen from './screens/BankerScreen'
 import CompanyScreen from './screens/CompanyScreen'
 import IdScreen from './screens/IdScreen'
+import EditDataScreen from './screens/EditDataScreen'
 
 function App() {
   return (
@@ -29,6 +30,26 @@ function App() {
               <Route
                 path="/companies"
                 element={<CompanyScreen dataFor={'company'} />}
+              />
+              <Route
+                path="/edit/actor"
+                element={<EditDataScreen formType={'actor'} />}
+              />
+              <Route
+                path="/edit/bankers"
+                element={<EditDataScreen formType={'banker'} />}
+              />
+              <Route
+                path="/edit/banks"
+                element={<EditDataScreen formType={'bank'} />}
+              />
+              <Route
+                path="/edit/companies"
+                element={<EditDataScreen formType={'company'} />}
+              />
+              <Route
+                path="/edit/ids"
+                element={<EditDataScreen formType={'id'} />}
               />
               <Route path="/ids" element={<IdScreen dataFor={'id'} />} />
             </Routes>

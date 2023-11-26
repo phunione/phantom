@@ -61,7 +61,19 @@ export const get_all_actors = async (req, res) => {
 
     return res.status(200).json(users);
   } catch (error) {
-    return res.status(500).json({ success: false, error: error });
+    return res.status(400).json(error);
+  }
+};
+
+export const getActor = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const actor = await Actor.findById(id);
+
+    return res.status(200).json(actor);
+  } catch (error) {
+    return res.status(400).json(error);
   }
 };
 

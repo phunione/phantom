@@ -5,6 +5,9 @@ import {
   GET_ALL_DATA_ERROR,
   GET_ALL_DATA_REQUEST,
   GET_ALL_DATA_SUCCESS,
+  GET_DATA_ERROR,
+  GET_DATA_REQUEST,
+  GET_DATA_SUCCESS,
 } from '../constants/data'
 
 export const addDataToTheFormReducer = (state = {}, action) => {
@@ -27,6 +30,19 @@ export const getAllDataReducer = (state = {}, action) => {
     case GET_ALL_DATA_SUCCESS:
       return { loading: false, data: action.payload }
     case GET_ALL_DATA_ERROR:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const getDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_DATA_REQUEST:
+      return { loading: true }
+    case GET_DATA_SUCCESS:
+      return { loading: false, data: action.payload }
+    case GET_DATA_ERROR:
       return { loading: false, error: action.payload }
     default:
       return state

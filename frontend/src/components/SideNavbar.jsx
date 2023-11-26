@@ -31,7 +31,7 @@ function SideNavBar() {
   }
 
   return (
-    <div className="bg-tertiary min-h-screen w-1/5 text-white">
+    <div className="min-h-screen w-1/5 bg-tertiary text-white">
       {/* Logo */}
       <div className="py-7">
         <h1 className="text-center text-4xl">Phantom</h1>
@@ -47,7 +47,7 @@ function SideNavBar() {
             className={`inline-block w-full rounded-2xl py-3 ${
               pathName === currPathName && link.id === currPathId
                 ? 'bg-primary hover:text-white'
-                : 'hover:bg-primary text-gray-400 hover:text-white'
+                : 'text-gray-400 hover:bg-primary hover:text-white'
             } transition-colors`}
           >
             <p className="mx-20 text-lg">{link.name}</p>

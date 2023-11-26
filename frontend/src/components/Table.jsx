@@ -1,12 +1,15 @@
 import React from 'react'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 const Table = ({ keys, titles, data }) => {
   const isValidDate = (dateString) => {
     const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
-    console.log(dateString, moment(dateString, moment.ISO_8601, true).isValid())
     return moment(dateString, format, true).isValid()
   }
+
+  const path = window.location.pathname
+  console.log(path)
 
   return (
     <div className="h-screen overflow-auto">
@@ -59,9 +62,12 @@ const Table = ({ keys, titles, data }) => {
                 </td>
               ))}
               <td className="border p-2">
-                <button className="rounded bg-blue-500 px-4 py-2 text-white">
+                <Link
+                  to={`/edit${path}?id=${item._id}`}
+                  className="rounded bg-blue-500 px-4 py-2 text-white"
+                >
                   Edit
-                </button>
+                </Link>
               </td>
             </tr>
           ))}

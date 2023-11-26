@@ -10,6 +10,8 @@ function ActorScreen({ dataFor }) {
   const allData = useSelector((state) => state.allData)
   const { loading, data, error } = allData
 
+
+
   const keys = []
   const titles = []
 

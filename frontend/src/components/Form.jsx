@@ -4,8 +4,8 @@ import { BACKEND_URL } from '../main'
 import { useDispatch } from 'react-redux'
 import { addDataToTheForm } from '../redux/actions/dataActions'
 
-function Form({ fields, name }) {
-  const [vals, setVals] = useState({})
+function Form({ fields, name, data }) {
+  const [vals, setVals] = useState(data === undefined ? {} : data)
   const dispatch = useDispatch()
 
   const getValue = (str) => {
