@@ -5,11 +5,14 @@ import {
   get_ids,
   addActorToId,
   update_details,
+  get_id,
 } from "../../controllers/id_controller.js";
 
 const id_router = express.Router();
 
 id_router.use(bodyParser.json());
+
+id_router.get('/:id',get_id);
 
 id_router.post("/add", addUsertoId); //add middleware to check the permissions
 

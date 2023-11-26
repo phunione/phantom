@@ -124,6 +124,16 @@ export const get_ids = async (req, res) => {
   }
 };
 
+export const get_id = async (req, res) => {
+  try {
+    const {type} = req.query;
+    const user = await IdSchema.findOne({unique_id: req.params.id,type:type})
+    return res.status(200).json(user);
+  } catch (error) {
+    if(error) return res.status(302);
+  }
+}
+
 //this can update multiple details at same time
 export const update_details = async (req, res) => {
   const { id } = req.query;
