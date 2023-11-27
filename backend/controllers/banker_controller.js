@@ -96,23 +96,22 @@ const add_banker_employee_ids = async (req, res) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 };
-const get_all_banker = async(req, res) => {
+const get_all_banker = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
-    
+
     const users = await Banker.find();
-    console.log(users)
-    return res.status(200).json( users );
+
+    return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
   }
-}
+};
 
 const add_comany_id_to_banker = async (req, res) => {
   const { id } = req.query;
   const { company_id, banker_id } = req.body;
   try {
-    
     const existingCompanyid = await Company.findOne({
       unique_id_company: company_id,
     });
@@ -141,14 +140,23 @@ const add_comany_id_to_banker = async (req, res) => {
   }
 };
 
-const get_banker_by_id = async(req,res)=>{
+const get_banker_by_id = async (req, res) => {
   try {
-    const Banker = await Banker.findOne({unique_banker_id:req.query.banker_id})
-    if(!Banker) return res.status(400).json({message:"Banker not found"})
-    return res.status(200).json(Banker);
-  } catch (error) {
-    return res.status(302).json(error);
-  }
-}
+    const { id } = req.params;
 
-export { createBanker, add_banker_employee_ids, add_comany_id_to_banker , get_banker_by_id,get_all_banker,};
+    const banker = await Banker.findById(id);
+
+    return res.status(200).json(banker);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+};
+
+export {
+  createBanker,
+  add_banker_employee_ids,
+  add_comany_id_to_banker,
+  get_banker_by_id,
+  get_all_banker,
+};

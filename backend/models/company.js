@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const compnay_model = new mongoose.Schema({
+const company_model = new mongoose.Schema({
   unique_id_company: {
     type: String,
     required: true,
@@ -93,4 +93,4 @@ const compnay_model = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Company", compnay_model);
+export default mongoose.model("Company", company_model);

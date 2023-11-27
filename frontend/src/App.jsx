@@ -22,11 +22,11 @@ function App() {
                 element={<ActorScreen dataFor={'actor'} />}
               />
               <Route path="/add" element={<AddDataScreen />} />
+              <Route path="/banks" element={<BankScreen dataFor={'bank'} />} />
               <Route
                 path="/bankers"
                 element={<BankerScreen dataFor={'banker'} />}
               />
-              <Route path="/banks" element={<BankScreen dataFor={'bank'} />} />
               <Route
                 path="/companies"
                 element={<CompanyScreen dataFor={'company'} />}
@@ -36,12 +36,12 @@ function App() {
                 element={<EditDataScreen formType={'actor'} />}
               />
               <Route
-                path="/edit/bankers"
-                element={<EditDataScreen formType={'banker'} />}
-              />
-              <Route
                 path="/edit/banks"
                 element={<EditDataScreen formType={'bank'} />}
+              />
+              <Route
+                path="/edit/bankers"
+                element={<EditDataScreen formType={'banker'} />}
               />
               <Route
                 path="/edit/companies"

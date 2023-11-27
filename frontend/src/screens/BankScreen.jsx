@@ -10,8 +10,6 @@ function BankScreen({ dataFor }) {
   const allData = useSelector((state) => state.allData)
   const { loading, data, error } = allData
 
-  console.log(data)
-
   const keys = []
   const titles = []
 

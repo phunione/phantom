@@ -115,24 +115,30 @@ export const addActorToId = async (req, res) => {
 export const get_ids = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
-    
-    const users = await IdSchema.find();
-    console.log(users)
-    return res.status(200).json( users );
+    const ids = await IdSchema.find();
+
+    console.log(ids);
+
+    return res.status(200).json(ids);
   } catch (error) {
-    return res.status(500).json({ success: false, error: error });
+    return res.status(400).json(error);
   }
 };
 
 export const get_id = async (req, res) => {
   try {
-    const {type} = req.query;
-    const user = await IdSchema.findOne({unique_id: req.params.id,type:type})
+    const { type } = req.query;
+
+    const user = await IdSchema.findOne({
+      unique_id: req.params.id,
+      type: type,
+    });
+
     return res.status(200).json(user);
   } catch (error) {
-    if(error) return res.status(302);
+    return res.status(400).json(error);
   }
-}
+};
 
 //this can update multiple details at same time
 export const update_details = async (req, res) => {

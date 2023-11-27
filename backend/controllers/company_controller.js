@@ -48,14 +48,11 @@ export const post_company = async (req, res) => {
 // Get a list of Company A
 export const get_companies = async (req, res) => {
   try {
-    const { type } = req.body;
-    const companies = await Company.find({ type: type });
-    res.json(companies);
+    const companies = await Company.find();
+
+    return res.status(200).json(companies);
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching Company A records." });
+    return res.status(400).json(error);
   }
 };
 

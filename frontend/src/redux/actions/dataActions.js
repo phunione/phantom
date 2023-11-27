@@ -59,6 +59,7 @@ export const getAllData = (dataFor) => async (dispatch) => {
     dispatch({ type: GET_ALL_DATA_REQUEST })
 
     const url = `${BACKEND_URL}/${dataFor}/all`
+    console.log(url)
 
     const config = {
       headers: {
@@ -66,7 +67,9 @@ export const getAllData = (dataFor) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.get(url, config)
+    const x = await axios.get(url, config)
+    const data = x.data
+    console.log(x)
 
     dispatch({ type: GET_ALL_DATA_SUCCESS, payload: data })
   } catch (e) {
@@ -85,6 +88,7 @@ export const getData = (dataFor, id) => async (dispatch, getState) => {
     dispatch({ type: GET_DATA_REQUEST })
 
     const url = `${BACKEND_URL}/${dataFor}/${id}`
+    console.log(url)
 
     const config = {
       headers: {

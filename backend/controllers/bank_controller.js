@@ -80,15 +80,19 @@ export const update_bank_details = async (req, res) => {
     res.status(500).send({ success: false, message: "An error occurred" });
   }
 };
-export const get_Bank = async(req,res)=>{
+
+export const get_Bank = async (req, res) => {
   try {
-    const bank = await Bank.findOne({unique_bank_id:req.query.id})
-    if(!bank) return res.status(300).json({message: "bank not found" });
-    return res.status(200).json(bank)
+    const { id } = req.params;
+
+    const bank = await Bank.findById(id);
+
+    return res.status(200).json(bank);
   } catch (error) {
-    return res.status(302).json(error)
+    return res.status(400).json(error);
   }
-}
+};
+
 export const add_banker_id = async (req, res) => {
   const { bankerId, bankId } = req.body;
   try {
