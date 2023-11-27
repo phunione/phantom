@@ -116,7 +116,7 @@ export const get_ids = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
     const ids = await IdSchema.find();
-
+    if(!ids) return res.status(302).json({message:"Not Found"});
     console.log(ids);
 
     return res.status(200).json(ids);

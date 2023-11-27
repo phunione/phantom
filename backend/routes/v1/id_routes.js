@@ -11,10 +11,10 @@ import {
 const id_router = express.Router();
 
 id_router.use(bodyParser.json());
-
+id_router.get("/all", get_ids);
 id_router.get("/:id", get_id);
 id_router.post("/add", addUsertoId); //add middleware to check the permissions
-id_router.get("/all", get_ids); //add middleware to check the permissions
+ //add middleware to check the permissions
 id_router.put("/addactor", addActorToId); //add middleware to check the permissions
 id_router.put("/edit/:id", update_details); //add middleware to check the permissions
 
