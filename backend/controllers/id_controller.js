@@ -14,7 +14,7 @@ const unique = [
 ];
 export const addUsertoId = async (req, res, next) => {
   const {
-    id_name,
+    name,
     adhar_number_id,
     pan_number_id,
     din_number,
@@ -42,7 +42,7 @@ export const addUsertoId = async (req, res, next) => {
     // Create a new PropId document
     const newId = new IdSchema({
       unique_id,
-      name: id_name,
+      name,
       adhar_number_id,
       pan_number_id,
       din_number,
@@ -116,8 +116,6 @@ export const get_ids = async (req, res) => {
   try {
     // Retrieve all users from the Prop_id collection
     const ids = await IdSchema.find();
-    if(!ids) return res.status(302).json({message:"Not Found"});
-    console.log(ids);
 
     return res.status(200).json(ids);
   } catch (error) {
@@ -127,12 +125,9 @@ export const get_ids = async (req, res) => {
 
 export const get_id = async (req, res) => {
   try {
-    const { type } = req.query;
+    const { id } = req.params;
 
-    const user = await IdSchema.findOne({
-      unique_id: req.params.id,
-      type: type,
-    });
+    const user = await IdSchema.findById(id);
 
     return res.status(200).json(user);
   } catch (error) {

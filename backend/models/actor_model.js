@@ -5,7 +5,7 @@ var validateEmail = function (email) {
 };
 
 const actor_schema = new mongoose.Schema({
-  unique_id_actor: {
+  unique_actor_id: {
     type: String,
     required: true,
     unique: true,

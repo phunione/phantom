@@ -12,18 +12,15 @@ export const addActor = async (req, res, next) => {
     per_phone,
     mother_name,
     address,
-    prop_ids,
-    adhar_otp_ids,
-    only_adhar_ids,
-    dummy_ids,
+    ids,
   } = req.body;
 
-  const unique_id_actor = Date.now().toString();
+  const unique_actor_id = Date.now().toString();
 
   try {
     // Create a new PropId document
     const actorObj = new Actor({
-      unique_id_actor,
+      unique_actor_id,
       name,
       adhar_number_id,
       pan_number_id,
@@ -34,10 +31,6 @@ export const addActor = async (req, res, next) => {
       per_phone,
       mother_name,
       address,
-      prop_ids,
-      adhar_otp_ids,
-      only_adhar_ids,
-      dummy_ids,
     });
 
     // Save the document to the database

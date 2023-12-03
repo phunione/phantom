@@ -30,7 +30,7 @@ function EditDataScreen({ formType }) {
             ) : formType === 'banker' ? (
               <Form fields={fields.banker} name="banker" data={data} />
             ) : formType === 'id' ? (
-              <Form fields={fields.id} name="id" />
+              <Form fields={fields.id} name="id" data={data} />
             ) : formType === 'company' ? (
               <Form fields={fields.company} name="company" />
             ) : (

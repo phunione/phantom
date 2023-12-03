@@ -28,10 +28,11 @@ const createBanker = async (req, res) => {
       rt: rt || false,
       forex: forex || false,
       demand,
-      banker_employee_ids,
-      company_ids,
-      actor_ids,
-      bank_ids,
+      // TODO: GET THE OBJECTS OF THESE BELOW MENTIONED IDs AND THEN ADD THEM!!
+      // banker_employee_ids,
+      // company_ids,
+      // actor_ids,
+      // bank_ids,
     });
 
     const savedBanker = await newBanker.save();

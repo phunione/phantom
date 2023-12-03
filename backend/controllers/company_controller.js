@@ -17,10 +17,10 @@ export const post_company = async (req, res) => {
       type,
     } = req.body;
 
-    const unique_id_company = Date.now().toString();
+    const unique_company_id = Date.now().toString();
 
     const newCompany = new Company({
-      unique_id_company,
+      unique_company_id,
       company_name,
       pan_no,
       pan_dob,

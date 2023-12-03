@@ -1,15 +1,26 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import {
+  addDataToTheForm,
+  editDataForm,
+  getAllData,
+} from '../redux/actions/dataActions'
 import { BACKEND_URL } from '../main'
-import { useDispatch } from 'react-redux'
-import { addDataToTheForm } from '../redux/actions/dataActions'
 
 function Form({ fields, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
+
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const addData = useSelector((state) => state.addData)
+  const allData = useSelector((state) => state.allData)
+
+  const { error: addError } = addData
 
   const getValue = (str) => {
-    if (str.substr(0, 6) === 'select') {
+    if (str.substr(0, 6).toLowerCase() === 'select') {
       return ''
     }
 
@@ -19,12 +30,17 @@ function Form({ fields, name, data }) {
   const handleSubmition = (e) => {
     e.preventDefault()
 
-    console.log(vals)
+    if (data) {
+      dispatch(editDataForm(data._id, vals, name))
+      navigate('/actor')
+    } else {
+      dispatch(addDataToTheForm(vals, name))
+    }
 
-    dispatch(addDataToTheForm(vals, name))
-
-    setVals({})
+    if (!error) setVals({})
   }
+
+  console.log(fields)
 
   return (
     <form
@@ -32,6 +48,7 @@ function Form({ fields, name, data }) {
       name={name}
       onSubmit={handleSubmition}
     >
+      {addError && <div>{addError}</div>}
       <div className="flex flex-wrap items-center justify-start py-6">
         {fields.map((field, idx) => {
           const inpName = field.name
