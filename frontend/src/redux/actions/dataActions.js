@@ -43,7 +43,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
       }
     }
 
-    axios.post(`${url}/add`, details, config)
+    await axios.post(`${url}/add`, details, config)
 
     dispatch({ type: ADD_DATA_SUCCESS, payload: 'Successfully Added' })
   } catch (e) {
@@ -87,7 +87,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
       }
     }
 
-    axios.post(`${url}/edit/${id}`, details, config)
+    await axios.put(`${url}/edit/${id}`, details, config)
 
     dispatch({ type: EDIT_DATA_SUCCESS, payload: 'Successfully Edited' })
   } catch (e) {

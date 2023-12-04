@@ -1,5 +1,7 @@
 import Bank from "../models/bank_model.js";
 import Banker from "../models/banker_model.js";
+import updateDocument from './genericFunctions/updateDocument.js'
+
 export const addBank = async (req, res) => {
   try {
     // Extract individual properties from the request body
@@ -11,6 +13,8 @@ export const addBank = async (req, res) => {
       ad_code,
       swift_code,
     } = req.body;
+
+    console.log(req.body)
 
     const unique_bank_id = Date.now().toString();
 
