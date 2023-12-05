@@ -119,11 +119,12 @@ export const add_banker_id = async (req, res) => {
     // console.log("Actor Id",existingBankerId[0]._id)
 
     // Push the new Actor ID into the banker_ids array
-    existingBankId[0].banker_ids.push(existingBankerId[0]._id);
-    existingBankerId[0].bank_ids.push(existingBankId[0]._id);
+    const a =await  existingBankId[0].banker_ids.push(existingBankerId[0]._id);
+    const b =await existingBankerId[0].bank_ids.push(existingBankId[0]._id);
     // Save the updated document
     await existingBankId[0].save();
     await existingBankerId[0].save();
+    console.log(a," ",b)
     return res.status(200).json({
       success: true,
       message: "banker id added to banker_ids",
@@ -132,5 +133,23 @@ export const add_banker_id = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false, error: error });
+  }
+};
+
+
+// Delete a bank by its unique ID
+export const deleteBankById = async (req, res) => {
+  const { id } = req.params; // Assuming bankId is passed in the URL parameters
+
+  try {
+    const deletedBank = await Bank.findByIdAndDelete(id);
+
+    if (!deletedBank) {
+      return res.status(404).json({ message: 'Bank not found' });
+    }
+
+    return res.status(200).json({ message: 'Bank deleted successfully', deletedBank });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error deleting bank', error: error.message });
   }
 };

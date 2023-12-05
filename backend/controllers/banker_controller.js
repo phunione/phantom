@@ -110,7 +110,7 @@ const get_all_banker = async (req, res) => {
 };
 
 const add_comany_id_to_banker = async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.params;
   const { company_id, banker_id } = req.body;
   try {
     const existingCompanyid = await Company.findOne({
@@ -131,8 +131,11 @@ const add_comany_id_to_banker = async (req, res) => {
       unique_banker_id: banker_id,
     });
 
-    await existingBanker.company_ids.push(existingCompanyid._id);
-    await existingCompanyid.update({ banker_id: existingBanker._id });
+    const a = await existingBanker.company_ids.push(existingCompanyid._id);
+    const b = await existingCompanyid.update({ banker_id: existingBanker._id });
+    existingBanker.save();
+    existingCompanyid.save();
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -153,11 +156,27 @@ const get_banker_by_id = async (req, res) => {
     return res.status(400).json(error);
   }
 };
+const delete_banker_by_id = async(req,res)=>{
+  const { id } = req.params; // Assuming bankId is passed in the URL parameters
 
+  try {
+    const deletedBank = await Banker.findByIdAndDelete(bankId);
+
+    if (!deletedBank) {
+      return res.status(404).json({ message: 'Bank not found' });
+    }
+
+    return res.status(200).json({ message: 'Bank deleted successfully', deletedBank });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error deleting bank', error: error.message });
+  }
+
+}
 export {
   createBanker,
   add_banker_employee_ids,
   add_comany_id_to_banker,
   get_banker_by_id,
   get_all_banker,
+  delete_banker_by_id
 };
