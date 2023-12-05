@@ -62,7 +62,8 @@ export const getAllBanks = async (req, res) => {
 export const update_bank_details = async (req, res) => {
   const unique = ["unique_bank_id", "ifsc", "ad_code", "swift_code"];
   const updateData = req.body;
-  const { id } = req.query;
+  const { id } = req.params;
+  
   try {
     console.log(req.body);
     // const key = Object.keys(updateData)[0];

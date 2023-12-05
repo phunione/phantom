@@ -44,7 +44,8 @@ const get_owner_details = async (req, res)=>{
 //fill company information
 
 export const fill_information = async(req,res)=>{
-    const { unique_id_actor ,
+    const { 
+    unique_id_actor ,
     unique_id_banker,
     unique_id_company,
     owner_id
@@ -52,7 +53,7 @@ export const fill_information = async(req,res)=>{
 
     const actor = await Actor.findOne({unique_id_actor:unique_id_actor});
     const banker = await Banker.findOne({unique_id_banker:unique_id_banker});
-    const company = await Company_A.findOne({unique_id_company:unique_id_company});
+    const company = await Company.findOne({unique_id_company:unique_id_company});
     // if(!company){
     //     company = await Company_B.findOne({unique_id_company_b:unique_id_company_b});
     // }

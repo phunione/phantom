@@ -45,7 +45,7 @@ const createBanker = async (req, res) => {
   }
 };
 export const update_Banker_details = async (req, res) => {
-  const { id } = req.querry;
+  const { id } = req.params;
   const update_details = req.body;
   try {
     const banker = await Banker.findOne({ unique_banker_id: id });

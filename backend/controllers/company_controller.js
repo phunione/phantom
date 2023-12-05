@@ -67,7 +67,7 @@ export const get_companies = async (req, res) => {
 // Get a single Company A by unique ID
 export const get_company_id = async (req, res) => {
   try {
-    const { id } = req.querry;
+    const { id } = req.params;
     const companyid = id;
     const company = await Company.findOne({ unique_id_company: companyid });
 
@@ -131,7 +131,7 @@ export const delete_company = async (req, res) => {
 export const adfs = async (req, res) => {
   //req.body will conatian path of the pdf in the following format
   //push path of the pdf_file
-  const id = req.query;
+  const id = req.params;
   const path = req.body;
   await add_pdfs(id, path, Company);
 };

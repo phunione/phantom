@@ -137,7 +137,7 @@ export const get_id = async (req, res) => {
 
 //this can update multiple details at same time
 export const update_details = async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.params;
   const updateData = req.body;
   try {
     const key = Object.keys(updateData)[0];
@@ -164,7 +164,7 @@ export const update_details = async (req, res) => {
 export const adfs = async (req, res) => {
   //req.body will conatian path of the pdf in the following format
   //push path of the pdf_file
-  const id = req.query;
+  const id = req.params;
   const path = req.body;
   await add_pdfs(id, path, IdSchema);
 };

@@ -72,7 +72,7 @@ export const getActor = async (req, res) => {
 
 export const update_actor_details = async (req, res) => {
   const unique = ["adhar_number_id", "pan_number_id", "din_number"];
-  const { id } = req.query;
+  const { id } = req.params;
   const updateData = req.body;
   try {
     const key = Object.keys(updateData)[0];
