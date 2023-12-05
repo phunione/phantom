@@ -15,7 +15,6 @@ function Form({ fields, name, data }) {
   const navigate = useNavigate()
 
   const addData = useSelector((state) => state.addData)
-  const allData = useSelector((state) => state.allData)
 
   const { error: addError } = addData
 
@@ -34,6 +33,7 @@ function Form({ fields, name, data }) {
       dispatch(editDataForm(data._id, vals, name))
       navigate('/actor')
     } else {
+      console.log(vals.pdfs)
       dispatch(addDataToTheForm(vals, name))
     }
 
@@ -41,7 +41,6 @@ function Form({ fields, name, data }) {
   }
 
   console.log(fields)
-  console.log(vals)
 
   return (
     <form
@@ -121,46 +120,6 @@ function Form({ fields, name, data }) {
                     ))}
                   </select>
                 </div>
-              ) : field.type === 'radio' ? (
-                <>
-                  <h3 className="mb-2 text-sm capitalize text-gray-900">
-                    {field.title}
-                    {field.required && (
-                      <sup className="font-bold text-red-600">*</sup>
-                    )}
-                  </h3>
-                  <ul
-                    style={{ width: field.width }}
-                    className="w-1/3 items-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 sm:flex"
-                  >
-                    {field.options.map((option, idx) => (
-                      <li
-                        key={idx}
-                        className="flex w-full items-center justify-center border-b border-gray-200 sm:border-b-0 sm:border-r"
-                      >
-                        <div className="flex w-full items-center justify-center capitalize">
-                          <input
-                            id={field.id + idx}
-                            type={field.type}
-                            value={option}
-                            required={field.required}
-                            onChange={(e) =>
-                              setVals({ ...vals, [inpName]: e.target.value })
-                            }
-                            name={inpName}
-                            className="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600"
-                          />
-                          <label
-                            htmlFor={field.id + idx}
-                            className="ml-2 py-3 text-sm font-medium text-gray-900"
-                          >
-                            {option}
-                          </label>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </>
               ) : (
                 <>
                   <input
@@ -170,10 +129,22 @@ function Form({ fields, name, data }) {
                     className="border-1 peer block w-2/3 appearance-none rounded-lg border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
                     placeholder=" "
                     required={field.required}
-                    value={vals[inpName] === undefined ? '' : vals[inpName]}
-                    onChange={(e) =>
-                      setVals({ ...vals, [inpName]: e.target.value })
+                    value={
+                      vals[inpName] === undefined
+                        ? ''
+                        : field.type === 'file'
+                        ? null
+                        : vals[inpName]
                     }
+                    onChange={(e) => {
+                      setVals({
+                        ...vals,
+                        [inpName]:
+                          field.type === 'file'
+                            ? e.target.files[0]
+                            : e.target.value,
+                      })
+                    }}
                     onWheel={(e) => field.type === 'number' && e.target.blur()}
                   />
                   <label

@@ -43,7 +43,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
       }
     }
 
-    axios.post(`${url}/add`, details, config)
+    await axios.post(`${url}/add`, details, config)
 
     dispatch({ type: ADD_DATA_SUCCESS, payload: 'Successfully Added' })
   } catch (e) {

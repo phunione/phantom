@@ -10,7 +10,7 @@ const bank_schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  comapany_ids: [
+  company_ids: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
