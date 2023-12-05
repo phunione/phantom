@@ -40,8 +40,6 @@ function Form({ fields, name, data }) {
     if (!error) setVals({})
   }
 
-  console.log(fields)
-
   return (
     <form
       className="flex flex-col items-center overflow-auto px-20"
