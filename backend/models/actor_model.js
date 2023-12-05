@@ -28,7 +28,7 @@ const actor_schema = new mongoose.Schema({
   },
   otp_phoneNr: {
     type: String,
-    match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
+    // match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
   },
   sim_number: {
     type: String,
@@ -48,7 +48,7 @@ const actor_schema = new mongoose.Schema({
   },
   per_phone: {
     type: String,
-    match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
+    // match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
   },
   mother_name: {
     type: String,

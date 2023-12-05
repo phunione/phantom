@@ -6,7 +6,7 @@ const bank_schema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  account_numbers: {
+  name: {
     type: String,
     required: true,
   },

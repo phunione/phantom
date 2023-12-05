@@ -1,10 +1,11 @@
 import Bank from "../models/bank_model.js";
 import Banker from "../models/banker_model.js";
+import updateDocument from "./genericFunctions/updateDocument.js";
 export const addBank = async (req, res) => {
   try {
     // Extract individual properties from the request body
     const {
-      account_numbers,
+      name,
       banker_ids,
       company_ids,
       ifsc,
@@ -27,7 +28,7 @@ export const addBank = async (req, res) => {
     // Create a new Bank instance using the Bank model
     const bank = new Bank({
       unique_bank_id,
-      account_numbers,
+      name,
       banker_ids,
       company_ids,
       ifsc,
@@ -59,19 +60,20 @@ export const update_bank_details = async (req, res) => {
   const updateData = req.body;
   const { id } = req.query;
   try {
-    const key = Object.keys(updateData)[0];
-    const index = unique.indexOf(key);
+    console.log(req.body);
+    // const key = Object.keys(updateData)[0];
+    // const index = unique.indexOf(key);
 
-    if (index !== -1) {
-      const isDuplicate = await duplicateCheck(Bank, id, updateData); //this will check if the updated details already exits in the database
+    // if (index !== -1) {
+    //   const isDuplicate = await duplicateCheck(Bank, id, updateData); //this will check if the updated details already exits in the database
 
-      if (isDuplicate) {
-        return res.send({
-          success: false,
-          message: `Duplicate found ${updateData}`,
-        });
-      }
-    }
+    //   if (isDuplicate) {
+    //     return res.send({
+    //       success: false,
+    //       message: `Duplicate found ${updateData}`,
+    //     });
+    //   }
+    // }
 
     await updateDocument(Bank, id, updateData, res);
   } catch (error) {

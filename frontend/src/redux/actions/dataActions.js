@@ -87,7 +87,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
       }
     }
 
-    axios.post(`${url}/edit/${id}`, details, config)
+    await axios.put(`${url}/edit/${id}`, details, config)
 
     dispatch({ type: EDIT_DATA_SUCCESS, payload: 'Successfully Edited' })
   } catch (e) {

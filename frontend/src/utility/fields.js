@@ -114,11 +114,11 @@ const fields = {
   ],
   bank: [
     {
-      title: 'account numbers',
-      id: 'account_numbers',
-      name: 'account_numbers',
+      title: 'name',
+      id: 'bankname',
+      name: 'name',
       required: true,
-      type: 'number',
+      type: 'text',
     },
     {
       title: 'ifsc',

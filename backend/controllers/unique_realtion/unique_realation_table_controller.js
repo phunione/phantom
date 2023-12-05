@@ -1,8 +1,8 @@
 import UniqueRelation from "../../models/application_table/unique_relation_table.js"
 import Actor from "../../models/actor_model.js"
 import Banker from "../../models/banker_model.js"
-import Company_A from "../../models/company_types/company_a_model.js"
-import Company_B from "../../models/company_types/company_b_model.js"
+import Company from "../../models/company_types/company_a_model.js"
+
 import company_a_model from "../../models/company_types/company_a_model.js"
 import Owner from "../../models/owner_id.js"
 import { addActorToPropId } from "../prop_id_controller.js"
@@ -17,10 +17,8 @@ import dummy_id from "../../models/Id_types/dummy_id.js"
 
 const get_owner_details = async (req, res)=>{
     const {id} = req.params.id;
-    const company = await Company_A.findOne({unique_id_company_a: id})
-    if(!company){
-        company = await Company_B.findOne({unique_id_company_b: id})
-    }
+    const company = await Company.findOne({unique_id_company: id})
+
     if(!company){
         return res.status(404).json({
             message: "company not found"

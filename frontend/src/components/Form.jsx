@@ -41,6 +41,7 @@ function Form({ fields, name, data }) {
   }
 
   console.log(fields)
+  console.log(vals)
 
   return (
     <form

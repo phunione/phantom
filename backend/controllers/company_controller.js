@@ -1,8 +1,9 @@
 import Company from "../models/company.js"; // Import the "Company_B" model
 import { add_pdfs } from "./genericFunctions/addpdf.js";
-
+import fs from 'fs'
 export const post_company = async (req, res) => {
   try {
+    console.log(req.body)
     const {
       company_name,
       pan_no,
@@ -15,8 +16,14 @@ export const post_company = async (req, res) => {
       actor_ids,
       owner_details,
       type,
+      pdfs
     } = req.body;
-
+    const pdfBuffer1 = fs.readFileSync(pdfs);
+    const pdfObject = {
+      title: `${Date.now()} ${id}`,
+      pdfData: pdfBuffer1,  // The binary data of the first PDF
+      contentType: 'application/pdf',
+  }
     const unique_company_id = Date.now().toString();
 
     const newCompany = new Company({
@@ -32,6 +39,7 @@ export const post_company = async (req, res) => {
       actor_ids,
       owner_details,
       type,
+      pdfObject
     });
 
     const savedCompany = await newCompany.save();
