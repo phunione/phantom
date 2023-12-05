@@ -18,6 +18,6 @@ companyRouter.get("/all", get_companies);
 companyRouter.get("/:id", get_company_id);
 companyRouter.put("/pdf/:id", adfs);
 companyRouter.put("/edit/:id", update_company_from_id);
-companyRouter.delete("/delete", delete_company);
+companyRouter.delete("/delete/:id", delete_company);
 
 export default companyRouter;

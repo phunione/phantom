@@ -95,5 +95,20 @@ export const update_actor_details = async (req, res) => {
     res.status(500).send({ success: false, message: "An error occurred" });
   }
 };
+export const delete_actor_by_id = async(req,res)=>{
+  const { id } = req.params; // Assuming bankId is passed in the URL parameters
 
+  try {
+    const deletedBank = await Actor.findByIdAndDelete(id);
+
+    if (!deletedBank) {
+      return res.status(404).json({ message: 'Bank not found' });
+    }
+
+    return res.status(200).json({ message: 'Bank deleted successfully', deletedBank });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error deleting bank', error: error.message });
+  }
+
+}
 // export default module = addUser

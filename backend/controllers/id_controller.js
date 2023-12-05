@@ -97,14 +97,14 @@ export const addActorToId = async (req, res) => {
 
     // Push the new Actor ID into the actor_ids array
     existingId[0].actor_ids.push(existingActorId[0]._id);
-    existingActorId[0].prop_ids.push(existingPropId[0]._id);
+    existingActorId[0].prop_ids.push(existingId[0]._id);
     // Save the updated document
-    await existingPropId[0].save();
+    await existingId[0].save();
     await existingActorId[0].save();
     return res.status(200).json({
       success: true,
       message: "Actor ID added to actor_ids",
-      propId: existingPropId,
+      newId: existingId,
     });
   } catch (error) {
     console.log(error);
@@ -169,4 +169,21 @@ export const adfs = async (req, res) => {
   await add_pdfs(id, path, IdSchema);
 };
 
+export const delete_ID_by_id = async(req, res)=>{
+  async (req, res) => {
+    const { id } = req.params; // Assuming bankId is passed in the URL parameters
+  
+    try {
+      const deletedBank = await IdSchema.findByIdAndDelete(id);
+      
+      if (!deletedBank) {
+        return res.status(404).json({ message: 'Bank not found' });
+      }
+  
+      return res.status(200).json({ message: 'Bank deleted successfully', deletedBank });
+    } catch (error) {
+      return res.status(500).json({ message: 'Error deleting bank', error: error.message });
+    }
+  };
+}
 // export default module = addUser

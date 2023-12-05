@@ -160,7 +160,7 @@ const delete_banker_by_id = async(req,res)=>{
   const { id } = req.params; // Assuming bankId is passed in the URL parameters
 
   try {
-    const deletedBank = await Banker.findByIdAndDelete(bankId);
+    const deletedBank = await Banker.findByIdAndDelete(id);
 
     if (!deletedBank) {
       return res.status(404).json({ message: 'Bank not found' });
