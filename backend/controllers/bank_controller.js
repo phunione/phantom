@@ -1,11 +1,8 @@
 import Bank from "../models/bank_model.js";
 import Banker from "../models/banker_model.js";
-<<<<<<< HEAD
-import updateDocument from "./genericFunctions/updateDocument.js";
-=======
+
 import updateDocument from './genericFunctions/updateDocument.js'
 
->>>>>>> be589a79ffc1b0b2f25b25f4e3aefec79327a6df
 export const addBank = async (req, res) => {
   try {
     // Extract individual properties from the request body
