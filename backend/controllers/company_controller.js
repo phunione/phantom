@@ -5,7 +5,7 @@ export const post_company = async (req, res) => {
   try {
     console.log(req.body)
     const {
-      company_name,
+      name,
       pan_no,
       pan_dob,
       company_status,
@@ -28,7 +28,7 @@ export const post_company = async (req, res) => {
 
     const newCompany = new Company({
       unique_company_id,
-      company_name,
+      name,
       pan_no,
       pan_dob,
       company_status,

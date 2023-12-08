@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Form from '../components/Form'
 import fields from '../utility/fields'
 import { getData } from '../redux/actions/dataActions'

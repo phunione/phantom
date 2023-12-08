@@ -5,20 +5,18 @@ import {
   getAllBanks,
   update_bank_details,
   get_Bank,
-  deleteBankById
+  deleteBankById,
 } from "../../controllers/bank_controller.js";
 
 const BankRouter = express.Router();
 
 BankRouter.post("/add", addBank);
 BankRouter.get("/all", getAllBanks);
-
 //populate both banker and bank from put req
 BankRouter.put("/addBanker", add_banker_id);
-//this will crate a relation 
-
-
+//this will crate a relation
 BankRouter.put("/edit/:id", update_bank_details);
 BankRouter.get("/:id", get_Bank);
-BankRouter.delete('/delete/:id',deleteBankById)
+BankRouter.delete("/delete/:id", deleteBankById);
+
 export default BankRouter;
