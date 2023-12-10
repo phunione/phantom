@@ -1,14 +1,11 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
 
 const Table = ({ keys, titles, data }) => {
   const dispatch = useDispatch()
-  console.log('rendered')
 
-  const { data: dData, success } = useSelector((state) => state.deleteData)
   const path = window.location.pathname
 
   const handleDelete = (path, id) => {
@@ -20,8 +17,6 @@ const Table = ({ keys, titles, data }) => {
     const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
     return moment(dateString, format, true).isValid()
   }
-
-  useEffect(() => {}, [success, dData, data])
 
   return (
     <div className="h-screen overflow-auto">
@@ -62,23 +57,20 @@ const Table = ({ keys, titles, data }) => {
                 </td>
                 {keys.slice(1).map((key, index) => (
                   <td key={index} className="w-40 border p-2 text-center ">
-                    {key === 'address' ? (
-                      <div className="whitespace-pre-wrap">
-                        {item[key] || 'null'}
-                      </div>
-                    ) : (typeof item[key] === 'object' &&
-                        item[key].length === 0) ||
-                      item[key] === undefined ? (
-                      'null'
-                    ) : typeof item[key] === 'string' ? (
-                      isValidDate(item[key]) ? (
-                        moment(item[key]).format('MMMM DD, YYYY')
-                      ) : (
-                        item[key]
-                      )
-                    ) : (
-                      item[key].toString()
-                    )}
+                    {
+                      key === 'address'
+                        ? item[key] || 'null' // Show address
+                        : (typeof item[key] === 'object' &&
+                            item[key].length === 0) ||
+                          item[key] === undefined ||
+                          item[key].trim() === ''
+                        ? 'null' // Checking If the item[key] is object
+                        : typeof item[key] === 'string'
+                        ? isValidDate(item[key]) // if the item[key] is a valid date
+                          ? moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
+                          : item[key] // else show the string only
+                        : item[key].toString() // if nothing of the above, we just convert the value to a string and show it
+                    }
                   </td>
                 ))}
                 <td

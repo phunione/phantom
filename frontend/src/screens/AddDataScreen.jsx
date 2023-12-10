@@ -6,6 +6,12 @@ import fields from '../utility/fields'
 function AddDataScreen() {
   const [formType, setFormType] = useState('')
 
+  const options = Object.keys(fields)
+
+  const getValue = (val) => {
+    return val.replace(/[^a-zA-Z]+/g, ' ')
+  }
+
   return (
     <>
       <div className="flex w-full flex-wrap items-center justify-end pr-10 pt-10">
@@ -13,28 +19,30 @@ function AddDataScreen() {
           id="form_type"
           value={formType}
           onChange={(e) => setFormType(e.target.value)}
-          className="inline-block w-44 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm text-gray-900 focus:border-gray-300 focus:ring-0"
+          className="inline-block w-48 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm capitalize text-gray-900 focus:border-gray-300 focus:ring-0"
         >
           <option value="">Choose Form Type</option>
-          <option value="actor">Actor</option>
-          <option value="bank">Bank</option>
-          <option value="banker">Banker</option>
-          <option value="id">ID</option>
-          <option value="company">Company</option>
+          {options.map((option, idx) => (
+            <option key={idx} value={option} className={'capitalize'}>
+              {getValue(option)}
+            </option>
+          ))}
         </select>
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-center">
         {formType === 'actor' ? (
-          <Form fields={fields.actor} name="actor" />
+          <Form fields={fields[formType]} name={formType} />
         ) : formType === 'bank' ? (
-          <Form fields={fields.bank} name="bank" />
+          <Form fields={fields[formType]} name={formType} />
         ) : formType === 'banker' ? (
-          <Form fields={fields.banker} name="banker" />
+          <Form fields={fields[formType]} name={formType} />
         ) : formType === 'id' ? (
-          <Form fields={fields.id} name="id" />
+          <Form fields={fields[formType]} name={formType} />
         ) : formType === 'company' ? (
-          <Form fields={fields.company} name="company" />
+          <Form fields={fields[formType]} name={formType} />
+        ) : formType === 'unique-relation' ? (
+          <Form fields={fields[formType]} name={formType} />
         ) : (
           <h1 className="mt-48 text-center text-5xl">
             Please select a type of Form you want to Fill

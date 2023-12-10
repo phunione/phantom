@@ -51,6 +51,10 @@ function App() {
                 element={<EditDataScreen formType={'id'} />}
               />
               <Route path="/id" element={<ShowDataScreen dataFor={'id'} />} />
+              <Route
+                path="/unique-relation"
+                element={<ShowDataScreen dataFor={'unique-relation'} />}
+              />
             </Routes>
           </div>
         </Router>

@@ -17,6 +17,10 @@ function Form({ fields, name, data }) {
   const { error: addError } = addData
 
   const getValue = (str) => {
+    if (str === undefined || str === null || typeof str !== 'string') {
+      return
+    }
+
     if (str.substr(0, 6).toLowerCase() === 'select') {
       return ''
     }
@@ -113,11 +117,11 @@ function Form({ fields, name, data }) {
                   >
                     {field.options.map((option, idx) => (
                       <option
-                        value={getValue(option)}
+                        value={getValue(option.name ? option.name : option)}
                         className="capitalize"
                         key={idx}
                       >
-                        {option}
+                        {option.name ? option.name : option}
                       </option>
                     ))}
                   </select>

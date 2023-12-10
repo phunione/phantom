@@ -467,6 +467,40 @@ const fields = {
       options: ['Select Type', 'A', 'B'],
     },
   ],
+  'unique-relation': [
+    {
+      title: 'actor id',
+      id: 'actor_id',
+      name: 'actor_id',
+      required: false,
+      type: 'select',
+      options: ['Select Actor Id', ...actorOptions],
+    },
+    {
+      title: 'banker id',
+      id: 'banker_id',
+      name: 'banker_id',
+      required: false,
+      type: 'select',
+      options: ['Select Banker Id', ...bankerOptions],
+    },
+    {
+      title: 'company',
+      id: 'company_id',
+      name: 'company',
+      required: false,
+      type: 'select',
+      options: ['Select Company Id', ...companyOptions],
+    },
+    {
+      title: 'company type',
+      id: 'company_type',
+      name: 'type',
+      required: true,
+      type: 'select',
+      options: ['Select Type', 'A', 'B'],
+    },
+  ],
 }
 
 export default fields

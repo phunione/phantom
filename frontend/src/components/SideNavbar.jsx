@@ -17,6 +17,11 @@ function SideNavBar() {
     },
     {
       id: 'm-6',
+      name: 'Unique Relations',
+      to: '/unique-relation',
+    },
+    {
+      id: 'm-7',
       name: 'Add?',
       to: '/add',
     },
@@ -50,7 +55,7 @@ function SideNavBar() {
                 : 'text-gray-400 hover:bg-primary hover:text-white'
             } transition-colors`}
           >
-            <p className="mx-20 text-lg">{link.name}</p>
+            <p className="text-center text-lg">{link.name}</p>
           </Link>
         ))}
       </div>
