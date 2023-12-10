@@ -6,7 +6,6 @@ export async function getOptions(dataFor) {
   const response = await fetch(url)
 
   const data = await response.json()
-  console.log(data)
 
   const finalData = data.map((d) => ({
     id: d[dataFor === 'id' ? 'unique_id' : `unique_${dataFor}_id`],
@@ -18,8 +17,6 @@ export async function getOptions(dataFor) {
         : d['name'],
     object_id: d['_id'],
   }))
-
-  console.log(finalData)
 
   return finalData
 }

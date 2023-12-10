@@ -2,6 +2,9 @@ import {
   ADD_DATA_ERROR,
   ADD_DATA_REQUEST,
   ADD_DATA_SUCCESS,
+  DELETE_DATA_ERROR,
+  DELETE_DATA_REQUEST,
+  DELETE_DATA_SUCCESS,
   EDIT_DATA_ERROR,
   EDIT_DATA_REQUEST,
   EDIT_DATA_SUCCESS,
@@ -60,6 +63,19 @@ export const getDataReducer = (state = {}, action) => {
       return { loading: false, data: action.payload }
     case GET_DATA_ERROR:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const deleteDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_DATA_REQUEST:
+      return { loading: true }
+    case DELETE_DATA_SUCCESS:
+      return { loading: false, data: action.payload, success: true }
+    case DELETE_DATA_ERROR:
+      return { loading: false, error: action.payload, success: false }
     default:
       return state
   }

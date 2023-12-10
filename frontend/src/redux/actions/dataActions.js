@@ -13,6 +13,9 @@ import {
   GET_DATA_REQUEST,
   GET_DATA_SUCCESS,
   GET_DATA_ERROR,
+  DELETE_DATA_SUCCESS,
+  DELETE_DATA_ERROR,
+  DELETE_DATA_REQUEST,
 } from '../constants/data'
 
 export const addDataToTheForm = (details, name) => async (dispatch) => {
@@ -66,8 +69,6 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     }
-
-    console.log(id, details, name)
 
     const url = `${BACKEND_URL}/${name}`
 
@@ -147,6 +148,32 @@ export const getData = (dataFor, id) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_DATA_ERROR,
+      payload:
+        e.response && e.response.data.detail
+          ? e.response.data.detail
+          : e.message,
+    })
+  }
+}
+
+export const deleteData = (path, id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_DATA_REQUEST })
+
+    const url = `${BACKEND_URL}${path}/delete/${id}`
+
+    const config = {
+      headers: {
+        accept: 'application/json',
+      },
+    }
+
+    const { data } = await axios.delete(url, config)
+
+    dispatch({ type: DELETE_DATA_SUCCESS, payload: data })
+  } catch (err) {
+    dispatch({
+      type: DELETE_DATA_ERROR,
       payload:
         e.response && e.response.data.detail
           ? e.response.data.detail

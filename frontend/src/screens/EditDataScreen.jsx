@@ -13,7 +13,7 @@ function EditDataScreen({ formType }) {
 
   useEffect(() => {
     dispatch(getData(formType, id))
-  }, [])
+  }, [dispatch, formType, id])
   return (
     <>
       {loading ? (
@@ -32,7 +32,7 @@ function EditDataScreen({ formType }) {
             ) : formType === 'id' ? (
               <Form fields={fields.id} name="id" data={data} />
             ) : formType === 'company' ? (
-              <Form fields={fields.company} name="company" />
+              <Form fields={fields.company} name="company" data={data} />
             ) : (
               <h1 className="mt-48 text-center text-5xl">
                 Please select a type of Form you want to Fill

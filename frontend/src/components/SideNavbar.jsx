@@ -7,13 +7,13 @@ function SideNavBar() {
 
   const links = [
     { id: 'm-1', name: 'Actors', to: '/actor' },
-    { id: 'm-2', name: 'Banks', to: '/banks' },
-    { id: 'm-3', name: 'Bankers', to: '/bankers' },
-    { id: 'm-4', name: 'ID(s)', to: '/ids' },
+    { id: 'm-2', name: 'Banks', to: '/bank' },
+    { id: 'm-3', name: 'Bankers', to: '/banker' },
+    { id: 'm-4', name: 'ID(s)', to: '/id' },
     {
       id: 'm-5',
       name: 'Companies',
-      to: '/companies',
+      to: '/company',
     },
     {
       id: 'm-6',

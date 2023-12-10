@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addDataToTheForm, editDataForm } from '../redux/actions/dataActions'
 import { MultiSelect } from 'primereact/multiselect'
-import { Dropdown } from 'primereact/dropdown'
+import moment from 'moment'
 
 function Form({ fields, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
+  console.log(vals)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,15 +29,17 @@ function Form({ fields, name, data }) {
 
     if (data) {
       dispatch(editDataForm(data._id, vals, name))
-      navigate('/actor')
+      navigate(`/${name}`)
     } else {
-      console.log(vals.pdfs)
       dispatch(addDataToTheForm(vals, name))
     }
 
-    if (!error) setVals({})
+    if (!addError) setVals({})
   }
 
+  const convertDate = (date) => {
+    return moment(date).format('YYYY-MM-DD')
+  }
   return (
     <form
       className="flex flex-col items-center overflow-auto px-20"
@@ -120,26 +123,22 @@ function Form({ fields, name, data }) {
                   </select>
                 </div>
               ) : inpType === 'multiselect' ? (
-                <>
-                  <MultiSelect
-                    value={vals[inpName]}
-                    onChange={(e) => {
-                      setVals({
-                        ...vals,
-                        [inpName]: e.value,
-                      })
-                      console.log(vals)
-                    }}
-                    options={field.options}
-                    optionLabel={'name'}
-                    placeholder={`Select ${field.title}`}
-                    aria-label="Option"
-                    filter
-                    // display="chip"
-                    maxSelectedLabels={1}
-                    className="w-full border capitalize md:w-48"
-                  />
-                </>
+                <MultiSelect
+                  value={vals[inpName]}
+                  onChange={(e) => {
+                    setVals({
+                      ...vals,
+                      [inpName]: e.value,
+                    })
+                  }}
+                  options={field.options}
+                  optionLabel={'name'}
+                  placeholder={`Select ${field.title}`}
+                  aria-label="Option"
+                  filter
+                  maxSelectedLabels={1}
+                  className="w-full border capitalize md:w-48"
+                />
               ) : (
                 <>
                   <input
@@ -154,6 +153,8 @@ function Form({ fields, name, data }) {
                         ? ''
                         : inpType === 'file'
                         ? null
+                        : inpType === 'date'
+                        ? convertDate(vals[inpName])
                         : vals[inpName]
                     }
                     onChange={(e) => {

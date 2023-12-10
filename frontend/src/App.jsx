@@ -1,12 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AddDataScreen from './screens/AddDataScreen'
-import ActorScreen from './screens/ActorScreen'
 import SideNavBar from './components/SideNavbar'
-import BankScreen from './screens/BankScreen'
-import BankerScreen from './screens/BankerScreen'
-import CompanyScreen from './screens/CompanyScreen'
-import IdScreen from './screens/IdScreen'
 import EditDataScreen from './screens/EditDataScreen'
+import ShowDataScreen from './screens/ShowDataScreen.jsx'
 
 function App() {
   return (
@@ -19,39 +15,42 @@ function App() {
             <Routes>
               <Route
                 path="/actor"
-                element={<ActorScreen dataFor={'actor'} />}
+                element={<ShowDataScreen dataFor={'actor'} />}
               />
               <Route path="/add" element={<AddDataScreen />} />
-              <Route path="/banks" element={<BankScreen dataFor={'bank'} />} />
               <Route
-                path="/bankers"
-                element={<BankerScreen dataFor={'banker'} />}
+                path="/bank"
+                element={<ShowDataScreen dataFor={'bank'} />}
               />
               <Route
-                path="/companies"
-                element={<CompanyScreen dataFor={'company'} />}
+                path="/banker"
+                element={<ShowDataScreen dataFor={'banker'} />}
+              />
+              <Route
+                path="/company"
+                element={<ShowDataScreen dataFor={'company'} />}
               />
               <Route
                 path="/edit/actor"
                 element={<EditDataScreen formType={'actor'} />}
               />
               <Route
-                path="/edit/banks"
+                path="/edit/bank"
                 element={<EditDataScreen formType={'bank'} />}
               />
               <Route
-                path="/edit/bankers"
+                path="/edit/banker"
                 element={<EditDataScreen formType={'banker'} />}
               />
               <Route
-                path="/edit/companies"
+                path="/edit/company"
                 element={<EditDataScreen formType={'company'} />}
               />
               <Route
-                path="/edit/ids"
+                path="/edit/id"
                 element={<EditDataScreen formType={'id'} />}
               />
-              <Route path="/ids" element={<IdScreen dataFor={'id'} />} />
+              <Route path="/id" element={<ShowDataScreen dataFor={'id'} />} />
             </Routes>
           </div>
         </Router>
