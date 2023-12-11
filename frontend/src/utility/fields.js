@@ -445,12 +445,14 @@ const fields = {
       options: actorOptions,
     },
     {
-      title: 'owner',
-      id: 'owner_details',
-      name: 'owner_details',
+      title: ' ids',
+      id: 'ids',
+      name: 'ids',
       required: false,
-      type: 'number', // TODO: Fetch id
-    },
+      type: 'multiselect',
+      options: idOptions,
+    }
+    ,
     {
       title: 'pdfs',
       id: 'pdfs',

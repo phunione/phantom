@@ -63,8 +63,8 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
       body.append('querry_filled', details['querry_filled'])
       body.append('address', details['address'])
       body.append('isMaharashtra', details['isMaharashtra'])
-      body.append('actor_ids', details['actor_ids'])
-      body.append('owner_details', details['owner_details'])
+      body.append('actor_ids', JSON.stringify(details['actor_ids']))
+      body.append('ids', JSON.stringify(details['ids']))
       body.append('pdfs', details['pdfs'])
       body.append('type', details['type'])
 

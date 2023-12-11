@@ -16,7 +16,7 @@ export const post_company = async (req, res) => {
     //TODO: on how to do all the stuff from the file I recommend using the internet as I am also not sure on how to do this in node js (isme files access ho paye uske liye alag jhanjhat kra hai index.js mei)
     console.log("body", req.body);
     console.log("files", req.files);
-    const {
+    var {
       name,
       pan_no,
       pan_dob,
@@ -26,26 +26,35 @@ export const post_company = async (req, res) => {
       isMaharashtra,
       location,
       actor_ids,
-      owner_details,
+      ids,
       type,
-      pdfs,
     } = req.body;
-    const pdfBuffer1 = fs.readFileSync(pdfs);
+    
     const pdfObject = {
-      title: `${Date.now()} ${id}`,
-      pdfData: pdfBuffer1, // The binary data of the first PDF
+      title: `${Date.now()} ${req.files.pdfs.name}`,
+      pdfData: req.files.pdfs.data, // The binary data of the first PDF
       contentType: "application/pdf",
     };
     const unique_company_id = Date.now().toString();
     const actor_ids_to_push = [];
-    actor_ids.map((items) => {
-      actor_ids_to_push.push(items.id);
+    actor_ids = JSON.parse(actor_ids);
+    ids = JSON.parse(ids)
+    // actor_ids = JSON.parse(actor_ids)
+    console.log(actor_ids)
+    if(actor_ids != []){
+    actor_ids.forEach((items) => {
+      actor_ids_to_push.push(items.object_id);
     });
-
+  }
+  
     const owner_ids_to_push = [];
-    owner_details.map((items) => {
-      owner_ids_to_push.push(items.id);
-    });
+    if(ids != []){
+      ids.map((items) => {
+        // console.log(typeof(items.id));
+        owner_ids_to_push.push(items.object_id);
+      });
+    }
+    
 
     const newCompany = new Company({
       unique_company_id,
@@ -57,8 +66,8 @@ export const post_company = async (req, res) => {
       address,
       isMaharashtra,
       location,
-      actor_ids_to_push,
-      owner_ids_to_push,
+      actor_ids:actor_ids_to_push,
+      owner_details:owner_ids_to_push,
       type,
       pdfObject,
     });
