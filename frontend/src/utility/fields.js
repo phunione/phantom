@@ -445,14 +445,13 @@ const fields = {
       options: actorOptions,
     },
     {
-      title: ' ids',
+      title: 'Owner Details',
       id: 'ids',
-      name: 'ids',
+      name: 'owner_details',
       required: false,
       type: 'multiselect',
       options: idOptions,
-    }
-    ,
+    },
     {
       title: 'pdfs',
       id: 'pdfs',

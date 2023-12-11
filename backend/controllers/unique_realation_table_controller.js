@@ -4,7 +4,7 @@ import Company from "../models/company.js";
 //get owner details by comapny
 
 export const get_owner_details = async (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
   const company = await Company.findOne({ unique_id_company: id });
 
   if (!company) {
