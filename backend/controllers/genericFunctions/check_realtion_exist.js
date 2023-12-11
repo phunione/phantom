@@ -1,4 +1,4 @@
-import UniqueRelation from '../../models/application_table/unique_relation_table'
+import UniqueRelation from '../../models/unique_relation_table.js'
 import actor_model from '../../models/actor_model'
 import company_a_model from '../../models/company_types/company_a_model.js'
 import company_b_model from '../../models/company_types/company_b_model.js'

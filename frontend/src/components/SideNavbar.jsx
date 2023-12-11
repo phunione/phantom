@@ -7,16 +7,21 @@ function SideNavBar() {
 
   const links = [
     { id: 'm-1', name: 'Actors', to: '/actor' },
-    { id: 'm-2', name: 'Banks', to: '/banks' },
-    { id: 'm-3', name: 'Bankers', to: '/bankers' },
-    { id: 'm-4', name: 'ID(s)', to: '/ids' },
+    { id: 'm-2', name: 'Banks', to: '/bank' },
+    { id: 'm-3', name: 'Bankers', to: '/banker' },
+    { id: 'm-4', name: 'ID(s)', to: '/id' },
     {
       id: 'm-5',
       name: 'Companies',
-      to: '/companies',
+      to: '/company',
     },
     {
       id: 'm-6',
+      name: 'Unique Relations',
+      to: '/unique-relation',
+    },
+    {
+      id: 'm-7',
       name: 'Add?',
       to: '/add',
     },
@@ -50,7 +55,7 @@ function SideNavBar() {
                 : 'text-gray-400 hover:bg-primary hover:text-white'
             } transition-colors`}
           >
-            <p className="mx-20 text-lg">{link.name}</p>
+            <p className="text-center text-lg">{link.name}</p>
           </Link>
         ))}
       </div>

@@ -6,7 +6,7 @@ const company_model = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  company_name: {
+  name: {
     type: String,
     required: [true, "please enter Company Name"],
   },

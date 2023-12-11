@@ -84,7 +84,7 @@ const fields = {
       id: 'bank_ids',
       name: 'bank_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: bankOptions,
     },
     {
@@ -92,7 +92,7 @@ const fields = {
       id: 'banker_ids',
       name: 'banker_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: bankerOptions,
     },
     {
@@ -100,7 +100,7 @@ const fields = {
       id: 'ids',
       name: 'ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: idOptions,
     },
     {
@@ -146,7 +146,7 @@ const fields = {
       id: 'company_ids',
       name: 'company_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: companyOptions,
     },
     {
@@ -154,7 +154,7 @@ const fields = {
       id: 'banker_ids',
       name: 'banker_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: bankerOptions,
     },
   ],
@@ -162,7 +162,7 @@ const fields = {
     {
       title: 'banker name',
       id: 'banker_name',
-      name: 'banker_name',
+      name: 'name',
       required: true,
       type: 'text',
     },
@@ -200,7 +200,7 @@ const fields = {
       id: 'banker_employee_ids',
       name: 'banker_employee_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: bankerEmployeeOptions,
     },
     {
@@ -208,7 +208,7 @@ const fields = {
       id: 'company_ids',
       name: 'company_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: companyOptions,
     },
     {
@@ -216,7 +216,7 @@ const fields = {
       id: 'actor_ids',
       name: 'actor_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: actorOptions,
     },
     {
@@ -224,7 +224,7 @@ const fields = {
       id: 'bank_ids',
       name: 'bank_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: bankOptions,
     },
   ],
@@ -305,7 +305,7 @@ const fields = {
       id: 'actor_ids',
       name: 'actor_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: actorOptions,
     },
     {
@@ -313,7 +313,7 @@ const fields = {
       id: 'company_ids',
       name: 'company_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: companyOptions,
     },
     {
@@ -321,7 +321,7 @@ const fields = {
       id: 'banker_ids',
       name: 'banker_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: bankerOptions,
     },
     {
@@ -344,7 +344,7 @@ const fields = {
     {
       title: 'company name',
       id: 'company_name',
-      name: 'company_name',
+      name: 'name',
       required: true,
       type: 'text',
     },
@@ -441,7 +441,7 @@ const fields = {
       id: 'actor_ids',
       name: 'actor_ids',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       options: actorOptions,
     },
     {
@@ -457,6 +457,40 @@ const fields = {
       name: 'pdfs',
       required: false,
       type: 'file',
+    },
+    {
+      title: 'company type',
+      id: 'company_type',
+      name: 'type',
+      required: true,
+      type: 'select',
+      options: ['Select Type', 'A', 'B'],
+    },
+  ],
+  'unique-relation': [
+    {
+      title: 'actor id',
+      id: 'actor_id',
+      name: 'actor_id',
+      required: false,
+      type: 'select',
+      options: ['Select Actor Id', ...actorOptions],
+    },
+    {
+      title: 'banker id',
+      id: 'banker_id',
+      name: 'banker_id',
+      required: false,
+      type: 'select',
+      options: ['Select Banker Id', ...bankerOptions],
+    },
+    {
+      title: 'company',
+      id: 'company_id',
+      name: 'company',
+      required: false,
+      type: 'select',
+      options: ['Select Company Id', ...companyOptions],
     },
     {
       title: 'company type',

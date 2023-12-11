@@ -6,7 +6,7 @@ export const post_company = async (req, res) => {
   try {
     console.log(req.body)
     const {
-      company_name,
+      name,
       pan_no,
       pan_dob,
       company_status,
@@ -29,7 +29,7 @@ export const post_company = async (req, res) => {
 
     const newCompany = new Company({
       unique_company_id,
-      company_name,
+      name,
       pan_no,
       pan_dob,
       company_status,
@@ -69,8 +69,7 @@ export const get_companies = async (req, res) => {
 export const get_company_id = async (req, res) => {
   try {
     const { id } = req.params;
-    const companyid = id;
-    const company = await Company.findOne({ unique_id_company: companyid });
+    const company = await Company.findById(id);
 
     if (!company) {
       res.status(404).json({ error: "Company A not found" });
@@ -91,7 +90,7 @@ export const update_company_from_id = async (req, res) => {
     const companyId = req.params.id;
     const updatedCompanyData = req.body; //sends in json format to in key value pairs which needs to be changed
     const updatedCompany = await Company.findOneAndUpdate(
-      { unique_id_company: companyId },
+      { _id: companyId },
       updatedCompanyData,
       { new: true },
     );
@@ -114,7 +113,7 @@ export const delete_company = async (req, res) => {
   try {
     const companyId = req.params.id;
     const deletedCompany = await Company.findOneAndDelete({
-      unique_id_company_a: companyId,
+      _id: companyId,
     });
 
     if (!deletedCompany) {

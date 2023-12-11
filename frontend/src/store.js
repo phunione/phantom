@@ -4,14 +4,18 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import {
   addDataToTheFormReducer,
+  deleteDataReducer,
+  editDataToTheFormReducer,
   getAllDataReducer,
   getDataReducer,
 } from './redux/reducers/dataReducers'
 
 const reducer = combineReducers({
   addData: addDataToTheFormReducer,
+  editData: editDataToTheFormReducer,
   allData: getAllDataReducer,
   data: getDataReducer,
+  deleteData: deleteDataReducer,
 })
 
 const middleware = [thunk]
