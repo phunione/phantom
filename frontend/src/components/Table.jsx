@@ -9,7 +9,6 @@ const Table = ({ keys, titles, data }) => {
   const path = window.location.pathname
 
   const handleDelete = (path, id) => {
-    console.log('clicked')
     dispatch(deleteData(path, id))
   }
 
@@ -62,11 +61,12 @@ const Table = ({ keys, titles, data }) => {
                         ? item[key] || 'null' // Show address
                         : (typeof item[key] === 'object' &&
                             item[key].length === 0) ||
-                          item[key] === undefined ||
-                          item[key].trim() === ''
+                          item[key] === undefined
                         ? 'null' // Checking If the item[key] is object
                         : typeof item[key] === 'string'
-                        ? isValidDate(item[key]) // if the item[key] is a valid date
+                        ? item[key].trim() === ''
+                          ? 'null'
+                          : isValidDate(item[key]) // if the item[key] is a valid date
                           ? moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
                           : item[key] // else show the string only
                         : item[key].toString() // if nothing of the above, we just convert the value to a string and show it

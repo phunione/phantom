@@ -7,7 +7,6 @@ import moment from 'moment'
 
 function Form({ fields, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
-  console.log(vals)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -35,6 +34,7 @@ function Form({ fields, name, data }) {
       dispatch(editDataForm(data._id, vals, name))
       navigate(`/${name}`)
     } else {
+      console.log('submiting', vals)
       dispatch(addDataToTheForm(vals, name))
     }
 

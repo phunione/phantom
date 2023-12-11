@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  post_company,
+  adfs,
+  delete_company,
   get_companies,
   get_company_id,
-  delete_company,
-  adfs,
+  post_company,
   update_company_from_id,
 } from "../../controllers/company_controller.js";
 import bodyParser from "body-parser";

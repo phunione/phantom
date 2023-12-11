@@ -4,25 +4,25 @@ import {
   ADD_DATA_ERROR,
   ADD_DATA_REQUEST,
   ADD_DATA_SUCCESS,
+  DELETE_DATA_ERROR,
+  DELETE_DATA_REQUEST,
+  DELETE_DATA_SUCCESS,
+  EDIT_DATA_ERROR,
   EDIT_DATA_REQUEST,
   EDIT_DATA_SUCCESS,
-  EDIT_DATA_ERROR,
   GET_ALL_DATA_ERROR,
   GET_ALL_DATA_REQUEST,
   GET_ALL_DATA_SUCCESS,
+  GET_DATA_ERROR,
   GET_DATA_REQUEST,
   GET_DATA_SUCCESS,
-  GET_DATA_ERROR,
-  DELETE_DATA_SUCCESS,
-  DELETE_DATA_ERROR,
-  DELETE_DATA_REQUEST,
 } from '../constants/data'
 
 export const addDataToTheForm = (details, name) => async (dispatch) => {
   try {
     dispatch({ type: ADD_DATA_REQUEST })
 
-    const config = {
+    let config = {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -41,8 +41,38 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         details['forex'] = false
       }
     } else if (name === 'company') {
+      console.log('company')
+      config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
       if (details['isMaharashtra'] === undefined) {
         details['isMaharashtra'] = false
+      }
+
+      console.log(details)
+
+      const body = new FormData()
+
+      body.append('name', details['name'])
+      body.append('pan_no', details['pan_no'])
+      body.append('pan_dob', details['pan_dob'])
+      body.append('company_status', details['company_status'])
+      body.append('querry_filled', details['querry_filled'])
+      body.append('address', details['address'])
+      body.append('isMaharashtra', details['isMaharashtra'])
+      body.append('actor_ids', details['actor_ids'])
+      body.append('owner_details', details['owner_details'])
+      body.append('pdfs', details['pdfs'])
+      body.append('type', details['type'])
+
+      details = body
+
+      console.log('form data')
+      for (let [key, value] of body.entries()) {
+        console.log(`${key}: ${value}`)
       }
     }
 

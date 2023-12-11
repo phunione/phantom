@@ -4,7 +4,9 @@ import Form from '../components/Form'
 import fields from '../utility/fields'
 
 function AddDataScreen() {
-  const [formType, setFormType] = useState('')
+  const [formType, setFormType] = useState(
+    location.state ? location.state.type : '',
+  )
 
   const options = Object.keys(fields)
 

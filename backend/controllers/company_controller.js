@@ -1,17 +1,21 @@
 import Company from "../models/company.js"; // Import the "Company_B" model
 import { add_pdfs } from "./genericFunctions/addpdf.js";
-import fs from 'fs'
-export const edit_comapny = async (req,res)=>{
-  const {id} = req.params;
+import fs from "fs";
+
+export const edit_comapny = async (req, res) => {
+  const { id } = req.params;
   try {
-    
   } catch (error) {
-    return res.send(400).json()
+    return res.send(400).json();
   }
-}
+};
+
 export const post_company = async (req, res) => {
   try {
-    console.log(req.body)
+    //TODO: Get the file(pdfs) from "req.files" and other data from "req.body"
+    //TODO: on how to do all the stuff from the file I recommend using the internet as I am also not sure on how to do this in node js (isme files access ho paye uske liye alag jhanjhat kra hai index.js mei)
+    console.log("body", req.body);
+    console.log("files", req.files);
     const {
       name,
       pan_no,
@@ -24,25 +28,24 @@ export const post_company = async (req, res) => {
       actor_ids,
       owner_details,
       type,
-      pdfs
+      pdfs,
     } = req.body;
     const pdfBuffer1 = fs.readFileSync(pdfs);
     const pdfObject = {
       title: `${Date.now()} ${id}`,
-      pdfData: pdfBuffer1,  // The binary data of the first PDF
-      contentType: 'application/pdf',
-  }
+      pdfData: pdfBuffer1, // The binary data of the first PDF
+      contentType: "application/pdf",
+    };
     const unique_company_id = Date.now().toString();
     const actor_ids_to_push = [];
-    actor_ids.map((items)=>{
-      actor_ids_to_push.push(items.id)
-    })
-    
+    actor_ids.map((items) => {
+      actor_ids_to_push.push(items.id);
+    });
+
     const owner_ids_to_push = [];
-    owner_details.map((items)=>{
-      owner_ids_to_push.push(items.id)
-    })
-    
+    owner_details.map((items) => {
+      owner_ids_to_push.push(items.id);
+    });
 
     const newCompany = new Company({
       unique_company_id,
@@ -57,7 +60,7 @@ export const post_company = async (req, res) => {
       actor_ids_to_push,
       owner_ids_to_push,
       type,
-      pdfObject
+      pdfObject,
     });
 
     const savedCompany = await newCompany.save();
@@ -145,7 +148,6 @@ export const delete_company = async (req, res) => {
       .json({ error: "An error occurred while deleting Company A." });
   }
 };
-
 
 export const adfs = async (req, res) => {
   //req.body will conatian path of the pdf in the following format

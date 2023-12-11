@@ -1,14 +1,13 @@
 import Banker from "../models/banker_model.js"; // Assuming you have a "Banker" model defined
 import Company from "../models/company.js";
 // import Company_B from "../models/company_types/company_b_model.js";
-
 import BankerEmployee from "../models/bank_employee_model.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
 
 const createBanker = async (req, res) => {
   try {
     const {
-      banker_name,
+      name,
       rtds,
       rt,
       forex,
@@ -23,7 +22,7 @@ const createBanker = async (req, res) => {
 
     const newBanker = new Banker({
       unique_banker_id,
-      name: banker_name,
+      name,
       rtds: rtds || false, // Default values if not provided in the request
       rt: rt || false,
       forex: forex || false,
@@ -135,7 +134,6 @@ const add_comany_id_to_banker = async (req, res) => {
     const b = await existingCompanyid.update({ banker_id: existingBanker._id });
     existingBanker.save();
     existingCompanyid.save();
-
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -156,27 +154,30 @@ const get_banker_by_id = async (req, res) => {
     return res.status(400).json(error);
   }
 };
-const delete_banker_by_id = async(req,res)=>{
+const delete_banker_by_id = async (req, res) => {
   const { id } = req.params; // Assuming bankId is passed in the URL parameters
 
   try {
     const deletedBank = await Banker.findByIdAndDelete(id);
 
     if (!deletedBank) {
-      return res.status(404).json({ message: 'Bank not found' });
+      return res.status(404).json({ message: "Bank not found" });
     }
 
-    return res.status(200).json({ message: 'Bank deleted successfully', deletedBank });
+    return res
+      .status(200)
+      .json({ message: "Bank deleted successfully", deletedBank });
   } catch (error) {
-    return res.status(500).json({ message: 'Error deleting bank', error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Error deleting bank", error: error.message });
   }
-
-}
+};
 export {
   createBanker,
   add_banker_employee_ids,
   add_comany_id_to_banker,
   get_banker_by_id,
   get_all_banker,
-  delete_banker_by_id
+  delete_banker_by_id,
 };
