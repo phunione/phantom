@@ -1,7 +1,14 @@
 import Company from "../models/company.js"; // Import the "Company_B" model
 import { add_pdfs } from "./genericFunctions/addpdf.js";
 import fs from 'fs'
-
+export const edit_comapny = async (req,res)=>{
+  const {id} = req.params;
+  try {
+    
+  } catch (error) {
+    return res.send(400).json()
+  }
+}
 export const post_company = async (req, res) => {
   try {
     console.log(req.body)
@@ -26,6 +33,16 @@ export const post_company = async (req, res) => {
       contentType: 'application/pdf',
   }
     const unique_company_id = Date.now().toString();
+    const actor_ids_to_push = [];
+    actor_ids.map((items)=>{
+      actor_ids_to_push.push(items.id)
+    })
+    
+    const owner_ids_to_push = [];
+    owner_details.map((items)=>{
+      owner_ids_to_push.push(items.id)
+    })
+    
 
     const newCompany = new Company({
       unique_company_id,
@@ -37,8 +54,8 @@ export const post_company = async (req, res) => {
       address,
       isMaharashtra,
       location,
-      actor_ids,
-      owner_details,
+      actor_ids_to_push,
+      owner_ids_to_push,
       type,
       pdfObject
     });
@@ -128,6 +145,8 @@ export const delete_company = async (req, res) => {
       .json({ error: "An error occurred while deleting Company A." });
   }
 };
+
+
 export const adfs = async (req, res) => {
   //req.body will conatian path of the pdf in the following format
   //push path of the pdf_file

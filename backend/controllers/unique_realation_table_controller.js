@@ -1,21 +1,12 @@
 import UniqueRelation from "../models/unique_relation_table.js"
 import Actor from "../models/actor_model.js"
 import Banker from "../models/banker_model.js"
-import Company from "../../models/company_types/company_a_model.js"
-import IdSchema from "../../models/ids.js"
-import company_a_model from "../../models/company_types/company_a_model.js"
-import Owner from "../models/owner_id.js"
-import { addActorToPropId } from "../prop_id_controller.js"
-import { addActorToAdharId } from "../adhar_otp_controller.js"
-import { addActorToDummyId } from "../dummy_id_controller.js"
-import { addActorToOnlyId } from "../only_adhar_contoller.js"
-import PropId from "../../models/prop_id.js"
-import adhar_otp from "../../models/Id_types/adhar_otp.js"
-import only_adhar from "../../models/Id_types/only_adhar.js"
-import dummy_id from "../../models/Id_types/dummy_id.js"
+import Company from "../models/company.js"
+import IdSchema from "../models/ids.js"
+
 //get owner details by comapny
 
-const get_owner_details = async (req, res)=>{
+export const get_owner_details = async (req, res)=>{
     const {id} = req.params.id;
     const company = await Company.findOne({unique_id_company: id})
 
@@ -43,9 +34,6 @@ export const fill_information = async(req,res)=>{
     const actor = await Actor.findOne({unique_id_actor:unique_id_actor});
     const banker = await Banker.findOne({unique_id_banker:unique_id_banker});
     const company = await Company.findOne({unique_id_company:unique_id_company});
-    // if(!company){
-    //     company = await Company_B.findOne({unique_id_company_b:unique_id_company_b});
-    // }
     const owner = IdSchema.findOne({unique_id:unique_id})
     //check if actor , banker and owner is already in one on one relation
     const relation = await UniqueRelation.findOne({actor_id:actor._id,banker_id:banker._id,unique_id:unique_id._id})
@@ -58,7 +46,7 @@ export const fill_information = async(req,res)=>{
         actor_id:actor._id,
         banker_id:banker._id,
         company_id:company._id,
-        owner_id:owner._id
+        ids:owner._id
     })
     
 
@@ -86,5 +74,14 @@ export const fill_information = async(req,res)=>{
         message: "relation added"
     })
     
+}
+
+export const get_all = async (req, res) => {
+    try {
+        const rem = await UniqueRelation.find();
+        return res.status(200).json(rem);
+    } catch (error) {
+        return res.status(400).json(error);
+    }
 }
 

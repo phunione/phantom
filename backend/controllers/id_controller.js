@@ -2,7 +2,6 @@ import IdSchema from "../models/ids.js"; // Adjust the path to your model file
 import Actor from "../models/actor_model.js";
 import duplicateCheck from "./genericFunctions/duplicateCheck.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
-import OwnerId from "../models/owner_id.js";
 import { add_pdfs } from "../controllers/genericFunctions/addpdf.js";
 
 const unique = [
@@ -97,7 +96,7 @@ export const addActorToId = async (req, res) => {
 
     // Push the new Actor ID into the actor_ids array
     existingId[0].actor_ids.push(existingActorId[0]._id);
-    existingActorId[0].prop_ids.push(existingId[0]._id);
+    existingActorId[0].ids.push(existingId[0]._id);
     // Save the updated document
     await existingId[0].save();
     await existingActorId[0].save();
