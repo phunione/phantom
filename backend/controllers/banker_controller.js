@@ -1,5 +1,8 @@
 import Banker from "../models/banker_model.js"; // Assuming you have a "Banker" model defined
 import Company from "../models/company.js";
+import Actor from "../models/actor_model.js";
+import Bank from '../models/bank_model.js'
+
 // import Company_B from "../models/company_types/company_b_model.js";
 import BankerEmployee from "../models/bank_employee_model.js";
 import updateDocument from "./genericFunctions/updateDocument.js";
@@ -19,24 +22,29 @@ const createBanker = async (req, res) => {
     } = req.body;
 
     const unique_banker_id = Date.now().toString();
+
+
+
+
+
     const actor_ids_to_push = [];
-    actor_ids.map((items)=>{
+    actor_ids.map((items) => {
       actor_ids_to_push.push(items.id)
     })
-    
+
     const company_ids_to_push = [];
-    company_ids.map((items)=>{
+    company_ids.map((items) => {
       company_ids_to_push.push(items.id)
     })
     const banker_ids_to_push = [];
-    banker_employee_ids.map((items)=>{
+    banker_employee_ids.map((items) => {
       banker_ids_to_push.push(items.id)
     })
     const bank_ids_to_push = [];
-    bank_ids.map((items)=>{
+    bank_ids.map((items) => {
       bank_ids_to_push.push(items.id)
     })
-    
+
     const newBanker = new Banker({
       unique_banker_id,
       name,
@@ -123,6 +131,62 @@ const get_all_banker = async (req, res) => {
 
     const users = await Banker.find();
 
+    //store actor ids  in a single var
+    users.map((user, ind) => {
+      var actors = user.actor_ids;
+      //map every actor and get  create a new object and push it to that index of actors
+      if(actors!= []){
+        actors.map(async (element, index) => {
+        const ac = await Actor.findById(element)
+        const newObj = {
+          id: ac.unique_actor_id,
+          name: ac.name,
+          object_id: ac._id
+        }
+        actors[index] = newObj;
+      });}
+      var companys = user.company_ids;
+      //map every actor and get  create a new object and push it to that index of actors
+      if(companys != [])
+      {companys.map(async (element, index) => {
+        const ac = await Company.findById(element)
+        const newObj = {
+          id: ac.unique_company_id,
+          name: ac.name,
+          object_id: ac._id
+        }
+        companys[index] = newObj;
+      });}
+      var banks = user.bank_ids;
+      //map every actor and get  create a new object and push it to that index of actors
+      if(banks != []){banks.map(async (element, index) => {
+        const ac = await Bank.findById(element)
+        const newObj = {
+          id: ac.unique_bank_id,
+          name: ac.name,
+          object_id: ac._id
+        }
+        companys[index] = newObj;
+      });}
+      var bankers_emp = user.banker_employee_ids;
+      //map every actor and get  create a new object and push it to that index of actors
+      if(bankers_emp != []){bankers_emp.map(async (element, index) => {
+        const ac = await BankerEmployee.findById(element)
+        const newObj = {
+          id: ac.unique_bank_id,
+          name: ac.name,
+          object_id: ac._id
+        }
+        bankers_emp[index] = newObj;
+      });
+    }
+
+      user['actor_ids'] =actors;
+      user['company_ids'] = companys;
+      user['bank_ids'] = banks;
+      user['banker_employee_ids']=bankers_emp;
+    
+    })
     return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
