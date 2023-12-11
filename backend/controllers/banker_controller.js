@@ -20,7 +20,24 @@ const createBanker = async (req, res) => {
     } = req.body;
 
     const unique_banker_id = Date.now().toString();
-
+    const actor_ids_to_push = [];
+    actor_ids.map((items)=>{
+      actor_ids_to_push.push(items.id)
+    })
+    
+    const company_ids_to_push = [];
+    company_ids.map((items)=>{
+      company_ids_to_push.push(items.id)
+    })
+    const banker_ids_to_push = [];
+    banker_employee_ids.map((items)=>{
+      banker_ids_to_push.push(items.id)
+    })
+    const bank_ids_to_push = [];
+    bank_ids.map((items)=>{
+      bank_ids_to_push.push(items.id)
+    })
+    
     const newBanker = new Banker({
       unique_banker_id,
       name: banker_name,
@@ -28,6 +45,10 @@ const createBanker = async (req, res) => {
       rt: rt || false,
       forex: forex || false,
       demand,
+      banker_ids_to_push,
+      company_ids_to_push,
+      actor_ids_to_push,
+      bank_ids_to_push
       // TODO: GET THE OBJECTS OF THESE BELOW MENTIONED IDs AND THEN ADD THEM!!
       // banker_employee_ids,
       // company_ids,

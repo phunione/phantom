@@ -34,6 +34,19 @@ export const addUsertoId = async (req, res, next) => {
   if (arr.size() > 0) {
     res.send("User Already exists.");
   }
+  const actor_ids_to_push = [];
+    actor_ids.map((items)=>{
+      actor_ids_to_push.push(items.id)
+    })
+    const comapny_ids_to_push = [];
+    company_ids.map((items)=>{
+      comapny_ids_to_push.push(items.id)
+    })
+    const banker_ids_to_push = [];
+    banker_ids.map((items)=>{
+      banker_ids_to_push.push(items.id)
+    })
+  
 
   const unique_id = Date.now().toString();
 
@@ -51,10 +64,10 @@ export const addUsertoId = async (req, res, next) => {
       per_phone,
       mother_name,
       address,
-      actor_ids,
+      actor_ids_to_push,
       type,
-      company_ids,
-      banker_ids,
+      comapny_ids_to_push,
+      banker_ids_to_push,
       pdfs,
     });
 
