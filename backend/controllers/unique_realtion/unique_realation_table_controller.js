@@ -2,7 +2,7 @@ import UniqueRelation from "../../models/application_table/unique_relation_table
 import Actor from "../../models/actor_model.js"
 import Banker from "../../models/banker_model.js"
 import Company from "../../models/company_types/company_a_model.js"
-
+import IdSchema from "../../models/ids.js"
 import company_a_model from "../../models/company_types/company_a_model.js"
 import Owner from "../../models/owner_id.js"
 import { addActorToPropId } from "../prop_id_controller.js"
@@ -22,23 +22,12 @@ const get_owner_details = async (req, res)=>{
     if(!company){
         return res.status(404).json({
             message: "company not found"
-        }) 
+        })
     }
      //find owner and if owner not found add one
-     const owner = await Actor.findOne({adhar_otp_ids: company.owner_details})
-     if(!owner){
-        owner = await Actor.findOne({dummy_ids: company.owner_details})
-     }
-     if(!owner){
-        owner = await Actor.findOne({only_adhar_ids: company.owner_details})
-     }
-     if(!owner){
-        return res.status(302).json({
-            message: "Actor not assigned to the Company",
-        })
-    
-    }
-     
+     //show ids connected to company
+     //name of id
+
 }
 
 //fill company information
@@ -48,7 +37,7 @@ export const fill_information = async(req,res)=>{
     unique_id_actor ,
     unique_id_banker,
     unique_id_company,
-    owner_id
+    unique_id
 } =  req.body;
 
     const actor = await Actor.findOne({unique_id_actor:unique_id_actor});
@@ -57,9 +46,9 @@ export const fill_information = async(req,res)=>{
     // if(!company){
     //     company = await Company_B.findOne({unique_id_company_b:unique_id_company_b});
     // }
-    const owner = Owner.findOne({unique_id_owner:owner_id})
+    const owner = IdSchema.findOne({unique_id:unique_id})
     //check if actor , banker and owner is already in one on one relation
-    const relation = await UniqueRelation.findOne({actor_id:actor._id,banker_id:banker._id,owner_id:owner._id})
+    const relation = await UniqueRelation.findOne({actor_id:actor._id,banker_id:banker._id,unique_id:unique_id._id})
     if(relation){
         return res.status(302).json({
             message: "relation already exist"

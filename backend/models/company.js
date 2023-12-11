@@ -77,7 +77,7 @@ const company_model = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "Owner",
+      ref: "Ids",
     },
   ],
   pdfs: [

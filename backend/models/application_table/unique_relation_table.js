@@ -17,9 +17,9 @@ const table_set_up = new mongoose.Schema({
         type: String,
         enum:["Company_A", "Company_B"]
     },
-    owner_id:{
+    ids:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Owner"
+        ref:"Ids"
     },
     
 
