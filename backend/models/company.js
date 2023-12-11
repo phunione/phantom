@@ -25,7 +25,7 @@ const company_model = new mongoose.Schema({
   },
   querry_filled: {
     type: Date,
-    required: [true, , "please enter querry Filled date"],
+    required: [true, "please enter querry Filled date"],
   },
   //add querry expire in frontend using querry filed value
   address: {

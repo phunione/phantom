@@ -1,6 +1,7 @@
+// noinspection JSUnresolvedReference
+
 import Company from "../models/company.js"; // Import the "Company_B" model
 import { add_pdfs } from "./genericFunctions/addpdf.js";
-import fs from "fs";
 
 export const edit_comapny = async (req, res) => {
   const { id } = req.params;
@@ -26,35 +27,41 @@ export const post_company = async (req, res) => {
       isMaharashtra,
       location,
       actor_ids,
-      ids,
+      owner_details,
       type,
     } = req.body;
-    
-    const pdfObject = {
-      title: `${Date.now()} ${req.files.pdfs.name}`,
-      pdfData: req.files.pdfs.data, // The binary data of the first PDF
+
+    const { pdfs } = req?.files || {};
+
+    const pdfObject = pdfs && {
+      title: `${Date.now()} ${pdfs.name}`,
+      pdfData: pdfs.data, // The binary data of the first PDF
       contentType: "application/pdf",
     };
+
     const unique_company_id = Date.now().toString();
+
     const actor_ids_to_push = [];
-    actor_ids = JSON.parse(actor_ids);
-    ids = JSON.parse(ids)
-    // actor_ids = JSON.parse(actor_ids)
-    console.log(actor_ids)
-    if(actor_ids != []){
-    actor_ids.forEach((items) => {
-      actor_ids_to_push.push(items.object_id);
-    });
-  }
-  
+    actor_ids =
+      typeof actor_ids === "string" && actor_ids !== "undefined"
+        ? JSON.parse(actor_ids)
+        : [];
+    if (actor_ids.length) {
+      actor_ids.forEach((items) => {
+        actor_ids_to_push.push(items.object_id);
+      });
+    }
+
     const owner_ids_to_push = [];
-    if(ids != []){
-      ids.map((items) => {
-        // console.log(typeof(items.id));
+    owner_details =
+      typeof owner_details === "string" && owner_details !== "undefined"
+        ? JSON.parse(owner_details)
+        : [];
+    if (owner_details.length) {
+      owner_details.map((items) => {
         owner_ids_to_push.push(items.object_id);
       });
     }
-    
 
     const newCompany = new Company({
       unique_company_id,
@@ -63,13 +70,13 @@ export const post_company = async (req, res) => {
       pan_dob,
       company_status,
       querry_filled,
-      address,
+      address: address === "undefined" ? "" : address,
       isMaharashtra,
       location,
-      actor_ids:actor_ids_to_push,
-      owner_details:owner_ids_to_push,
+      actor_ids: actor_ids_to_push,
+      owner_details: owner_ids_to_push,
       type,
-      pdfObject,
+      pdfs: pdfObject,
     });
 
     const savedCompany = await newCompany.save();
@@ -78,7 +85,7 @@ export const post_company = async (req, res) => {
   } catch (error) {
     console.error(error);
     res
-      .status(500)
+      .status(400)
       .json({ error: "An error occurred while creating Company A." });
   }
 };

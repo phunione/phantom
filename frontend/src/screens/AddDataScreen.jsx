@@ -5,7 +5,7 @@ import fields from '../utility/fields'
 
 function AddDataScreen() {
   const [formType, setFormType] = useState(
-    location.state ? location.state.type : '',
+    localStorage.getItem('formType') ? localStorage.getItem('formType') : '',
   )
 
   const options = Object.keys(fields)
@@ -14,13 +14,18 @@ function AddDataScreen() {
     return val.replace(/[^a-zA-Z]+/g, ' ')
   }
 
+  const handleFormTypeChange = (e) => {
+    setFormType(e.target.value)
+    localStorage.setItem('formType', e.target.value)
+  }
+
   return (
     <>
       <div className="flex w-full flex-wrap items-center justify-end pr-10 pt-10">
         <select
           id="form_type"
           value={formType}
-          onChange={(e) => setFormType(e.target.value)}
+          onChange={handleFormTypeChange}
           className="inline-block w-48 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm capitalize text-gray-900 focus:border-gray-300 focus:ring-0"
         >
           <option value="">Choose Form Type</option>

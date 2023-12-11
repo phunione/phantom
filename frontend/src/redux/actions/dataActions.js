@@ -41,7 +41,6 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         details['forex'] = false
       }
     } else if (name === 'company') {
-      console.log('company')
       config = {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -52,8 +51,6 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         details['isMaharashtra'] = false
       }
 
-      console.log(details)
-
       const body = new FormData()
 
       body.append('name', details['name'])
@@ -63,17 +60,13 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
       body.append('querry_filled', details['querry_filled'])
       body.append('address', details['address'])
       body.append('isMaharashtra', details['isMaharashtra'])
+      body.append('location', details['location'])
       body.append('actor_ids', JSON.stringify(details['actor_ids']))
       body.append('ids', JSON.stringify(details['ids']))
       body.append('pdfs', details['pdfs'])
       body.append('type', details['type'])
 
       details = body
-
-      console.log('form data')
-      for (let [key, value] of body.entries()) {
-        console.log(`${key}: ${value}`)
-      }
     }
 
     await axios.post(`${url}/add`, details, config)
@@ -186,7 +179,7 @@ export const getData = (dataFor, id) => async (dispatch) => {
   }
 }
 
-export const deleteData = (path, id) => async (dispatch, getState) => {
+export const deleteData = (path, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_DATA_REQUEST })
 
@@ -205,9 +198,9 @@ export const deleteData = (path, id) => async (dispatch, getState) => {
     dispatch({
       type: DELETE_DATA_ERROR,
       payload:
-        e.response && e.response.data.detail
-          ? e.response.data.detail
-          : e.message,
+        err.response && err.response.data.detail
+          ? err.response.data.detail
+          : err.message,
     })
   }
 }
