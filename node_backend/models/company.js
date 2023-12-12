@@ -48,7 +48,7 @@ const company_model = new mongoose.Schema({
       "Gujarat",
       "Haryana",
       "Himachal Pradesh",
-      "Jharkhand",
+      "Jharkhand",  
       "Karnataka",
       "Kerala",
       "Madhya Pradesh",

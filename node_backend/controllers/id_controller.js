@@ -12,7 +12,7 @@ const unique = [
   "address",
 ];
 export const addUsertoId = async (req, res, next) => {
-  const {
+  var {
     name,
     adhar_number_id,
     pan_number_id,
@@ -34,17 +34,20 @@ export const addUsertoId = async (req, res, next) => {
   if (arr.size() > 0) {
     res.send("User Already exists.");
   }
+  actor_ids = JSON.parse(actor_ids)
   const actor_ids_to_push = [];
     actor_ids.map((items)=>{
-      actor_ids_to_push.push(items.id)
+      actor_ids_to_push.push(items.object_id)
     })
+    company_ids= JSON.parse(company_ids);
     const comapny_ids_to_push = [];
     company_ids.map((items)=>{
-      comapny_ids_to_push.push(items.id)
+      comapny_ids_to_push.push(items.object_id)
     })
+    banker_ids = JSON.parse(banker_ids);
     const banker_ids_to_push = [];
     banker_ids.map((items)=>{
-      banker_ids_to_push.push(items.id)
+      banker_ids_to_push.push(items.object_id)
     })
   
 
@@ -64,10 +67,10 @@ export const addUsertoId = async (req, res, next) => {
       per_phone,
       mother_name,
       address,
-      actor_ids_to_push,
+      actor_ids:actor_ids_to_push,
       type,
-      comapny_ids_to_push,
-      banker_ids_to_push,
+      company_ids:comapny_ids_to_push,
+      banker_ids:banker_ids_to_push,
       pdfs,
     });
 
