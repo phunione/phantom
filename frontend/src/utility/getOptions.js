@@ -1,22 +1,19 @@
-export const BACKEND_URL = 'http://localhost:8800/api/v1'
+export const BACKEND_URL = 'http://127.0.0.1:8000'
 
 export async function getOptions(dataFor) {
-  const url = `${BACKEND_URL}/${dataFor}/all`
+  const url = `${BACKEND_URL}/${dataFor}/all/`
 
-  const response = await fetch(url)
+  try {
+    const response = await fetch(url)
 
-  const data = await response.json()
+    const data = await response.json()
 
-  const finalData = data.map((d) => ({
-    id: d[dataFor === 'id' ? 'unique_id' : `unique_${dataFor}_id`],
-    name:
-      d['name'] === undefined
-        ? dataFor === 'id'
-          ? d['unique_id']
-          : d[`unique_${dataFor}_id`]
-        : d['name'],
-    object_id: d['_id'],
-  }))
-
-  return finalData
+    return data.map((d) => ({
+      id: d['id'],
+      name: d['name'],
+    }))
+  } catch (err) {
+    console.error(err)
+    return []
+  }
 }

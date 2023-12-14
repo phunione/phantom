@@ -4,8 +4,6 @@ import { Provider } from 'react-redux'
 
 import { PrimeReactProvider } from 'primereact/api'
 import 'primereact/resources/themes/lara-light-indigo/theme.css' // theme
-// import 'primeflex/primeflex.css' // css utility
-// import 'primeicons/primeicons.css'
 import 'primereact/resources/primereact.css'
 
 import App from './App.jsx'
@@ -22,4 +20,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 )
 
-export const BACKEND_URL = 'http://localhost:8800/api/v1'
+export const BACKEND_URL = 'http://127.0.0.1:8000'

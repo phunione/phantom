@@ -69,7 +69,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
       details = body
     }
 
-    await axios.post(`${url}/add`, details, config)
+    await axios.post(`${url}/add/`, details, config)
 
     dispatch({ type: ADD_DATA_SUCCESS, payload: 'Successfully Added' })
   } catch (e) {
@@ -111,7 +111,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
       }
     }
 
-    await axios.put(`${url}/edit/${id}`, details, config)
+    await axios.put(`${url}/edit/${id}/`, details, config)
 
     dispatch({ type: EDIT_DATA_SUCCESS, payload: 'Successfully Edited' })
   } catch (e) {
@@ -157,7 +157,7 @@ export const getData = (dataFor, id) => async (dispatch) => {
   try {
     dispatch({ type: GET_DATA_REQUEST })
 
-    const url = `${BACKEND_URL}/${dataFor}/${id}`
+    const url = `${BACKEND_URL}/${dataFor}/${id}/`
 
     const config = {
       headers: {
@@ -183,7 +183,7 @@ export const deleteData = (path, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_DATA_REQUEST })
 
-    const url = `${BACKEND_URL}${path}/delete/${id}`
+    const url = `${BACKEND_URL}${path}/delete/${id}/`
 
     const config = {
       headers: {

@@ -59,7 +59,10 @@ const Table = ({ keys, titles, data }) => {
                     {
                       key === 'address'
                         ? item[key] || 'null' // Show address
+                        : item[key] === null
+                        ? 'null'
                         : (typeof item[key] === 'object' &&
+                            item[key] &&
                             item[key].length === 0) ||
                           item[key] === undefined
                         ? 'null' // Checking If the item[key] is object
