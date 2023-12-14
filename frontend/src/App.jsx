@@ -47,10 +47,13 @@ function App() {
                 element={<EditDataScreen formType={'company'} />}
               />
               <Route
-                path="/edit/id"
-                element={<EditDataScreen formType={'id'} />}
+                path="/edit/owner"
+                element={<EditDataScreen formType={'owner'} />}
               />
-              <Route path="/id" element={<ShowDataScreen dataFor={'id'} />} />
+              <Route
+                path="/owner"
+                element={<ShowDataScreen dataFor={'owner'} />}
+              />
               <Route
                 path="/unique-relation"
                 element={<ShowDataScreen dataFor={'unique-relation'} />}

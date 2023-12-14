@@ -9,7 +9,7 @@ function SideNavBar() {
     { id: 'm-1', name: 'Actors', to: '/actor' },
     { id: 'm-2', name: 'Banks', to: '/bank' },
     { id: 'm-3', name: 'Bankers', to: '/banker' },
-    { id: 'm-4', name: 'ID(s)', to: '/id' },
+    { id: 'm-4', name: 'Owners', to: '/owner' },
     {
       id: 'm-5',
       name: 'Companies',
@@ -27,7 +27,7 @@ function SideNavBar() {
     },
   ]
 
-  const link = links.find((link) => link.to == pathName)
+  const link = links.find((link) => link.to === pathName)
   const [currPathId, setCurrentPathId] = useState(link ? link.id : '/')
 
   function handleLinkClick(link) {
