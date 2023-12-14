@@ -25,8 +25,30 @@ def signup(request):
 	try:
 		user = User.objects.create(first_name=data['first_name'], email=data['email'],
 		                           password=make_password(data['password']))
-		serializer = RegisteredUserSerializer(user, many=false)
+		serializer = RegisteredUserSerializer(user, many=False)
 		return Response(serializer.data, status=status.HTTP_201_CREATED)
 	except:
 		message = {'detail': 'User with this email already exists'}
 		return Response(message, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def getOne(request, id):
+    try:
+        user =  User.objects.get(id = id)
+        serializer = RegisteredUserSerializer(user, many = False)
+        return Response(serializer.data,status = status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        message = {'success': False, 'error': e}
+        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+    
+@api_view(['Delete'])
+def delete_one(request,id):
+    try:
+        user = User.objects.get(id = id)
+        user.delete()
+        message = {'success': True, 'message': "User deleted successfully"}
+        return Response(message,status = status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        message = {'success': False, 'error': e}
+        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)

@@ -50,5 +50,29 @@ def getAll(request):
 		return Response(serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:
 		print(e)
-		message = {'success': False, 'error': e}
+		message = {'success': False, 'error': 'Error Fetching Actors'}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
+@api_view(['GET'])
+def getOne(request, id):
+    try:
+        actor = Actor.objects.get(id = id)
+        serializer = ActorSerializer(actor, many = False)
+        return Response(serializer.data,status = status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        message = {'success': False, 'error': e}
+        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+    
+@api_view(['Delete'])
+def delete_one(request,id):
+    try:
+        actor = Actor.objects.get(id = id)
+        actor.delete()
+        message = {'success': True, 'message': "Actor deleted successfully"}
+        return Response(message,status = status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        message = {'success': False, 'error': e}
+        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
