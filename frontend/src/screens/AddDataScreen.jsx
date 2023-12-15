@@ -44,7 +44,7 @@ function AddDataScreen() {
           <Form fields={fields[formType]} name={formType} />
         ) : formType === 'banker' ? (
           <Form fields={fields[formType]} name={formType} />
-        ) : formType === 'id' ? (
+        ) : formType === 'owner' ? (
           <Form fields={fields[formType]} name={formType} />
         ) : formType === 'company' ? (
           <Form fields={fields[formType]} name={formType} />

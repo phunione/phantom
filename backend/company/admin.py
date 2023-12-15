@@ -7,5 +7,5 @@ from .models import Company
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
 	list_display = (
-		'name', 'company_type', 'pan_number', 'pan_dob', 'company_status', 'isMaharashtra', 'state', 'querry_filled'
+		'name', 'type', 'pan_number', 'pan_dob', 'company_status', 'isMaharashtra', 'state', 'querry_filled'
 	)

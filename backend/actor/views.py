@@ -1,8 +1,11 @@
+import json
 # REST FRAMEWORK
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 # My Models
+from banker.models import Banker
+from owner.models import Owner
 from bank.models import Bank
 from actor.models import Actor
 from .serializers import ActorSerializer
@@ -11,28 +14,38 @@ from .serializers import ActorSerializer
 # Create your views here.
 @api_view(['POST'])
 def add(request):
-	"""
-	API view to add an Actor.
-
-	Parameters:
-			request (HttpRequest): The HTTP request object.
-
-	Returns:
-			response (Response): The HTTP response object.
-
-	Raises:
-			Exception: If an error occurs while adding the Actor.
-	"""
 	data = request.data
-	print(data)
 	try:
-		actor = Actor.objects.create(**data)
+		bank_data = []
 		if 'bank' in data:
-			bank_ids = [obj['id'] for obj in data['bank']]
-			print(bank_ids)
-		# bank_obj = Bank.objects.filter(id__in=data['bank']['id'])
-		# actor.bank = bank_obj
-		# print(bank_obj)
+			bank_data = data['bank']
+			del data['bank']
+
+		banker_data = []
+		if 'banker' in data:
+			banker_data = data['banker']
+			del data['banker']
+
+		owner_data = []
+		if 'owner' in data:
+			owner_data = data['owner']
+			del data['owner']
+
+		actor = Actor.objects.create(**data)
+		if len(bank_data) > 0:
+			for d in bank_data:
+				bank_obj = Bank.objects.get(id=d['id'])
+				actor.bank.add(bank_obj)
+
+		if len(banker_data) > 0:
+			for d in banker_data:
+				banker_obj = Banker.objects.get(id=d['id'])
+				actor.banker.add(banker_obj)
+
+		if len(owner_data) > 0:
+			for d in owner_data:
+				owner_obj = Owner.objects.get(id=d['id'])
+				actor.owner.add(owner_obj)
 
 		message = {'success': True, 'message': "Actor added successfully"}
 		return Response(message, status=status.HTTP_201_CREATED)
@@ -56,23 +69,24 @@ def getAll(request):
 
 @api_view(['GET'])
 def getOne(request, id):
-    try:
-        actor = Actor.objects.get(id = id)
-        serializer = ActorSerializer(actor, many = False)
-        return Response(serializer.data,status = status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': e}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
-    
+	try:
+		actor = Actor.objects.get(id=id)
+		serializer = ActorSerializer(actor, many=False)
+		return Response(serializer.data, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': 'Error Fetching Actor'}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
 @api_view(['Delete'])
-def delete_one(request,id):
-    try:
-        actor = Actor.objects.get(id = id)
-        actor.delete()
-        message = {'success': True, 'message': "Actor deleted successfully"}
-        return Response(message,status = status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': e}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+def delete(request, id):
+	try:
+		actor = Actor.objects.get(id=id)
+		actor.delete()
+		message = {'success': True, 'message': "Actor deleted successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': e}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)

@@ -11,3 +11,6 @@ class Bank(models.Model):
 	swift_code = models.CharField(max_length=100, null=False, blank=False)
 
 	banker = models.ManyToManyField(Banker, blank=True)
+
+	def __str__(self):
+		return self.name

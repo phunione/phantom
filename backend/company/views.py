@@ -1,9 +1,64 @@
+import json
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
 from .serializers import CompanySerializer
 from .models import Company
+from actor.models import Actor
+from bank.models import Bank
+from banker.models import Banker
+from owner.models import Owner
+
+
+@api_view(['POST'])
+def add(req):
+	data = req.data
+	print(data)
+	try:
+		company = Company.objects.create(name=data['name'], pan_number=data['pan_number'], pan_dob=data['pan_dob'],
+		                                 querry_filled=data['querry_filled'], company_status=data['company_status'],
+		                                 type=data['type'], address=data['address'], state=data['location'])
+
+		if data['isMaharashtra'] == 'true':
+			company.isMaharashtra = True
+		else:
+			company.isMaharashtra = False
+
+		if data['pdfs'] != '':
+			company.pdfs = data['pdfs']
+
+		if data['actor'] != '':
+			parsed_data = json.loads(data['actor'])
+			for d in parsed_data:
+				actor_obj = Actor.objects.get(id=d['id'])
+				company.actor.add(actor_obj)
+
+		if data['bank'] != '':
+			parsed_data = json.loads(data['bank'])
+			bank_obj = Bank.objects.get(id=int(parsed_data))
+			company.bank = bank_obj
+
+		if data['banker'] != '':
+			parsed_data = json.loads(data['banker'])
+			banker_obj = Banker.objects.get(id=int(parsed_data))
+			company.banker = banker_obj
+
+		if data['owner'] != '':
+			parsed_data = json.loads(data['owner'])
+			for d in parsed_data:
+				owner_obj = Owner.objects.get(id=d['id'])
+				company.owner.add(owner_obj)
+
+		company.save()
+
+		message = {'success': True, 'message': "Company added successfully"}
+		return Response(message, status=status.HTTP_201_CREATED)
+	except Exception as e:
+		print('add error', e)
+		message = {'success': False, 'error': 'Error Adding Company'}
+		return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -13,27 +68,31 @@ def getAll(req):
 		company_serializer = CompanySerializer(company, many=True)
 		return Response(company_serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:
-		message = {success: False, error: e}
+		print(e)
+		message = {'success': False, 'error': 'Error Fetching Companies'}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
 @api_view(['GET'])
 def getOne(request, id):
-    try:
-        company =  Company.objects.get(id = id)
-        serializer = CompanySerializer(company, many = False)
-        return Response(serializer.data,status = status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': e}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
-    
+	try:
+		company = Company.objects.get(id=id)
+		serializer = CompanySerializer(company, many=False)
+		return Response(serializer.data, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': e}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
 @api_view(['Delete'])
-def delete_one(request,id):
-    try:
-        banker = Company.objects.get(id = id)
-        banker.delete()
-        message = {'success': True, 'message': "Comapny deleted successfully"}
-        return Response(message,status = status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': e}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+def delete(request, id):
+	try:
+		banker = Company.objects.get(id=id)
+		banker.delete()
+		message = {'success': True, 'message': "Comapny deleted successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': e}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
 
 const Table = ({ keys, titles, data }) => {
+  console.log(data)
   const dispatch = useDispatch()
 
   const path = window.location.pathname
@@ -72,6 +73,13 @@ const Table = ({ keys, titles, data }) => {
                           : isValidDate(item[key]) // if the item[key] is a valid date
                           ? moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
                           : item[key] // else show the string only
+                        : typeof item[key] === 'object'
+                        ? item[key].map(
+                            (it, idx) =>
+                              `${it.name}${
+                                idx !== item[key].length - 1 ? ', ' : ''
+                              }`,
+                          )
                         : item[key].toString() // if nothing of the above, we just convert the value to a string and show it
                     }
                   </td>
@@ -80,18 +88,24 @@ const Table = ({ keys, titles, data }) => {
                   colSpan={2}
                   className="sticky right-0 top-0 z-10 border bg-white px-1 py-2"
                 >
-                  <Link
-                    to={`/edit${path}?id=${item._id}`}
-                    className="mr-1 inline rounded bg-blue-500 px-2 py-1 text-white transition-colors hover:bg-blue-600"
+                  <div
+                    className={
+                      'justify ju flex flex-wrap items-center justify-center'
+                    }
                   >
-                    <i className="fal fa-pencil"></i>
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(path, item._id)}
-                    className="inline rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
-                  >
-                    <i className="fal fa-trash"></i>
-                  </button>
+                    <Link
+                      to={`/edit${path}?id=${item.id}`}
+                      className="mr-1 inline rounded bg-blue-500 px-2 py-1 text-white transition-colors hover:bg-blue-600"
+                    >
+                      <i className="fal fa-pencil"></i>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(path, item.id)}
+                      className="inline rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
+                    >
+                      <i className="fal fa-trash"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

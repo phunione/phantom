@@ -21,3 +21,6 @@ class Actor(models.Model):
 	bank = models.ManyToManyField(Bank, blank=True)
 	banker = models.ManyToManyField(Banker, blank=True)
 	owner = models.ManyToManyField(Owner, blank=True)
+
+	def __str__(self):
+		return self.name
