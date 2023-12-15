@@ -90,3 +90,28 @@ def delete(request, id):
 		print(e)
 		message = {'success': False, 'error': e}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
+@api_view(['PUT'])
+def edit(request,id):
+    try:
+        actor = Actor.objects.get(id = id)
+        data = request.data
+        if 'actor' in data:
+            actor_data = data['actor']
+            del data['actor']
+        for key, value in data.items():
+            setattr(actor, key, value)
+
+        actor.save()
+
+        message = {'success': True, 'message': "actor details updated successfully"}
+        return Response(message, status=status.HTTP_200_OK)
+    except Actor.DoesNotExist:
+        message = {'success': False, 'error': "actor not found"}
+        return Response(message, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        print(e)
+        message = {'success': False, 'error': str(e)}
+        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+

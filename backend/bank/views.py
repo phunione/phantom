@@ -58,7 +58,7 @@ def getOne(request, id):
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
 
 
-@api_view(['Delete'])
+@api_view(['DELETE'])
 def delete(request, id):
 	try:
 		bank = Bank.objects.get(id=id)
@@ -69,3 +69,29 @@ def delete(request, id):
 		print(e)
 		message = {'success': False, 'error': e}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
+
+
+@api_view(['PUT'])
+def edit(request,id):
+    try:
+        bank = Bank.objects.get(id = id)
+        data = request.data
+        if 'bank' in data:
+            bank_data = data['bank']
+            del data['bank']
+        for key, value in data.items():
+            setattr(bank, key, value)
+
+        bank.save()
+
+        message = {'success': True, 'message': "Bank details updated successfully"}
+        return Response(message, status=status.HTTP_200_OK)
+    except Bank.DoesNotExist:
+        message = {'success': False, 'error': "Bank not found"}
+        return Response(message, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        print(e)
+        message = {'success': False, 'error': str(e)}
+        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
