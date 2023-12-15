@@ -2,6 +2,7 @@ from django.db import models
 
 from actor.models import Actor
 from bank.models import Bank
+from banker.models import Banker
 from owner.models import Owner
 
 
@@ -67,8 +68,12 @@ class Company(models.Model):
 	state = models.CharField(max_length=150, choices=STATE_CHOICES, default='', null=False, blank=False)
 
 	pdfs = models.FileField(upload_to=file_path, null=True, blank=True)
-	company_type = models.CharField(max_length=150, choices=COMPANY_TYPE_CHOICES, default='', null=False, blank=False)
+	type = models.CharField(max_length=150, choices=COMPANY_TYPE_CHOICES, default='', null=False, blank=False)
 
 	actor = models.ManyToManyField(Actor, blank=True)
 	owner = models.ManyToManyField(Owner, blank=True)
 	bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, blank=True, null=True)
+	banker = models.ForeignKey(Banker, on_delete=models.SET_NULL, blank=True, null=True)
+
+	def __str__(self):
+		return self.name

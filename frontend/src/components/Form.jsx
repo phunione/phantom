@@ -30,7 +30,6 @@ function Form({ fields, name, data }) {
       dispatch(addDataToTheForm(vals, name))
     }
 
-    console.log(addError)
     if (addError === undefined) setVals({})
   }
 
@@ -81,6 +80,11 @@ function Form({ fields, name, data }) {
                           [inpName]: e.target.checked,
                           location: '',
                         })
+                    } else {
+                      setVals({
+                        ...vals,
+                        [inpName]: e.target.checked,
+                      })
                     }
                   }}
                   inpTitle={inpTitle}

@@ -2,6 +2,10 @@ import * as PropTypes from 'prop-types'
 
 export default function Select(props) {
   const getValue = (str) => {
+    if (typeof str === 'number') {
+      return str.toString()
+    }
+
     if (str === undefined || str === null || typeof str !== 'string') {
       return
     }
@@ -21,7 +25,11 @@ export default function Select(props) {
       </label>
       <select
         value={
-          props.vals[props.name] === undefined ? '' : props.vals[props.name]
+          props.vals[props.name]
+            ? props.vals[props.name]
+            : props.vals[props.id]
+            ? props.vals[props.id]
+            : ''
         }
         name={props.name}
         id={props.htmlFor}
@@ -31,7 +39,7 @@ export default function Select(props) {
       >
         {props.options.map((option, idx) => (
           <option
-            value={getValue(option.name ? option.name : option)}
+            value={getValue(option.id ? option.id : option)}
             className="capitalize"
             key={idx}
           >
