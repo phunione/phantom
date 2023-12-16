@@ -372,9 +372,9 @@ const fields = {
       type: 'boolean',
     },
     {
-      title: 'Location',
-      id: 'location',
-      name: 'location',
+      title: 'State',
+      id: 'state',
+      name: 'state',
       required: true,
       type: 'select',
       options: [

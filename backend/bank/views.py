@@ -37,7 +37,7 @@ def add(req):
 # Create your views here.
 def getAll(request):
 	try:
-		bank = Bank.objects.all()
+		bank = Bank.objects.all().order_by('id')
 		bank_serializer = BankSerializer(bank, many=True)
 		return Response(bank_serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:
@@ -54,7 +54,7 @@ def getOne(request, id):
 		return Response(serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:
 		print(e)
-		message = {'success': False, 'error': e}
+		message = {'success': False, 'error': "Error Fetching Bank"}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
 
 
@@ -71,27 +71,35 @@ def delete(request, id):
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
 
 
-
-
 @api_view(['PUT'])
-def edit(request,id):
-    try:
-        bank = Bank.objects.get(id = id)
-        data = request.data
-        if 'bank' in data:
-            bank_data = data['bank']
-            del data['bank']
-        for key, value in data.items():
-            setattr(bank, key, value)
+def edit(request, id):
+	data = request.data
+	try:
+		banker_data = []
+		if 'banker' in data:
+			banker_data = data['banker']
+			del data['banker']
 
-        bank.save()
+		print(banker_data)
+		bank = Bank.objects.get(id=id)
 
-        message = {'success': True, 'message': "Bank details updated successfully"}
-        return Response(message, status=status.HTTP_200_OK)
-    except Bank.DoesNotExist:
-        message = {'success': False, 'error': "Bank not found"}
-        return Response(message, status=status.HTTP_404_NOT_FOUND)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': str(e)}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+		for key, value in data.items():
+			setattr(bank, key, value)
+
+		bank.banker.clear()
+		if len(banker_data) > 0:
+			for d in banker_data:
+				banker_obj = Banker.objects.get(id=d['id'])
+				bank.banker.add(banker_obj)
+
+		bank.save()
+
+		message = {'success': True, 'message': "Bank details updated successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Bank.DoesNotExist:
+		message = {'success': False, 'error': "Bank not found"}
+		return Response(message, status=status.HTTP_404_NOT_FOUND)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': str(e)}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)

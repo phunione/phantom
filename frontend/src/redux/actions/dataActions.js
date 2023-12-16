@@ -114,7 +114,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
       body.append('company_status', details['company_status'])
       body.append('querry_filled', details['querry_filled'])
       body.append('isMaharashtra', details['isMaharashtra'])
-      body.append('location', details['location'])
+      body.append('state', details['state'])
       body.append('type', details['type'])
       body.append(
         'address',
@@ -161,7 +161,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
   try {
     dispatch({ type: EDIT_DATA_REQUEST })
 
-    const config = {
+    let config = {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -179,10 +179,107 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
       if (details['forex'] === undefined) {
         details['forex'] = false
       }
+    } else if (name === 'owner') {
+      config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const body = new FormData()
+
+      body.append('name', details['name'])
+      body.append('adhar_number', details['adhar_number'])
+      body.append('pan_number', details['pan_number'])
+      body.append('din_number', details['din_number'])
+      body.append('sim_number', details['sim_number'])
+      body.append('type', details['type'])
+      body.append(
+        'otp_phoneNr',
+        details['otp_phoneNr'] === undefined ? '' : details['otp_phoneNr'],
+      )
+      body.append(
+        'per_phone',
+        details['per_phone'] === undefined ? '' : details['per_phone'],
+      )
+      body.append(
+        'email',
+        details['email'] === undefined ? '' : details['email'],
+      )
+      body.append(
+        'mother_name',
+        details['mother_name'] === undefined ? '' : details['mother_name'],
+      )
+      body.append(
+        'address',
+        details['address'] === undefined ? '' : details['address'],
+      )
+
+      body.append(
+        'actor',
+        details['actor'] === undefined ? '' : JSON.stringify(details['actor']),
+      )
+      body.append(
+        'company',
+        details['company'] === undefined
+          ? ''
+          : JSON.stringify(details['company']),
+      )
+      body.append(
+        'banker',
+        details['banker'] === undefined
+          ? ''
+          : JSON.stringify(details['banker']),
+      )
+      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+
+      details = body
     } else if (name === 'company') {
+      config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
       if (details['isMaharashtra'] === undefined) {
         details['isMaharashtra'] = false
       }
+
+      const body = new FormData()
+
+      body.append('name', details['name'])
+      body.append('pan_number', details['pan_number'])
+      body.append('pan_dob', details['pan_dob'])
+      body.append('company_status', details['company_status'])
+      body.append('querry_filled', details['querry_filled'])
+      body.append('isMaharashtra', details['isMaharashtra'])
+      body.append('state', details['state'])
+      body.append('type', details['type'])
+      body.append(
+        'address',
+        details['address'] === undefined ? '' : details['address'],
+      )
+      body.append(
+        'actor',
+        details['actor'] === undefined ? '' : JSON.stringify(details['actor']),
+      )
+      body.append(
+        'bank',
+        details['bank'] === undefined ? '' : JSON.stringify(details['bank']),
+      )
+      body.append(
+        'banker',
+        details['banker'] === undefined
+          ? ''
+          : JSON.stringify(details['banker']),
+      )
+      body.append(
+        'owner',
+        details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
+      )
+      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+
+      details = body
     }
 
     await axios.put(`${url}/edit/${id}/`, details, config)

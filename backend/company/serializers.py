@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from .models import Company
-from banker.serializers import BankerSerializer
 
 
 class CompanySerializer(serializers.ModelSerializer):

@@ -10,6 +10,7 @@ export default function Boolean(props) {
         value={
           props.vals[props.name] === undefined ? false : props.vals[props.name]
         }
+        // checked={props.vals[props.name] !== undefined}
         onChange={props.onChange}
         className="peer sr-only"
       />

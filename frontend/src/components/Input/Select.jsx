@@ -26,7 +26,9 @@ export default function Select(props) {
       <select
         value={
           props.vals[props.name]
-            ? props.vals[props.name]
+            ? Array.isArray(props.vals[props.name])
+              ? props.vals[props.name][0].id
+              : props.vals[props.name]
             : props.vals[props.id]
             ? props.vals[props.id]
             : ''
@@ -39,7 +41,7 @@ export default function Select(props) {
       >
         {props.options.map((option, idx) => (
           <option
-            value={getValue(option.id ? option.id : option)}
+            value={getValue(option?.id === undefined ? option : option?.id)}
             className="capitalize"
             key={idx}
           >

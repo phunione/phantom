@@ -11,6 +11,7 @@ import Input from './Input/Input.jsx'
 
 function Form({ fields, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
+
   console.log(vals)
 
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ function Form({ fields, name, data }) {
     e.preventDefault()
 
     if (data) {
-      dispatch(editDataForm(data._id, vals, name))
+      dispatch(editDataForm(data.id, vals, name))
       navigate(`/${name}`)
     } else {
       dispatch(addDataToTheForm(vals, name))
@@ -108,14 +109,13 @@ function Form({ fields, name, data }) {
                   onChange={(e) => {
                     setVals({
                       ...vals,
-                      [inpName]: e.value,
+                      [inpName]: e.target.value,
                     })
                   }}
                   options={field.options}
                   optionLabel={'name'}
                   placeholder={`Select ${field.title}`}
-                  aria-label="Option"
-                  filter
+                  checked={true}
                   maxSelectedLabels={1}
                   className="w-full border capitalize md:w-48"
                 />
