@@ -26,7 +26,8 @@ urlpatterns = [
 	path('banker/', include('banker.urls')),
 	path('company/', include('company.urls')),
 	path('owner/', include('owner.urls')),
-
+	path('excel-company/',include('ExcelData.urls')),
+ 
 	path('user/', include('users.urls')),
 ]
 
