@@ -18,7 +18,7 @@ def add(req):
 	try:
 		company = Company.objects.create(name=data['name'], pan_number=data['pan_number'], pan_dob=data['pan_dob'],
 		                                 querry_filled=data['querry_filled'], company_status=data['company_status'],
-		                                 type=data['type'], address=data['address'], state=data['location'])
+		                                 type=data['type'], address=data['address'], state=data['state'])
 
 		if data['isMaharashtra'] == 'true':
 			company.isMaharashtra = True
@@ -95,3 +95,88 @@ def delete(request, id):
 		print(e)
 		message = {'success': False, 'error': e}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
+@api_view(['PUT'])
+def edit(req, id):
+	req_data = req.data
+	data = req_data.copy()
+	try:
+		pdfs = ''
+		if data['pdfs'] != '':
+			pdfs = data['pdfs']
+		del data['pdfs']
+
+		parsed_actor_data = []
+		if data['actor'] != '':
+			parsed_actor_data = json.loads(data['actor'])
+		del data['actor']
+
+		parsed_bank_data = ''
+		if data['bank'] != '':
+			parsed_bank_data = json.loads(data['bank'])
+			if type(parsed_bank_data) == list:
+				print("in bank")
+				parsed_bank_data = str(parsed_bank_data[0]['id'])
+		del data['bank']
+
+		parsed_banker_data = ''
+		if data['banker'] != "":
+			parsed_banker_data = json.loads(data['banker'])
+			if type(parsed_banker_data) == list:
+				print("in banker")
+				parsed_banker_data = str(parsed_banker_data[0]['id'])
+		del data['banker']
+
+		parsed_owner_data = []
+		if data['owner'] != '':
+			parsed_owner_data = json.loads(data['owner'])
+		del data['owner']
+
+		print(pdfs, parsed_actor_data, parsed_bank_data, parsed_banker_data, parsed_owner_data)
+
+		company = Company.objects.get(id=id)
+
+		for key, value in data.items():
+			setattr(company, key, value)
+
+		if data['isMaharashtra'] == 'true':
+			company.isMaharashtra = True
+		else:
+			company.isMaharashtra = False
+
+		if pdfs != '':
+			company.pdfs = data['pdfs']
+
+		company.actor.clear()
+		if len(parsed_actor_data) > 0:
+			for d in parsed_actor_data:
+				actor_obj = Actor.objects.get(id=d['id'])
+				company.actor.add(actor_obj)
+
+		if parsed_bank_data:
+			bank_obj = Bank.objects.get(id=int(parsed_bank_data))
+			company.bank = bank_obj
+		else:
+			company.bank = None
+
+		if parsed_banker_data and parsed_banker_data.isnumeric():
+			banker = Banker.objects.get(id=int(parsed_banker_data))
+			company.banker = banker
+		else:
+			company.banker = None
+
+		company.owner.clear()
+		if len(parsed_owner_data) > 0:
+			for d in parsed_owner_data:
+				owner_obj = Owner.objects.get(id=d['id'])
+				company.owner.add(owner_obj)
+
+		company.save()
+
+		message = {'success': True, 'message': "Banker edited successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': "Error Updating Bank"}
+		return Response(message, status=status.HTTP_400_BAD_REQUEST)

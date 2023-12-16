@@ -58,7 +58,7 @@ def add(request):
 @api_view(['GET'])
 def getAll(request):
 	try:
-		actor = Actor.objects.all()
+		actor = Actor.objects.all().order_by('id')
 		serializer = ActorSerializer(actor, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:
@@ -93,25 +93,55 @@ def delete(request, id):
 
 
 @api_view(['PUT'])
-def edit(request,id):
-    try:
-        actor = Actor.objects.get(id = id)
-        data = request.data
-        if 'actor' in data:
-            actor_data = data['actor']
-            del data['actor']
-        for key, value in data.items():
-            setattr(actor, key, value)
+def edit(request, id):
+	data = request.data
+	try:
+		bank_data = []
+		if 'bank' in data:
+			bank_data = data['bank']
+			del data['bank']
 
-        actor.save()
+		banker_data = []
+		if 'banker' in data:
+			banker_data = data['banker']
+			del data['banker']
 
-        message = {'success': True, 'message': "actor details updated successfully"}
-        return Response(message, status=status.HTTP_200_OK)
-    except Actor.DoesNotExist:
-        message = {'success': False, 'error': "actor not found"}
-        return Response(message, status=status.HTTP_404_NOT_FOUND)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': str(e)}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+		owner_data = []
+		if 'owner' in data:
+			owner_data = data['owner']
+			del data['owner']
 
+		actor = Actor.objects.get(id=id)
+
+		for key, value in data.items():
+			setattr(actor, key, value)
+
+		actor.bank.clear()
+		if len(bank_data) > 0:
+			for d in bank_data:
+				bank_obj = Bank.objects.get(id=d['id'])
+				actor.bank.add(bank_obj)
+
+		actor.banker.clear()
+		if len(banker_data) > 0:
+			for d in banker_data:
+				banker_obj = Banker.objects.get(id=d['id'])
+				actor.banker.add(banker_obj)
+
+		actor.owner.clear()
+		if len(owner_data) > 0:
+			for d in owner_data:
+				owner_obj = Owner.objects.get(id=d['id'])
+				actor.owner.add(owner_obj)
+
+		actor.save()
+
+		message = {'success': True, 'message': "actor details updated successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Actor.DoesNotExist:
+		message = {'success': False, 'error': "actor not found"}
+		return Response(message, status=status.HTTP_404_NOT_FOUND)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': str(e)}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)

@@ -21,14 +21,18 @@ class OwnerSerializer(serializers.ModelSerializer):
 	@staticmethod
 	def get_banker(obj):
 		banker_obj = obj.banker_set.all()
-		serializer = BankerSerializer(banker_obj, many=True)
-		return serializer.data
+		data = []
+		for banker in banker_obj:
+			data.append({'id': banker.id, 'name': banker.name})
+		return data
 
 	@staticmethod
 	def get_company(obj):
 		company_obj = obj.company_set.all()
-		serializer = CompanySerializer(company_obj, many=True)
-		return serializer.data
+		data = []
+		for company in company_obj:
+			data.append({'id': company.id, 'name': company.name})
+		return data
 
 	class Meta:
 		model = Owner

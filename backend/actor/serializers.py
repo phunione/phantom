@@ -1,9 +1,6 @@
 from rest_framework import serializers
 
 from actor.models import Actor
-from bank.serializers import BankSerializer
-from banker.serializers import BankerSerializer
-from owner.serializers import OwnerSerializer
 
 
 class ActorSerializer(serializers.ModelSerializer):
@@ -15,8 +12,10 @@ class ActorSerializer(serializers.ModelSerializer):
 	def get_bank(obj):
 		try:
 			bank_obj = obj.bank.all()
-			serializer = BankSerializer(bank_obj, many=True)
-			return serializer.data
+			data = []
+			for bank in bank_obj:
+				data.append({'id': bank.id, 'name': bank.name})
+			return data
 		except Exception as e:
 			print(e)
 
@@ -24,8 +23,10 @@ class ActorSerializer(serializers.ModelSerializer):
 	def get_banker(obj):
 		try:
 			banker_obj = obj.banker.all()
-			serializer = BankerSerializer(banker_obj, many=True)
-			return serializer.data
+			data = []
+			for banker in banker_obj:
+				data.append({'id': banker.id, 'name': banker.name})
+			return data
 		except Exception as e:
 			print(e)
 
@@ -33,8 +34,10 @@ class ActorSerializer(serializers.ModelSerializer):
 	def get_owner(obj):
 		try:
 			owner_obj = obj.owner.all()
-			serializer = OwnerSerializer(owner_obj, many=True)
-			return serializer.data
+			data = []
+			for owner in owner_obj:
+				data.append({'id': owner.id, 'name': owner.name})
+			return data
 		except Exception as e:
 			print(e)
 

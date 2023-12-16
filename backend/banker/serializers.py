@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from .models import Banker
-from bank.serializers import BankSerializer
 
 
 class BankerSerializer(serializers.ModelSerializer):
@@ -18,9 +17,11 @@ class BankerSerializer(serializers.ModelSerializer):
 
 	@staticmethod
 	def get_bank(obj):
-		bank = obj.bank_set.all()
-		serializer = BankSerializer(bank, many=True)
-		return serializer.data
+		bank_obj = obj.bank_set.all()
+		data = []
+		for bank in bank_obj:
+			data.append({'id': bank.id, 'name': bank.name})
+		return data
 
 	class Meta:
 		model = Banker

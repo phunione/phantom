@@ -62,7 +62,7 @@ def add(req):
 @api_view(['GET'])
 def getAll(req):
 	try:
-		owner = Owner.objects.all()
+		owner = Owner.objects.all().order_by('id')
 		serializer = OwnerSerializer(owner, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:
@@ -72,25 +72,93 @@ def getAll(req):
 			'error': 'Error Fetching Owners'
 		}
 		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
 @api_view(['GET'])
 def getOne(request, id):
-    try:
-        owner =  Owner.objects.get(id = id)
-        serializer = OwnerSerializer(owner, many = False)
-        return Response(serializer.data,status = status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': e}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
-    
+	try:
+		owner = Owner.objects.get(id=id)
+		serializer = OwnerSerializer(owner, many=False)
+		return Response(serializer.data, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': e}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
 @api_view(['DELETE'])
-def delete_one(request,id):
-    try:
-        owner = Owner.objects.get(id = id)
-        owner.delete()
-        message = {'success': True, 'message': "Owner deleted successfully"}
-        return Response(message,status = status.HTTP_200_OK)
-    except Exception as e:
-        print(e)
-        message = {'success': False, 'error': e}
-        return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+def delete(request, id):
+	try:
+		owner = Owner.objects.get(id=id)
+		owner.delete()
+		message = {'success': True, 'message': "Owner deleted successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': e}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+
+@api_view(['PUT'])
+def edit(req, id):
+	req_data = req.data
+	data = req_data.copy()
+	print(data)
+	try:
+		pdfs = ''
+		if data['pdfs'] != '':
+			pdfs = data['pdfs']
+		del data['pdfs']
+
+		parsed_actor_data = []
+		if data['actor'] != '':
+			parsed_actor_data = json.loads(data['actor'])
+		del data['actor']
+
+		parsed_company_data = []
+		if data['company'] != '':
+			parsed_company_data = json.loads(data['company'])
+		del data['company']
+
+		parsed_banker_data = []
+		if data['banker'] != "":
+			parsed_banker_data = json.loads(data['banker'])
+		del data['banker']
+
+		owner = Owner.objects.get(id=id)
+
+		for key, value in data.items():
+			setattr(owner, key, value)
+
+		if pdfs != '':
+			owner.pdfs = pdfs
+
+		if parsed_actor_data:
+			for d in parsed_actor_data:
+				actor_obj = Actor.objects.get(id=d['id'])
+				owner.actor_set.add(actor_obj)
+
+		if parsed_company_data:
+			for d in parsed_company_data:
+				company_obj = Company.objects.get(id=d['id'])
+				owner.company_set.add(company_obj)
+
+		if parsed_banker_data:
+			for d in parsed_banker_data:
+				banker_obj = Banker.objects.get(id=d['id'])
+				owner.banker_set.add(banker_obj)
+
+		owner.save()
+
+		message = {
+			'success': True,
+			'message': 'Owner edited successfully'
+		}
+		return Response(message, status=status.HTTP_201_CREATED)
+	except Exception as e:
+		print(e)
+		message = {
+			'success': False,
+			'error': 'Error editing Owner'
+		}
+		return Response(message, status=status.HTTP_400_BAD_REQUEST)
