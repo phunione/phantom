@@ -37,12 +37,14 @@ const ExcelCompanyScreen = () => {
 
   const dispatch = useDispatch()
   const excelCompanyData = useSelector((state) => state.excelCompanyData)
+  const deleteData = useSelector((state) => state.deleteData)
 
   const { loading, data, error } = excelCompanyData
+  const { data: delData } = deleteData
 
   useEffect(() => {
     dispatch(getExcelCompanyData())
-  }, [dispatch])
+  }, [dispatch, delData])
 
   return (
     <div className="overflow-x-auto">
