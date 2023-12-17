@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
 	path('add/', views.add, name='add'),
-	
+	path('all/', views.getAll, name='get-all-excelcompanies'),
+
 ]

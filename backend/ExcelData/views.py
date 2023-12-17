@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-# from .serializers import ExcelDataSerializer
+from .serializers import ExcelDataSerializer
 from .models import ExcelCompany
 
 
@@ -56,4 +56,15 @@ def add(req):
         message = {'success': False, 'error': 'Error Adding Company'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def getAll(req):
+	try:
+		excelcompany = ExcelCompany.objects.all()
+		company_serializer = ExcelDataSerializer(excelcompany, many=True)
+		return Response(company_serializer.data, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': 'Error Fetching excelCompanies'}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
 
