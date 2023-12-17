@@ -14,6 +14,9 @@ import {
   GET_DATA_ERROR,
   GET_DATA_REQUEST,
   GET_DATA_SUCCESS,
+  GET_EXCEL_COMPANY_DATA_ERROR,
+  GET_EXCEL_COMPANY_DATA_REQUEST,
+  GET_EXCEL_COMPANY_DATA_SUCCESS,
 } from '../constants/data'
 
 export const addDataToTheFormReducer = (state = {}, action) => {
@@ -75,6 +78,19 @@ export const deleteDataReducer = (state = {}, action) => {
     case DELETE_DATA_SUCCESS:
       return { loading: false, data: action.payload, success: true }
     case DELETE_DATA_ERROR:
+      return { loading: false, error: action.payload, success: false }
+    default:
+      return state
+  }
+}
+
+export const excelCompanyDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_EXCEL_COMPANY_DATA_REQUEST:
+      return { loading: true }
+    case GET_EXCEL_COMPANY_DATA_SUCCESS:
+      return { loading: false, data: action.payload, success: true }
+    case GET_EXCEL_COMPANY_DATA_ERROR:
       return { loading: false, error: action.payload, success: false }
     default:
       return state

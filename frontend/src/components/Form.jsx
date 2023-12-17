@@ -8,6 +8,7 @@ import Boolean from './Input/Boolean.jsx'
 import Select from './Input/Select.jsx'
 import File from './Input/File.jsx'
 import Input from './Input/Input.jsx'
+import Loader from './Loader.jsx'
 
 function Form({ fields, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
@@ -19,7 +20,7 @@ function Form({ fields, name, data }) {
 
   const addData = useSelector((state) => state.addData)
 
-  let { error: addError } = addData
+  let { error: addError, loading } = addData
 
   const handleSubmition = (e) => {
     e.preventDefault()
@@ -38,9 +39,7 @@ function Form({ fields, name, data }) {
     return moment(date).format('YYYY-MM-DD')
   }
 
-  useEffect(() => {
-    addError = ''
-  }, [name])
+  useEffect(() => {}, [name])
 
   return (
     <form
@@ -73,13 +72,13 @@ function Form({ fields, name, data }) {
                         setVals({
                           ...vals,
                           [inpName]: e.target.checked,
-                          location: 'Maharashtra',
+                          state: 'Maharashtra',
                         })
                       else
                         setVals({
                           ...vals,
                           [inpName]: e.target.checked,
-                          location: '',
+                          state: '',
                         })
                     } else {
                       setVals({
@@ -116,8 +115,13 @@ function Form({ fields, name, data }) {
                   optionLabel={'name'}
                   placeholder={`Select ${field.title}`}
                   checked={true}
+                  filter
                   maxSelectedLabels={1}
-                  className="w-full border capitalize md:w-48"
+                  panelClassName={'bg-yellow-300'}
+                  itemClassName={
+                    'bg-base-200 shadow-sm text-amber-200 focus:outline-none focus:ring-0'
+                  }
+                  className="w-full border border-amber-300 bg-transparent capitalize text-amber-200 focus:border-none focus:outline-none focus:ring-0 md:w-48"
                 />
               ) : inpType === 'file' ? (
                 <File
@@ -160,7 +164,7 @@ function Form({ fields, name, data }) {
         type="submit"
         className="w-full rounded-lg bg-blue-700 px-3 py-1.5 text-center text-sm font-medium text-white hover:bg-blue-800 sm:w-32 sm:text-lg"
       >
-        Submit
+        {loading ? <Loader /> : 'Submit'}
       </button>
     </form>
   )

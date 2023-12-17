@@ -10,12 +10,12 @@ export default function Boolean(props) {
         value={
           props.vals[props.name] === undefined ? false : props.vals[props.name]
         }
-        // checked={props.vals[props.name] !== undefined}
+        checked={props.vals[props.name] === true}
         onChange={props.onChange}
         className="peer sr-only"
       />
-      <div className="peer h-6 w-11 rounded-full bg-red-500 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-      <span className="ml-3 text-sm  capitalize text-gray-900">
+      <div className="after:bg-base-100 peer-checked:after:border-base-100 after:border-base-100 peer h-6 w-11 rounded-full bg-red-500 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:transition-all after:content-[''] peer-checked:bg-yellow-300 peer-checked:after:translate-x-full"></div>
+      <span className="ml-3 text-sm  capitalize text-amber-300">
         {props.inpTitle}
         {props.inpRequired && <sup className="font-bold text-red-600">*</sup>}
       </span>

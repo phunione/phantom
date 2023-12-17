@@ -16,6 +16,9 @@ import {
   GET_DATA_ERROR,
   GET_DATA_REQUEST,
   GET_DATA_SUCCESS,
+  GET_EXCEL_COMPANY_DATA_ERROR,
+  GET_EXCEL_COMPANY_DATA_REQUEST,
+  GET_EXCEL_COMPANY_DATA_SUCCESS,
 } from '../constants/data'
 
 export const addDataToTheForm = (details, name) => async (dispatch) => {
@@ -139,6 +142,20 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
       )
       body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+
+      details = body
+    } else if (name === 'excel-company') {
+      config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const body = new FormData()
+
+      body.append('start', details['start'])
+      body.append('end', details['end'])
+      body.append('excel', details['excel'])
 
       details = body
     }
@@ -372,6 +389,29 @@ export const deleteData = (path, id) => async (dispatch) => {
         err.response && err.response.data.detail
           ? err.response.data.detail
           : err.message,
+    })
+  }
+}
+
+export const getExcelCompanyData = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_EXCEL_COMPANY_DATA_REQUEST })
+
+    const url = `${BACKEND_URL}/excel-company/all/`
+    const config = {
+      headers: {
+        accept: 'application/json',
+      },
+    }
+
+    const { data } = await axios.get(url, config)
+
+    dispatch({ type: GET_EXCEL_COMPANY_DATA_SUCCESS, payload: data })
+  } catch (e) {
+    dispatch({
+      type: GET_EXCEL_COMPANY_DATA_ERROR,
+      payload:
+        e.response && e.response.data.error ? e.response.data.error : e.message,
     })
   }
 }

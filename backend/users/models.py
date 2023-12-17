@@ -18,6 +18,7 @@ class UserManager(BaseUserManager):
 
 	def create_superuser(self, email, password=None, **kwargs):
 		kwargs.setdefault('is_superuser', True)
+		kwargs.setdefault('is_excel_company_user', True)
 		kwargs.setdefault('is_staff', True)
 		kwargs.setdefault('is_active', True)
 
@@ -38,12 +39,12 @@ class User(AbstractUser):
 	email = models.EmailField(unique=True, null=False, blank=False)
 	first_name = models.CharField(max_length=100, blank=True, null=True)
 	last_name = models.CharField(max_length=100, blank=True, null=True)
-	avatar = models.ImageField(upload_to=file_path)
 
 	date_joined = models.DateTimeField(auto_now_add=True)
 	dob = models.DateField(blank=True, null=True)
 
 	is_superuser = models.BooleanField(default=False)
+	is_excel_company_user = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)
 	is_active = models.BooleanField(default=True)
 

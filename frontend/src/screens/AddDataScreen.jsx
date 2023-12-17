@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import Form from '../components/Form'
+import URForm from '../components/unique-relation/Form.jsx'
 import fields from '../utility/fields'
 
 function AddDataScreen() {
@@ -26,7 +27,7 @@ function AddDataScreen() {
           id="form_type"
           value={formType}
           onChange={handleFormTypeChange}
-          className="inline-block w-48 rounded-lg border-2 border-gray-300 bg-gray-50 pt-2 text-center text-sm capitalize text-gray-900 focus:border-gray-300 focus:ring-0"
+          className="bg-base-100 inline-block w-48 rounded-lg border-2 border-amber-300 pt-2 text-center text-sm capitalize text-amber-400 focus:border-amber-300 focus:ring-0"
         >
           <option value="">Choose Form Type</option>
           {options.map((option, idx) => (
@@ -49,6 +50,8 @@ function AddDataScreen() {
         ) : formType === 'company' ? (
           <Form fields={fields[formType]} name={formType} />
         ) : formType === 'unique-relation' ? (
+          <URForm fields={fields[formType]} name={formType} />
+        ) : formType === 'excel-company' ? (
           <Form fields={fields[formType]} name={formType} />
         ) : (
           <h1 className="mt-48 text-center text-5xl">

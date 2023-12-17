@@ -3,7 +3,19 @@
 @tailwind utilities;
 
 .p-checkbox .p-checkbox-box {
-  @apply border border-gray-400;
+  @apply bg-transparent border border-blue-400;
+}
+
+.p-multiselect-filter {
+  @apply bg-transparent text-amber-300 focus:border-amber-200 focus:outline-none focus:ring-0
+}
+
+.p-placeholder {
+  @apply text-amber-100
+}
+
+.p-multiselect-header {
+  @apply bg-base-300
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -27,7 +39,7 @@ input[type='number'] {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  @apply rounded-xl bg-quaternary;
+  @apply rounded-xl bg-base-100;
 }
 
 /* Handle */

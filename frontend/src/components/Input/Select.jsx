@@ -19,7 +19,10 @@ export default function Select(props) {
 
   return (
     <div className="w-full flex-col flex-wrap items-center justify-start pr-10 ">
-      <label htmlFor={props.id} className="mb-1 block text-xs capitalize">
+      <label
+        htmlFor={props.id}
+        className="mb-1 block text-xs capitalize text-amber-300"
+      >
         {props.inpTitle}
         {props.inpRequired && <sup className="font-bold text-red-600">*</sup>}
       </label>
@@ -37,7 +40,7 @@ export default function Select(props) {
         id={props.htmlFor}
         onChange={props.onChange}
         required={props.inpRequired}
-        className="block w-48 rounded-lg border border-gray-300 bg-gray-50 pt-2 text-center text-sm capitalize text-gray-900 focus:border-gray-300 focus:ring-0"
+        className="bg-base-100 block w-48 rounded-lg border border-amber-300 pt-2 text-center text-sm capitalize text-amber-200 focus:border-amber-300 focus:ring-0"
       >
         {props.options.map((option, idx) => (
           <option

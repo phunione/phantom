@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
@@ -6,6 +6,7 @@ import {
   addDataToTheFormReducer,
   deleteDataReducer,
   editDataToTheFormReducer,
+  excelCompanyDataReducer,
   getAllDataReducer,
   getDataReducer,
 } from './redux/reducers/dataReducers'
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   allData: getAllDataReducer,
   data: getDataReducer,
   deleteData: deleteDataReducer,
+  excelCompanyData: excelCompanyDataReducer,
 })
 
 const middleware = [thunk]

@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 	'banker',
 	'company',
 	'owner',
-	'ExcelData'
+	'ExcelData',
 
 	# corsheaders
 	'corsheaders',
