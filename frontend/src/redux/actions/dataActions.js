@@ -264,37 +264,46 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
 
       const body = new FormData()
 
-      body.append('name', details['name'])
-      body.append('pan_number', details['pan_number'])
-      body.append('pan_dob', details['pan_dob'])
-      body.append('company_status', details['company_status'])
-      body.append('querry_filled', details['querry_filled'])
-      body.append('isMaharashtra', details['isMaharashtra'])
-      body.append('state', details['state'])
-      body.append('type', details['type'])
-      body.append(
-        'address',
-        details['address'] === undefined ? '' : details['address'],
-      )
-      body.append(
-        'actor',
-        details['actor'] === undefined ? '' : JSON.stringify(details['actor']),
-      )
-      body.append(
-        'bank',
-        details['bank'] === undefined ? '' : JSON.stringify(details['bank']),
-      )
-      body.append(
-        'banker',
-        details['banker'] === undefined
-          ? ''
-          : JSON.stringify(details['banker']),
-      )
-      body.append(
-        'owner',
-        details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
-      )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+      if (details['name']) body.append('name', details['name'])
+      if (details['pan_number']) {
+        body.append('pan_number', details['pan_number'])
+      }
+      if (details['pan_dob']) {
+        body.append('pan_dob', details['pan_dob'])
+      }
+      if (details['company_status']) {
+        body.append('company_status', details['company_status'])
+      }
+      if (details['querry_filled']) {
+        body.append('querry_filled', details['querry_filled'])
+      }
+      if (details['isMaharashtra']) {
+        body.append('isMaharashtra', details['isMaharashtra'])
+      }
+      if (details['state']) {
+        body.append('state', details['state'])
+      }
+      if (details['type']) {
+        body.append('type', details['type'])
+      }
+      if (details['address']) {
+        body.append('address', details['address'])
+      }
+      if (details['actor']) {
+        body.append('actor', JSON.stringify(details['actor']))
+      }
+      if (details['bank']) {
+        body.append('bank', JSON.stringify(details['bank']))
+      }
+      if (details['banker']) {
+        body.append('banker', JSON.stringify(details['banker']))
+      }
+      if (details['owner']) {
+        body.append('owner', JSON.stringify(details['owner']))
+      }
+      if (details['pdfs']) {
+        body.append('pdfs', details['pdfs'])
+      }
 
       details = body
     }
