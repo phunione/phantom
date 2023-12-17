@@ -47,7 +47,7 @@ def add(req):
 @api_view(['GET'])
 def getAll(req):
 	try:
-		banker = Banker.objects.all()
+		banker = Banker.objects.all().order_by('id')
 		banker_serializer = BankerSerializer(banker, many=True)
 		return Response(banker_serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:

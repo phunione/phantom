@@ -19,103 +19,124 @@ const Table = ({ keys, titles, data }) => {
   }
 
   return (
-    <div className="h-screen overflow-auto">
-      {/* eslint-disable-next-line react/prop-types */}
-      {data.length ? (
-        <table className="min-w-full border bg-white">
-          <thead className="sticky top-0 z-30 bg-white">
-            <tr>
-              <th className="sticky left-0 top-0 z-10 border bg-white p-2 capitalize">
-                {titles[0]}
+    <div className="overflow-x-auto">
+      <table className="table-zebra table-pin-rows table-pin-cols table">
+        <thead>
+          <tr>
+            <th className={'border border-amber-200 capitalize'}>
+              {' '}
+              {titles[0]}{' '}
+            </th>
+            {titles.slice(1).map((title, index) => (
+              <td
+                key={index}
+                className=" border border-amber-200 text-center capitalize "
+              >
+                {title}
+              </td>
+            ))}
+            <th colSpan={2} className={'border border-amber-200 text-center'}>
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr key={index}>
+              <th className="border border-amber-200 text-center">
+                {(typeof item[keys[0]] === 'object' &&
+                  item[keys[0]].length === 0) ||
+                item[keys[0]] === undefined
+                  ? 'null'
+                  : typeof item[keys[0]] === 'string'
+                  ? isValidDate(item[keys[0]])
+                    ? moment(item[keys[0]]).format('MMMM DD, YYYY')
+                    : item[keys[0]]
+                  : item[keys[0]].toString()}
               </th>
-              {titles.slice(1).map((title, index) => (
-                <th key={index} className="w-40 border p-2 capitalize">
-                  {title}
-                </th>
+              {keys.slice(1).map((key, index) => (
+                <td
+                  key={index}
+                  className={`border border-amber-200 text-center`}
+                >
+                  {
+                    key === 'address' ? (
+                      <div
+                        className={`
+                            flex h-full w-96 flex-wrap items-center justify-center
+                          `}
+                      >
+                        {item[key] || 'null'}
+                      </div> // Show address
+                    ) : item[key] === null ? (
+                      'null'
+                    ) : (typeof item[key] === 'object' &&
+                        item[key] &&
+                        item[key].length === 0) ||
+                      item[key] === undefined ? (
+                      'null' // Checking If the item[key] is object
+                    ) : typeof item[key] === 'string' ? (
+                      item[key].trim() === '' ? (
+                        'null'
+                      ) : isValidDate(item[key]) ? ( // if the item[key] is a valid date
+                        moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
+                      ) : (
+                        item[key]
+                      ) // else show the string only
+                    ) : typeof item[key] === 'object' ? (
+                      item[key].map((it, idx) =>
+                        it.name
+                          ? `${it.name}${
+                              idx !== item[key].length - 1 ? ', ' : ''
+                            }`
+                          : `${it}${idx !== item[key].length - 1 ? ', ' : ''}`,
+                      )
+                    ) : (
+                      item[key].toString()
+                    ) // if nothing of the above, we just convert the value to a string and show it
+                  }
+                </td>
               ))}
               <th
                 colSpan={2}
-                className="sticky right-0 top-0 z-10 border bg-white p-2 capitalize"
+                className="sticky right-0 top-0 border border-amber-200 px-1 py-2"
               >
-                Actions
+                <div
+                  className={
+                    'justify ju flex flex-wrap items-center justify-center'
+                  }
+                >
+                  <Link
+                    to={`/edit${path}?id=${item.id}`}
+                    className="mr-1 inline rounded bg-blue-500 px-2 py-1 text-white transition-colors hover:bg-blue-600"
+                  >
+                    <i className="fal fa-pencil"></i>
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(path, item.id)}
+                    className="inline rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
+                  >
+                    <i className="fal fa-trash"></i>
+                  </button>
+                </div>
               </th>
             </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td className="sticky left-0 top-0 z-10 w-40 border bg-white p-2 text-center">
-                  {(typeof item[keys[0]] === 'object' &&
-                    item[keys[0]].length === 0) ||
-                  item[keys[0]] === undefined
-                    ? 'null'
-                    : typeof item[keys[0]] === 'string'
-                    ? isValidDate(item[keys[0]])
-                      ? moment(item[keys[0]]).format('MMMM DD, YYYY')
-                      : item[keys[0]]
-                    : item[keys[0]].toString()}
-                </td>
-                {keys.slice(1).map((key, index) => (
-                  <td key={index} className="w-40 border p-2 text-center ">
-                    {
-                      key === 'address'
-                        ? item[key] || 'null' // Show address
-                        : item[key] === null
-                        ? 'null'
-                        : (typeof item[key] === 'object' &&
-                            item[key] &&
-                            item[key].length === 0) ||
-                          item[key] === undefined
-                        ? 'null' // Checking If the item[key] is object
-                        : typeof item[key] === 'string'
-                        ? item[key].trim() === ''
-                          ? 'null'
-                          : isValidDate(item[key]) // if the item[key] is a valid date
-                          ? moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
-                          : item[key] // else show the string only
-                        : typeof item[key] === 'object'
-                        ? item[key].map(
-                            (it, idx) =>
-                              `${it.name}${
-                                idx !== item[key].length - 1 ? ', ' : ''
-                              }`,
-                          )
-                        : item[key].toString() // if nothing of the above, we just convert the value to a string and show it
-                    }
-                  </td>
-                ))}
-                <td
-                  colSpan={2}
-                  className="sticky right-0 top-0 z-10 border bg-white px-1 py-2"
-                >
-                  <div
-                    className={
-                      'justify ju flex flex-wrap items-center justify-center'
-                    }
-                  >
-                    <Link
-                      to={`/edit${path}?id=${item.id}`}
-                      className="mr-1 inline rounded bg-blue-500 px-2 py-1 text-white transition-colors hover:bg-blue-600"
-                    >
-                      <i className="fal fa-pencil"></i>
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(path, item.id)}
-                      className="inline rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
-                    >
-                      <i className="fal fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th className={'capitalize'}> {titles[0]} </th>
+            {titles.slice(1).map((title, index) => (
+              <td key={index} className=" text-center capitalize">
+                {title}
+              </td>
             ))}
-          </tbody>
-        </table>
-      ) : (
-        <div className="flex h-full items-center justify-center">
-          <h1 className="text-center text-7xl">No Data Found</h1>
-        </div>
-      )}
+            <th colSpan={2} className={'text-center'}>
+              Actions
+            </th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   )
 }

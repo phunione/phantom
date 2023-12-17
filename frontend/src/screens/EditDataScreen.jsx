@@ -26,15 +26,17 @@ function EditDataScreen({ formType }) {
         <>
           <div className="mt-6 flex flex-wrap items-center justify-center">
             {formType === 'actor' ? (
-              <Form fields={fields.actor} name="actor" data={data} />
+              <Form fields={fields.actor} name={formType} data={data} />
             ) : formType === 'bank' ? (
-              <Form fields={fields.bank} name="bank" data={data} />
+              <Form fields={fields.bank} name={formType} data={data} />
             ) : formType === 'banker' ? (
-              <Form fields={fields.banker} name="banker" data={data} />
+              <Form fields={fields.banker} name={formType} data={data} />
             ) : formType === 'owner' ? (
-              <Form fields={fields.owner} name="owner" data={data} />
+              <Form fields={fields.owner} name={formType} data={data} />
             ) : formType === 'company' ? (
-              <Form fields={fields.company} name="company" data={data} />
+              <Form fields={fields.company} name={formType} data={data} />
+            ) : formType === 'excel-company' ? (
+              <Form fields={fields.company} name={formType} data={data} />
             ) : (
               <h1 className="mt-48 text-center text-5xl">
                 Please select a type of Form you want to Fill

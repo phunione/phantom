@@ -63,7 +63,7 @@ def add(req):
 @api_view(['GET'])
 def getAll(req):
 	try:
-		company = Company.objects.all()
+		company = Company.objects.all().order_by('id')
 		company_serializer = CompanySerializer(company, many=True)
 		return Response(company_serializer.data, status=status.HTTP_200_OK)
 	except Exception as e:

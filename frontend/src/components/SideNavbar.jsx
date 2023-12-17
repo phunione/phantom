@@ -22,6 +22,11 @@ function SideNavBar() {
     },
     {
       id: 'm-7',
+      name: 'Excel Companies',
+      to: '/excel-company',
+    },
+    {
+      id: 'm-8',
       name: 'Add?',
       to: '/add',
     },

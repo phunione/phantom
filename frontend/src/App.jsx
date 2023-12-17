@@ -3,6 +3,7 @@ import AddDataScreen from './screens/AddDataScreen'
 import SideNavBar from './components/SideNavbar'
 import EditDataScreen from './screens/EditDataScreen'
 import ShowDataScreen from './screens/ShowDataScreen.jsx'
+import ExcelCompanyScreen from './screens/ExcelCompanScreen.jsx'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 path="/company"
                 element={<ShowDataScreen dataFor={'company'} />}
               />
+              <Route path="/excel-company" element={<ExcelCompanyScreen />} />
               <Route
                 path="/edit/actor"
                 element={<EditDataScreen formType={'actor'} />}

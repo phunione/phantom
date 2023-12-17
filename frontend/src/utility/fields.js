@@ -475,12 +475,12 @@ const fields = {
       options: ['Select Banker Id', ...bankerOptions],
     },
     {
-      title: 'id',
-      id: 'id',
-      name: 'id',
+      title: 'owner ids',
+      id: 'owner',
+      name: 'owner',
       required: false,
       type: 'select',
-      options: ['Select Id', ...ownerOptions],
+      options: ['Select Owner', ...ownerOptions],
     },
     {
       title: 'company',
@@ -497,6 +497,29 @@ const fields = {
       required: true,
       type: 'select',
       options: ['Select Type', 'A', 'B'],
+    },
+  ],
+  'excel-company': [
+    {
+      title: 'start row',
+      id: 'start',
+      name: 'start',
+      required: true,
+      type: 'number',
+    },
+    {
+      title: 'end row',
+      id: 'end',
+      name: 'end',
+      required: true,
+      type: 'number',
+    },
+    {
+      title: 'excel file',
+      id: 'excel',
+      name: 'excel',
+      required: true,
+      type: 'file',
     },
   ],
 }
