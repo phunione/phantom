@@ -31,17 +31,20 @@ def add(req):
                         else:
                                 if(exc[x][i] == "" or exc[x][i] == None):
                                         print("none")
-                                        
+                                        x="".join(c for c in x if c.isalnum())
+                                        x.lower();    
                                         dataToPush.update({x:""})
                                 else:
+                                        x="".join(c for c in x if c.isalnum())
+                                        x.lower();
                                         dataToPush.update({x:exc[x][i]})
                 
                 a,b = exc["FIRST PARTNER"][i].split('-')
                 c,m = exc["SECOND PARTNER"][i].split('-')
                 
                 dataToPush.update( {
-                "OwnerName" : [a,c],
-                "OwnerPan" : [b,m],
+                "ownername" : [a,c],
+                "ownerpan" : [b,m],
                 })
                 excelcompany = ExcelCompany.objects.create(dataToPush)
                 excelcompany.save()
