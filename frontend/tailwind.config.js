@@ -16,6 +16,9 @@ export default {
       },
     },
   },
+  daisyui: {
+    themes: ['dark', 'coffee'],
+  },
   // eslint-disable-next-line no-undef
   plugins: [require('flowbite/plugin'), require('daisyui')],
 }
