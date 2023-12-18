@@ -17,7 +17,7 @@ class RegisteredUserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ['id', 'first_name', 'last_name', 'email', 'dob', 'avatar', 'token']
+		fields = ['id', 'first_name', 'last_name', 'email', 'dob', 'token', 'is_superuser', 'is_excel_company_user']
 
 
 class LoginSerializer(TokenObtainPairSerializer):

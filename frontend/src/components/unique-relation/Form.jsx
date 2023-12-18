@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Loader.jsx'
 import { BACKEND_URL } from '../../main.jsx'
 import axios from 'axios'
+import Message from '../Message.jsx'
 
 const Form = () => {
   const [company, setCompany] = useState()
@@ -105,7 +106,7 @@ const Form = () => {
       onSubmit={handleSubmit}
     >
       {/*Message for the error*/}
-      {error && <div className={'text-red-600'}>{error}</div>}
+      {error && <Message message={error} variant={'error'} />}
 
       {/*Actual Form starts*/}
       <div className="flex w-full flex-wrap items-center justify-start py-6">

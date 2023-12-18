@@ -10,8 +10,12 @@ import {
   getAllDataReducer,
   getDataReducer,
 } from './redux/reducers/dataReducers'
+import { login, signup } from './redux/reducers/userReducers.js'
 
 const reducer = combineReducers({
+  userLogin: login,
+  userRegister: signup,
+
   addData: addDataToTheFormReducer,
   editData: editDataToTheFormReducer,
   allData: getAllDataReducer,
@@ -20,9 +24,15 @@ const reducer = combineReducers({
   excelCompanyData: excelCompanyDataReducer,
 })
 
+const userInfoFromStorage = localStorage.getItem('userInfo')
+const userInfo = userInfoFromStorage ? JSON.parse(userInfoFromStorage) : null
+
 const middleware = [thunk]
 
 const initialState = {
+  userLogin: {
+    userInfo: userInfo,
+  },
   allData: { loading: true, data: [] },
   data: { loading: true, data: {} },
 }

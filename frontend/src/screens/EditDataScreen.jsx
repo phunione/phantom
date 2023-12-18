@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import Form from '../components/Form'
 import fields from '../utility/fields'
 import { getData } from '../redux/actions/dataActions'
+import Loader from '../components/Loader.jsx'
+import Message from '../components/Message.jsx'
 
 function EditDataScreen({ formType }) {
   const params = new URLSearchParams(window.location.search)
@@ -19,9 +21,9 @@ function EditDataScreen({ formType }) {
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+        <Loader className={'loading-lg'} />
       ) : error ? (
-        <div>{error}</div>
+        <Message message={error} variant={'error'} />
       ) : (
         <>
           <div className="mt-6 flex flex-wrap items-center justify-center">

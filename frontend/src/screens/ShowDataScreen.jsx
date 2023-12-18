@@ -3,6 +3,8 @@ import Table from '../components/Table'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllData } from '../redux/actions/dataActions'
 import fields from '../utility/fields'
+import Loader from '../components/Loader.jsx'
+import Message from '../components/Message.jsx'
 
 function ShowDataScreen({ dataFor }) {
   const dispatch = useDispatch()
@@ -23,9 +25,11 @@ function ShowDataScreen({ dataFor }) {
   }, [dispatch, dataFor, success])
 
   return loading ? (
-    <div>loading</div>
+    <div className={'flex h-screen items-center justify-center'}>
+      <Loader className={'loading-lg'} />
+    </div>
   ) : error ? (
-    <div>{error}</div>
+    <Message variant={'error'} message={error} className={'mb-5'} />
   ) : data ? (
     <div className="w-full">
       <Table keys={keys} titles={titles} data={data} />

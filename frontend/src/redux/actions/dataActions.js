@@ -167,9 +167,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
     dispatch({
       type: ADD_DATA_ERROR,
       payload:
-        e.response && e.response.data.detail
-          ? e.response.data.detail
-          : e.message,
+        e.response && e.response.data.error ? e.response.data.error : e.message,
     })
   }
 }
@@ -315,9 +313,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
     dispatch({
       type: EDIT_DATA_ERROR,
       payload:
-        e.response && e.response.data.detail
-          ? e.response.data.detail
-          : e.message,
+        e.response && e.response.data.error ? e.response.data.error : e.message,
     })
   }
 }
@@ -343,9 +339,7 @@ export const getAllData = (dataFor) => async (dispatch) => {
     dispatch({
       type: GET_ALL_DATA_ERROR,
       payload:
-        e.response && e.response.data.detail
-          ? e.response.data.detail
-          : e.message,
+        e.response && e.response.data.error ? e.response.data.error : e.message,
     })
   }
 }
@@ -369,9 +363,7 @@ export const getData = (dataFor, id) => async (dispatch) => {
     dispatch({
       type: GET_DATA_ERROR,
       payload:
-        e.response && e.response.data.detail
-          ? e.response.data.detail
-          : e.message,
+        e.response && e.response.data.error ? e.response.data.error : e.message,
     })
   }
 }
@@ -395,8 +387,8 @@ export const deleteData = (path, id) => async (dispatch) => {
     dispatch({
       type: DELETE_DATA_ERROR,
       payload:
-        err.response && err.response.data.detail
-          ? err.response.data.detail
+        err.response && err.response.data.error
+          ? err.response.data.error
           : err.message,
     })
   }

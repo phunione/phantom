@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { logout } from '../redux/actions/userActions.js'
+import { useDispatch, useSelector } from 'react-redux'
 
 function SideNavBar() {
   const [currPathName, setCurrentPathName] = useState(window.location.pathname)
   const pathName = window.location.pathname
+
+  const dispatch = useDispatch()
+  const { userInfo } = useSelector((state) => state.userLogin)
 
   const links = [
     { id: 'm-1', name: 'Actors', to: '/actor' },
@@ -20,11 +25,13 @@ function SideNavBar() {
       name: 'Unique Relations',
       to: '/unique-relation',
     },
-    {
-      id: 'm-7',
-      name: 'Excel Companies',
-      to: '/excel-company',
-    },
+    userInfo.is_superuser || userInfo.is_excel_company_user
+      ? {
+          id: 'm-7',
+          name: 'Excel Companies',
+          to: '/excel-company',
+        }
+      : {},
     {
       id: 'm-8',
       name: 'Add?',
@@ -40,29 +47,61 @@ function SideNavBar() {
     setCurrentPathId(link.id)
   }
 
+  useEffect(() => {}, [pathName])
+
   return (
-    <div className="min-h-screen w-1/5 bg-tertiary text-white">
+    <div className="flex min-h-screen w-1/5 flex-col items-center justify-evenly bg-tertiary text-white">
       {/* Logo */}
       <div className="py-7">
-        <h1 className="text-center text-4xl">Phantom</h1>
+        <Link to="/">
+          <h1 className="text-center text-4xl">Phantom</h1>
+        </Link>
       </div>
 
       {/* Links */}
-      <div className="mt-2 text-2xl">
-        {links.map((link, idx) => (
+      <div className="text-2xl">
+        {links.map(
+          (link, idx) =>
+            link?.to && (
+              <Link
+                key={idx}
+                to={link.to}
+                onClick={() => handleLinkClick(link)}
+                className={`inline-block w-full rounded-2xl py-3 ${
+                  pathName === currPathName && link.id === currPathId
+                    ? 'bg-primary hover:text-white'
+                    : 'text-gray-400 hover:bg-primary hover:text-white'
+                } transition-colors`}
+              >
+                <p className="text-center text-lg">{link.name}</p>
+              </Link>
+            ),
+        )}
+      </div>
+
+      <div className={'flex h-1/6 w-full items-center justify-evenly'}>
+        {userInfo?.is_superuser && (
           <Link
-            key={idx}
-            to={link.to}
-            onClick={() => handleLinkClick(link)}
+            to="/register"
+            onClick={() => handleLinkClick({ to: '/register', id: 'm-9' })}
             className={`inline-block w-full rounded-2xl py-3 ${
-              pathName === currPathName && link.id === currPathId
+              pathName === currPathName && 'm-9' === currPathId
                 ? 'bg-primary hover:text-white'
                 : 'text-gray-400 hover:bg-primary hover:text-white'
             } transition-colors`}
           >
-            <p className="text-center text-lg">{link.name}</p>
+            <p className="text-center text-lg">Register</p>
           </Link>
-        ))}
+        )}
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            dispatch(logout())
+          }}
+          className="inline-block w-full rounded-2xl py-3 text-gray-400 transition-colors hover:bg-primary hover:text-white"
+        >
+          <p className="text-center text-lg">Logout</p>
+        </button>
       </div>
     </div>
   )

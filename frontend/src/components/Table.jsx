@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
 
 const Table = ({ keys, titles, data }) => {
-  console.log(data)
   const dispatch = useDispatch()
 
   const path = window.location.pathname
@@ -20,7 +19,7 @@ const Table = ({ keys, titles, data }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="table-zebra table-pin-rows table-pin-cols table">
+      <table className="table table-zebra table-pin-rows table-pin-cols">
         <thead>
           <tr>
             <th className={'border border-amber-200 capitalize'}>

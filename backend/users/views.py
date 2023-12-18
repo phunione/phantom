@@ -23,11 +23,17 @@ def signup(request):
 	data = request.data
 
 	try:
-		user = User.objects.create(first_name=data['first_name'], email=data['email'],
-		                           password=make_password(data['password']))
-		serializer = RegisteredUserSerializer(user, many=False)
-		return Response(serializer.data, status=status.HTTP_201_CREATED)
-	except:
+		user = User.objects.create(email=data['email'], password=make_password(data['password']))
+
+		if (data['type'] == 'excel'):
+			user.is_excel_company_user = True
+
+		user.save()
+
+		message = {'success': True, 'message': "User created successfully"}
+		return Response(message, status=status.HTTP_201_CREATED)
+	except Exception as e:
+		print(e)
 		message = {'detail': 'User with this email already exists'}
 		return Response(message, status=status.HTTP_400_BAD_REQUEST)
 

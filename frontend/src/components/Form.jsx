@@ -9,6 +9,7 @@ import Select from './Input/Select.jsx'
 import File from './Input/File.jsx'
 import Input from './Input/Input.jsx'
 import Loader from './Loader.jsx'
+import Message from './Message.jsx'
 
 function Form({ fields, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
@@ -48,7 +49,7 @@ function Form({ fields, name, data }) {
       onSubmit={handleSubmition}
     >
       {/*Message for the error*/}
-      {addError && <div className={'text-red-600'}>{addError}</div>}
+      {addError && <Message message={addError} variant={'error'} />}
 
       {/*Actual Form starts*/}
       <div className="flex flex-wrap items-center justify-start py-6">
