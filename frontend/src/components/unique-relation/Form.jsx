@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { getAllData } from '../../redux/actions/dataActions.js'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Loader.jsx'
+import { BACKEND_URL } from '../../main.jsx'
+import axios from 'axios'
 
 const Form = () => {
-  const [company, setCompany] = useState('')
-  const [banker, setBanker] = useState('')
-  const [owner, setOwner] = useState('')
-  const [actor, setActor] = useState('')
-  const [type, setType] = useState('')
+  const [company, setCompany] = useState()
+  const [banker, setBanker] = useState()
+  const [owner, setOwner] = useState()
+  const [actor, setActor] = useState()
+  const [type, setType] = useState()
 
   const dispatch = useDispatch()
 
@@ -19,11 +21,75 @@ const Form = () => {
   const [ownerOptions, setOwnerOptions] = useState([])
   const [actorOptions, setActorOptions] = useState([])
 
-  console.log('bankerOptions', bankerOptions)
-  console.log('ownerOptions', ownerOptions)
+  const fetchData = async (owner) => {
+    try {
+      const config = {
+        headers: {
+          accept: 'application/json',
+        },
+      }
 
-  const fetchData = async () => {
-    // await axios.get(`${BACKEND_URL}/company/owner`)
+      console.log('owner', owner)
+      console.log('banker', banker)
+
+      if (owner && banker) {
+        const requestData = {
+          owner_id: owner,
+          banker_id: banker,
+        }
+
+        // Build the query parameters
+        const queryParams = new URLSearchParams(requestData)
+
+        const { data } = await axios.get(
+          `${BACKEND_URL}/owner/actor/all/?${queryParams}`,
+          config,
+        )
+
+        console.log(data)
+        setActorOptions(data)
+      } else {
+        // noinspection ExceptionCaughtLocallyJS
+        alert(Error('Please select banker and owner'))
+      }
+    } catch (e) {
+      console.log(e)
+      alert(
+        e.response && e.response.data.error ? e.response.data.error : e.message,
+      )
+    }
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+
+    try {
+      const config = {
+        headers: {
+          accept: 'application/json',
+        },
+      }
+
+      const body = {
+        company,
+        banker,
+        owner,
+        actor,
+      }
+
+      const { data } = await axios.put(
+        `${BACKEND_URL}/company/edit-relation/${company}/`,
+        body,
+        config,
+      )
+
+      alert(data.message)
+    } catch (e) {
+      console.log(e)
+      alert(
+        e.response && e.response.data.error ? e.response.data.error : e.message,
+      )
+    }
   }
 
   useEffect(() => {
@@ -36,7 +102,7 @@ const Form = () => {
     <form
       className="flex w-full flex-col items-center overflow-auto px-20"
       name={name}
-      // onSubmit={handleSubmition}
+      onSubmit={handleSubmit}
     >
       {/*Message for the error*/}
       {error && <div className={'text-red-600'}>{error}</div>}
@@ -73,14 +139,7 @@ const Form = () => {
             <div className="label">
               <span className="label-text">Select Banker</span>
             </div>
-            <select
-              className="select select-bordered"
-              value={banker.id}
-              onChange={(e) => {
-                setOwner(e.target.value)
-              }}
-              disabled
-            >
+            <select className="select select-bordered" value={banker} disabled>
               <option value={bankerOptions.id}>{bankerOptions.name}</option>
             </select>
           </label>
@@ -95,10 +154,33 @@ const Form = () => {
               className="select select-bordered"
               onChange={(e) => {
                 setOwner(e.target.value)
+                fetchData(e.target.value)
               }}
             >
               <option value={''}>Select Owner</option>
               {ownerOptions?.map((option, idx) => (
+                <option key={idx} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
+        {actorOptions.length > 0 && (
+          <label className="form-control w-1/4 max-w-xs">
+            <div className="label">
+              <span className="label-text">Select Actor</span>
+            </div>
+            <select
+              className="select select-bordered"
+              onChange={(e) => {
+                setActor(e.target.value)
+                // fetchData()
+              }}
+            >
+              <option value={''}>Select Actor</option>
+              {actorOptions?.map((option, idx) => (
                 <option key={idx} value={option.id}>
                   {option.name}
                 </option>

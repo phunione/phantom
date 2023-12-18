@@ -7,4 +7,5 @@ urlpatterns = [
 	path('<id>/', views.getOne, name='get-one-company'),
 	path('delete/<id>/', views.delete, name='delete-company'),
 	path('edit/<id>/', views.edit, name='edit-company'),
+	path('edit-relation/<id>/', views.editRelation, name='edit-relations-company'),
 ]

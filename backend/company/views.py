@@ -103,47 +103,46 @@ def edit(req, id):
 	data = req_data.copy()
 	try:
 		pdfs = ''
-		if data['pdfs'] != '':
+		if 'pdfs' in data:
 			pdfs = data['pdfs']
-		del data['pdfs']
+			del data['pdfs']
 
 		parsed_actor_data = []
-		if data['actor'] != '':
+		if 'actor' in data:
 			parsed_actor_data = json.loads(data['actor'])
-		del data['actor']
+			del data['actor']
 
 		parsed_bank_data = ''
-		if data['bank'] != '':
+		if 'bank' in data:
 			parsed_bank_data = json.loads(data['bank'])
 			if type(parsed_bank_data) == list:
 				print("in bank")
 				parsed_bank_data = str(parsed_bank_data[0]['id'])
-		del data['bank']
+			del data['bank']
 
 		parsed_banker_data = ''
-		if data['banker'] != "":
+		if 'banker' in data:
 			parsed_banker_data = json.loads(data['banker'])
 			if type(parsed_banker_data) == list:
 				print("in banker")
 				parsed_banker_data = str(parsed_banker_data[0]['id'])
-		del data['banker']
+			del data['banker']
 
 		parsed_owner_data = []
-		if data['owner'] != '':
+		if 'owner' in data:
 			parsed_owner_data = json.loads(data['owner'])
-		del data['owner']
-
-		print(pdfs, parsed_actor_data, parsed_bank_data, parsed_banker_data, parsed_owner_data)
+			del data['owner']
 
 		company = Company.objects.get(id=id)
 
 		for key, value in data.items():
 			setattr(company, key, value)
 
-		if data['isMaharashtra'] == 'true':
-			company.isMaharashtra = True
-		else:
-			company.isMaharashtra = False
+		if 'isMaharashtra' in data:
+			if data['isMaharashtra'] == 'true':
+				company.isMaharashtra = True
+			else:
+				company.isMaharashtra = False
 
 		if pdfs != '':
 			company.pdfs = data['pdfs']
@@ -171,6 +170,38 @@ def edit(req, id):
 			for d in parsed_owner_data:
 				owner_obj = Owner.objects.get(id=d['id'])
 				company.owner.add(owner_obj)
+
+		company.save()
+
+		message = {'success': True, 'message': "Banker edited successfully"}
+		return Response(message, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': "Error Updating Bank"}
+		return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def editRelation(req, id):
+	req_data = req.data
+	data = req_data.copy()
+	try:
+		parsed_actor_data = []
+		if 'actor' in data:
+			parsed_actor_data = int(data['actor'])
+			parsed_actor_data = Actor.objects.get(id=parsed_actor_data)
+			del data['actor']
+
+		parsed_owner_data = []
+		if 'owner' in data:
+			parsed_owner_data = int(data['owner'])
+			parsed_owner_data = Owner.objects.get(id=parsed_owner_data)
+			del data['owner']
+
+		company = Company.objects.get(id=id)
+
+		company.actor.add(parsed_actor_data)
+		company.owner.add(parsed_owner_data)
 
 		company.save()
 

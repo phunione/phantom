@@ -6,6 +6,7 @@ from rest_framework import status
 
 from .models import Owner
 from actor.models import Actor
+from actor.serializers import ActorSerializer
 from banker.models import Banker
 from company.models import Company
 from .serializers import OwnerSerializer
@@ -133,16 +134,19 @@ def edit(req, id):
 		if pdfs != '':
 			owner.pdfs = pdfs
 
+		owner.actor_set.clear()
 		if parsed_actor_data:
 			for d in parsed_actor_data:
 				actor_obj = Actor.objects.get(id=d['id'])
 				owner.actor_set.add(actor_obj)
 
+		owner.company_set.clear()
 		if parsed_company_data:
 			for d in parsed_company_data:
 				company_obj = Company.objects.get(id=d['id'])
 				owner.company_set.add(company_obj)
 
+		owner.banker_set.clear()
 		if parsed_banker_data:
 			for d in parsed_banker_data:
 				banker_obj = Banker.objects.get(id=d['id'])
@@ -162,3 +166,57 @@ def edit(req, id):
 			'error': 'Error editing Owner'
 		}
 		return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getAllActors(req):
+	data = req.query_params
+	print(data)
+	owner_id = int(data['owner_id'])
+	banker_id = int(data['banker_id'])
+
+	try:
+		banker_obj = Banker.objects.get(id=banker_id)
+		owner_obj = Owner.objects.get(id=owner_id)
+
+		print(owner_obj.id)
+		print(banker_obj.owner.all())
+		print(owner_obj in banker_obj.owner.all())
+
+		if owner_obj in banker_obj.owner.all():
+			print("IN")
+			# get the actors in banker and owner
+			actor_in_banker = banker_obj.actor_set.all()
+			actor_in_owner = owner_obj.actor_set.all()
+
+			# iterate in actor_in_banker
+			for actor in actor_in_banker:
+				# check if the actor in actor_in_banker is present in actor_in_owner
+				# P.S. This has to be the case in order to return the actor
+				if actor in actor_in_owner:
+					serializer = ActorSerializer(actor, many=False)
+					return Response([serializer.data], status=status.HTTP_200_OK)
+				else:
+					message = {
+						'success': False,
+						'error': 'Actor not present in neither banker nor owner'
+					}
+					return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
+		print("OUT")
+		# Add relation between owner and banker
+		banker_obj.owner.add(owner_obj)
+		banker_obj.save()
+
+		# Get all actors
+		actor = Actor.objects.all()
+		serializer = ActorSerializer(actor, many=True)
+
+		return Response(serializer.data, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {
+			'success': False,
+			'error': 'Error Fetching Actor'
+		}
+		return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
