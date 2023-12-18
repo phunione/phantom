@@ -58,7 +58,7 @@ class Company(models.Model):
 	]
 
 	name = models.CharField(max_length=200, null=False, blank=False)
-	pan_number = models.CharField(max_length=10, null=False, blank=False)
+	pan_number = models.CharField(max_length=20, null=False, blank=False)
 	pan_dob = models.DateField(null=False, blank=False)
 	querry_filled = models.DateField(auto_now_add=True)
 

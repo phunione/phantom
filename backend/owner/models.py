@@ -15,8 +15,8 @@ class Owner(models.Model):
 	]
 
 	name = models.CharField(max_length=200, null=False, blank=False)
-	adhar_number = models.CharField(max_length=14, null=False, blank=False)
-	pan_number = models.CharField(max_length=10, null=False, blank=False)
+	adhar_number = models.CharField(max_length=26, null=False, blank=False)
+	pan_number = models.CharField(max_length=20, null=False, blank=False)
 	din_number = models.CharField(max_length=20, null=True, blank=True)
 	otp_phoneNr = models.CharField(max_length=20, null=True, blank=True)
 	sim_number = models.CharField(max_length=10, null=True, blank=True)
