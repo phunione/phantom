@@ -12,6 +12,7 @@ import ExcelCompanyScreen from './screens/ExcelCompanScreen.jsx'
 import { useSelector } from 'react-redux'
 import LoginScreen from './screens/LoginScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
+import UniqueRelationScreen from './screens/UniqueRelationScreen.jsx'
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin)
@@ -92,7 +93,7 @@ function App() {
                 />
                 <Route
                   path="/unique-relation"
-                  element={<ShowDataScreen dataFor={'unique-relation'} />}
+                  element={<UniqueRelationScreen />}
                 />
               </Routes>
             </div>

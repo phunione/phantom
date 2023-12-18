@@ -25,7 +25,7 @@ function SideNavBar() {
       name: 'Unique Relations',
       to: '/unique-relation',
     },
-    userInfo.is_superuser || userInfo.is_excel_company_user
+    userInfo?.is_superuser || userInfo?.is_excel_company_user
       ? {
           id: 'm-7',
           name: 'Excel Companies',

@@ -22,9 +22,8 @@ const Table = ({ keys, titles, data }) => {
       <table className="table table-zebra table-pin-rows table-pin-cols">
         <thead>
           <tr>
-            <th className={'border border-amber-200 capitalize'}>
-              {' '}
-              {titles[0]}{' '}
+            <th className={'border border-amber-200 text-center capitalize'}>
+              {titles[0]}
             </th>
             {titles.slice(1).map((title, index) => (
               <td
@@ -124,7 +123,7 @@ const Table = ({ keys, titles, data }) => {
         </tbody>
         <tfoot>
           <tr>
-            <th className={'capitalize'}> {titles[0]} </th>
+            <th className={'text-center capitalize'}> {titles[0]} </th>
             {titles.slice(1).map((title, index) => (
               <td key={index} className=" text-center capitalize">
                 {title}

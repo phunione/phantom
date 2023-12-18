@@ -179,31 +179,28 @@ def getAllActors(req):
 		banker_obj = Banker.objects.get(id=banker_id)
 		owner_obj = Owner.objects.get(id=owner_id)
 
-		print(owner_obj.id)
-		print(banker_obj.owner.all())
-		print(owner_obj in banker_obj.owner.all())
-
 		if owner_obj in banker_obj.owner.all():
-			print("IN")
 			# get the actors in banker and owner
-			actor_in_banker = banker_obj.actor_set.all()
-			actor_in_owner = owner_obj.actor_set.all()
+			actors_in_banker = banker_obj.actor_set.all()
+			actors_in_owner = owner_obj.actor_set.all()
 
 			# iterate in actor_in_banker
-			for actor in actor_in_banker:
-				# check if the actor in actor_in_banker is present in actor_in_owner
+			for actor in actors_in_banker:
+				# check if the actor in actors_in_banker is present in actors_in_owner
 				# P.S. This has to be the case in order to return the actor
-				if actor in actor_in_owner:
+				if actor in actors_in_owner:
+					print(actor)
 					serializer = ActorSerializer(actor, many=False)
 					return Response([serializer.data], status=status.HTTP_200_OK)
-				else:
-					message = {
-						'success': False,
-						'error': 'Actor not present in neither banker nor owner'
-					}
-					return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
 
-		print("OUT")
+		# if actor is not found above, then the relation is non existent and they should delete the relation
+		if owner_obj in banker_obj.owner.all():
+			message = {
+				'success': False,
+				'error': 'No actor found in either banker or owner, but they are connected, please review your reation!'
+			}
+			return Response(message, status=status.HTTP_418_IM_A_TEAPOT)
+
 		# Add relation between owner and banker
 		banker_obj.owner.add(owner_obj)
 		banker_obj.save()

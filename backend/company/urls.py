@@ -8,4 +8,5 @@ urlpatterns = [
 	path('delete/<id>/', views.delete, name='delete-company'),
 	path('edit/<id>/', views.edit, name='edit-company'),
 	path('edit-relation/<id>/', views.editRelation, name='edit-relations-company'),
+	path('unique-relation/all/', views.getUniqueRelations, name='get-unique-relations-company'),
 ]

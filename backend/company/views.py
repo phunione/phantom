@@ -200,6 +200,9 @@ def editRelation(req, id):
 
 		company = Company.objects.get(id=id)
 
+		parsed_owner_data.actor_set.add(parsed_actor_data)
+		parsed_owner_data.save()
+
 		company.actor.add(parsed_actor_data)
 		company.owner.add(parsed_owner_data)
 
@@ -210,4 +213,29 @@ def editRelation(req, id):
 	except Exception as e:
 		print(e)
 		message = {'success': False, 'error': "Error Updating Bank"}
+		return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getUniqueRelations(req):
+	try:
+		companies = Company.objects.all()
+		data = []
+		for company in companies:
+			owners = company.owner.all()
+			banker = company.banker
+			for owner in owners:
+				print(company, owner, banker, "->", owner in banker.owner.all())
+				if owner in banker.owner.all():
+					actors_in_banker = banker.actor_set.all()
+					actors_in_owner = owner.actor_set.all()
+
+					for actor in actors_in_owner:
+						if actor in actors_in_banker:
+							data.append({'company': company.name, 'banker': banker.name, 'owner': owner.name, 'actor': actor.name})
+
+		return Response(data, status=status.HTTP_200_OK)
+	except Exception as e:
+		print(e)
+		message = {'success': False, 'error': "Error Getting Unique Relations"}
 		return Response(message, status=status.HTTP_400_BAD_REQUEST)

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-function Message({ message, variant, className }) {
+function Message({ message, variant, className, appear }) {
   const [isVisible, setIsVisible] = useState(true)
 
   setTimeout(() => {
-    setIsVisible(false)
+    if (!appear) setIsVisible(false)
   }, 2000)
 
   return (
