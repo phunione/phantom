@@ -12,9 +12,9 @@ import Loader from './Loader.jsx'
 import Message from './Message.jsx'
 
 function Form({ fields, name, data }) {
-  const [vals, setVals] = useState(data === undefined ? {} : data)
+  if (data && data['pdfs']) delete data['pdfs']
 
-  console.log(vals)
+  const [vals, setVals] = useState(data === undefined ? {} : data)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -130,11 +130,43 @@ function Form({ fields, name, data }) {
                   id={inpId}
                   name={inpName}
                   required={inpRequired}
+                  accept={
+                    inpName === 'pdfs' ? 'application/pdf' : '.xls, .xlsx'
+                  }
                   onChange={(e) => {
-                    setVals({
-                      ...vals,
-                      [inpName]: e.target.files[0],
-                    })
+                    if (inpName === 'pdfs') {
+                      const file = e.target.files[0]
+                      let fileName = file.name
+                      let fileExtension = fileName
+                        .split('.')
+                        .pop()
+                        .toLowerCase()
+
+                      if (fileExtension === 'pdf') {
+                        setVals({
+                          ...vals,
+                          [inpName]: e.target.files[0],
+                        })
+                      } else {
+                        alert('Please select only pdfs')
+                      }
+                    } else if (inpName === 'excel') {
+                      const file = e.target.files[0]
+                      let fileName = file.name
+                      let fileExtension = fileName
+                        .split('.')
+                        .pop()
+                        .toLowerCase()
+
+                      if (fileExtension === 'xls' || fileExtension === 'xlsx') {
+                        setVals({
+                          ...vals,
+                          [inpName]: e.target.files[0],
+                        })
+                      }
+                    } else {
+                      console.log(inpName)
+                    }
                   }}
                   inpTitle={inpTitle}
                 />

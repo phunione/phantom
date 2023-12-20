@@ -15,8 +15,6 @@ function SignupForm() {
   const { error, userInfo, loading } = user
   const message = userInfo?.message
 
-  console.log(userInfo)
-
   function handleSubmit(event) {
     event.preventDefault()
     dispatch(register(type, email, password))
