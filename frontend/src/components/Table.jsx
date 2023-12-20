@@ -86,7 +86,7 @@ const Table = ({ keys, titles, data }) => {
                         moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
                       ) : key === 'pdfs' && item[key] ? (
                         <a
-                          href={`${BACKEND_URL}${item[key]}`}
+                          href={import.meta.env.PROD ? item[key] : `${BACKEND_URL}${item[key]}`}
                           target={'_blank'}
                           rel="noreferrer"
                           className={
