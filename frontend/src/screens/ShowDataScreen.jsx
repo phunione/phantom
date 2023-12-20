@@ -29,13 +29,18 @@ function ShowDataScreen({ dataFor }) {
       <Loader className={'loading-lg'} />
     </div>
   ) : error ? (
+    <div className={'flex h-screen items-center justify-center'}>
+
     <Message variant={'error'} message={error} className={'mb-5'} />
-  ) : data ? (
+    </div>
+  ) : data && data.length > 0 ? (
     <div className="w-full">
       <Table keys={keys} titles={titles} data={data} />
     </div>
   ) : (
-    <div>Nothing</div>
+      <div className={'flex h-screen items-center justify-center'}>
+        No Data Found
+      </div>
   )
 }
 
