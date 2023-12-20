@@ -150,7 +150,6 @@ function Form({ fields:fieldsInProps, name, data }) {
       }
     }
 
-    console.log(fields)
     fetchData();
   }, [name])
 
@@ -278,7 +277,7 @@ function Form({ fields:fieldsInProps, name, data }) {
                                     })
                                   }
                                 } else {
-                                  console.log(inpName)
+                                  console.error(`${inpName} not supported`)
                                 }
                               }}
                               inpTitle={inpTitle}

@@ -5,7 +5,6 @@ import { deleteData } from '../redux/actions/dataActions.js'
 import { BACKEND_URL } from '../main.jsx'
 
 const Table = ({ keys, titles, data }) => {
-  console.log(data)
   const dispatch = useDispatch()
 
   const path = window.location.pathname
