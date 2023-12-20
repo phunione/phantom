@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
-import { BACKEND_URL } from '../App.jsx'
 
 const Table = ({ keys, titles, data }) => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
   const dispatch = useDispatch()
 
   const path = window.location.pathname
