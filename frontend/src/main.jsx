@@ -20,7 +20,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 )
 
-export const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://127.0.0.1:8000'
+
+console.log(import.meta.env.VITE_BACKEND_URL)
+
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
 
 export async function getOptions(dataFor) {
   const url = `${BACKEND_URL}/${dataFor}/all/`
