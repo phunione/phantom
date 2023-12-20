@@ -105,6 +105,8 @@ function App() {
 }
 
 export async function getOptions(dataFor) {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+
   const url = `${BACKEND_URL}/${dataFor}/all/`
 
   try {
