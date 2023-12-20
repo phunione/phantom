@@ -10,7 +10,7 @@ import File from './Input/File.jsx'
 import Input from './Input/Input.jsx'
 import Loader from './Loader.jsx'
 import Message from './Message.jsx'
-import {getOptions} from '../utility/getOptions.js'
+import {getOptions} from '../main.jsx'
 function Form({ fields:fieldsInProps, name, data }) {
   if (data && data['pdfs']) delete data['pdfs']
 

@@ -1,5 +1,3 @@
-import { getOptions } from './getOptions'
-
 const fields = {
   actor: [
     {
