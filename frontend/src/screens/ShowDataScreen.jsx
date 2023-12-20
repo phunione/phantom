@@ -30,17 +30,16 @@ function ShowDataScreen({ dataFor }) {
     </div>
   ) : error ? (
     <div className={'flex h-screen items-center justify-center'}>
-
-    <Message variant={'error'} message={error} className={'mb-5'} />
+      <Message variant={'error'} message={error} className={'mb-5'} />
     </div>
   ) : data && data.length > 0 ? (
     <div className="w-full">
       <Table keys={keys} titles={titles} data={data} />
     </div>
   ) : (
-      <div className={'flex h-screen items-center justify-center'}>
-        No Data Found
-      </div>
+    <div className={'flex h-screen items-center justify-center'}>
+      No Data Found
+    </div>
   )
 }
 
