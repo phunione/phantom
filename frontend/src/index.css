@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.p-checkbox .p-checkbox-box {
+  @apply bg-transparent border border-blue-400;
+}
+
+.p-multiselect-filter {
+  @apply bg-transparent text-amber-300 focus:border-amber-200 focus:outline-none focus:ring-0
+}
+
+.p-placeholder {
+  @apply text-amber-100
+}
+
+.p-multiselect-header {
+  @apply bg-base-300
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  @apply rounded-xl;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply rounded-xl bg-base-100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-secondary bg-opacity-90 transition-colors duration-200 ease-in-out hover:bg-secondary;
+}
