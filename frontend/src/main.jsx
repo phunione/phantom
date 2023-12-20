@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 console.log(import.meta.env)
 console.log(import.meta.env['VITE_BACKEND_URL'])
 
-export const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'] || 'http://127.0.0.1:8000'
+export const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'] === undefined ? 'http://127.0.0.1:8000' : import.meta.env['VITE_BACKEND_URL']
 
 export async function getOptions(dataFor) {
   const url = `${BACKEND_URL}/${dataFor}/all/`
