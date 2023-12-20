@@ -30,7 +30,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG') == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'phantom.vercel.app']  # SECURITY WARNING: Change in Prod
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'phantom.vercel.app',
+                 'phantom-7es7.onrender.com']
 
 # Whitelist Origin Sites for CORS Policy
 CORS_ALLOWED_ORIGINS = [
