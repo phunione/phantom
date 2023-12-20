@@ -1,11 +1,5 @@
 import { getOptions } from './getOptions'
 
-const actorOptions = await getOptions('actor'),
-  bankOptions = await getOptions('bank'),
-  bankerOptions = await getOptions('banker'),
-  companyOptions = await getOptions('company'),
-  ownerOptions = await getOptions('owner')
-
 const fields = {
   actor: [
     {
@@ -84,7 +78,7 @@ const fields = {
       name: 'bank',
       required: false,
       type: 'multiselect',
-      options: bankOptions,
+      // options: bankOptions,
     },
     {
       title: 'banker id',
@@ -92,7 +86,7 @@ const fields = {
       name: 'banker',
       required: false,
       type: 'multiselect',
-      options: bankerOptions,
+      // options: bankerOptions,
     },
     {
       title: 'owner ids',
@@ -100,7 +94,7 @@ const fields = {
       name: 'owner',
       required: false,
       type: 'multiselect',
-      options: ownerOptions,
+      // options: ownerOptions,
     },
   ],
   bank: [
@@ -138,7 +132,7 @@ const fields = {
       name: 'banker',
       required: false,
       type: 'multiselect',
-      options: bankerOptions,
+      // options: bankerOptions,
     },
   ],
   banker: [
@@ -184,7 +178,7 @@ const fields = {
       name: 'actor',
       required: false,
       type: 'multiselect',
-      options: actorOptions,
+      // options: actorOptions,
     },
     {
       title: 'bank ids',
@@ -192,7 +186,7 @@ const fields = {
       name: 'bank',
       required: false,
       type: 'multiselect',
-      options: bankOptions,
+      // options: bankOptions,
     },
   ],
   owner: [
@@ -245,7 +239,6 @@ const fields = {
       required: false,
       type: 'number',
     },
-
     {
       title: 'email',
       id: 'email',
@@ -273,7 +266,7 @@ const fields = {
       name: 'actor',
       required: false,
       type: 'multiselect',
-      options: actorOptions,
+      // options: actorOptions,
     },
     {
       title: 'company ids',
@@ -281,7 +274,7 @@ const fields = {
       name: 'company',
       required: false,
       type: 'multiselect',
-      options: companyOptions,
+      // options: companyOptions,
     },
     {
       title: 'banker ids',
@@ -289,7 +282,7 @@ const fields = {
       name: 'banker',
       required: false,
       type: 'multiselect',
-      options: bankerOptions,
+      // options: bankerOptions,
     },
     {
       title: 'pdfs',
@@ -415,7 +408,7 @@ const fields = {
       name: 'actor',
       required: false,
       type: 'multiselect',
-      options: actorOptions,
+      // options: actorOptions,
     },
     {
       title: 'bank ids',
@@ -423,7 +416,7 @@ const fields = {
       name: 'bank',
       required: false,
       type: 'select',
-      options: ['Select Bank', ...bankOptions],
+      // options: ['Select Bank', ...bankOptions],
     },
     {
       title: 'banker ids',
@@ -431,7 +424,7 @@ const fields = {
       name: 'banker',
       required: false,
       type: 'select',
-      options: ['Select Banker', ...bankerOptions],
+      // options: ['Select Banker', ...bankerOptions],
     },
     {
       title: 'Owner Details',
@@ -439,7 +432,7 @@ const fields = {
       name: 'owner',
       required: false,
       type: 'multiselect',
-      options: ownerOptions,
+      // options: ownerOptions,
     },
     {
       title: 'pdfs',
@@ -464,7 +457,7 @@ const fields = {
       name: 'actor_id',
       required: true,
       type: 'select',
-      options: ['Select Actor Id', ...actorOptions],
+      // options: ['Select Actor Id', ...actorOptions],
     },
     {
       title: 'banker id',
@@ -472,7 +465,7 @@ const fields = {
       name: 'banker_id',
       required: true,
       type: 'select',
-      options: ['Select Banker Id', ...bankerOptions],
+      // options: ['Select Banker Id', ...bankerOptions],
     },
     {
       title: 'owner ids',
@@ -480,7 +473,7 @@ const fields = {
       name: 'owner',
       required: false,
       type: 'select',
-      options: ['Select Owner', ...ownerOptions],
+      // options: ['Select Owner', ...ownerOptions],
     },
     {
       title: 'company',
@@ -488,7 +481,7 @@ const fields = {
       name: 'company',
       required: true,
       type: 'select',
-      options: ['Select Company Id', ...companyOptions],
+      // options: ['Select Company Id', ...companyOptions],
     },
     {
       title: 'company type',
