@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
-import { BACKEND_URL } from '../main.jsx'
+import { BACKEND_URL } from '../App.jsx'
 
 const Table = ({ keys, titles, data }) => {
   const dispatch = useDispatch()

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { BACKEND_URL } from '../../main'
+import { BACKEND_URL } from '../../App.jsx'
 import {
   ADD_DATA_ERROR,
   ADD_DATA_REQUEST,

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getAllData } from '../../redux/actions/dataActions.js'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Loader.jsx'
-import { BACKEND_URL } from '../../main.jsx'
+import { BACKEND_URL } from '../../App.jsx'
 import axios from 'axios'
 import Message from '../Message.jsx'
 

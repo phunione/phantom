@@ -8,7 +8,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from '../constants/user'
-import {BACKEND_URL} from '../../main.jsx'
+import {BACKEND_URL} from '../../App.jsx'
 
 const url = `${BACKEND_URL}/user/`
 
