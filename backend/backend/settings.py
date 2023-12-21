@@ -153,8 +153,8 @@ if DEBUG:
 			'ENGINE': 'django.db.backends.postgresql',
 			'NAME': 'phantom',
 			'USER': 'postgres',
-			'PASSWORD': '0347',
-			'PORT': '5432'
+			'PASSWORD': '12345',
+			'PORT': '54321'
 		}
 	}
 else:

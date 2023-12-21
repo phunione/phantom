@@ -148,7 +148,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
       )
       if (details['pdfs']) {
-        const pdfs = details['pdfs']
+        var pdfs = details['pdfs']
         for (let i = 0; i < pdfs.length; i++) {
           body.append('pdfs', pdfs[i])
         }
