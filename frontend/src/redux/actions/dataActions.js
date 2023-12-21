@@ -96,10 +96,11 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
           ? ''
           : JSON.stringify(details['banker']),
       )
-      body.append(
-        'pdfs',
-        details['pdfs'] === undefined ? '' : JSON.stringify(details['pdfs']),
-      )
+      if (details['pdfs']) {
+        for (const pdf in details['pdfs']) {
+          body.append('pdfs', pdf)
+        }
+      }
 
       details = body
     } else if (name === 'company') {
@@ -145,10 +146,12 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         'owner',
         details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
       )
-      body.append(
-        'pdfs',
-        details['pdfs'] === undefined ? '' : JSON.stringify(details['pdfs']),
-      )
+      if (details['pdfs']) {
+        for (const pdf in details['pdfs']) {
+          body.append('pdfs', pdf)
+        }
+      }
+      
       details = body
     } else if (name === 'excel-company') {
       config = {
@@ -313,26 +316,21 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
           body.append('pdfs', pdf)
         }
       }
+      details = body
     }
 
-    details = body
+    console.log(details)
+
+    await axios.put(`${url}/edit/${id}/`, details, config)
+
+    dispatch({ type: EDIT_DATA_SUCCESS, payload: 'Successfully Edited' })
+  } catch (e) {
+    dispatch({
+      type: EDIT_DATA_ERROR,
+      payload:
+        e.response && e.response.data.error ? e.response.data.error : e.message,
+    })
   }
-
-  console.log(details)
-
-  await axios.put(`${url}/edit/${id}/`, details, config)
-
-  dispatch({ type: EDIT_DATA_SUCCESS, payload: 'Successfully Edited' })
-}
-catch
-(e)
-{
-  dispatch({
-    type: EDIT_DATA_ERROR,
-    payload:
-      e.response && e.response.data.error ? e.response.data.error : e.message,
-  })
-}
 }
 
 export const getAllData = (dataFor) => async (dispatch) => {
