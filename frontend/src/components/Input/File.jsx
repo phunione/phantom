@@ -9,6 +9,8 @@ export default function File(props) {
         name={props.name}
         className="border-1 peer block w-2/3 appearance-none rounded-lg border-gray-200 bg-transparent pb-2.5 pt-5 text-xs text-amber-200 focus:border-amber-600 focus:outline-none focus:ring-0"
         required={props.required}
+        multiple
+        accept='application/pdf'
         onChange={props.onChange}
       />
       <label

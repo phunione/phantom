@@ -95,7 +95,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
           ? ''
           : JSON.stringify(details['banker']),
       )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+      body.append('pdfs', details['pdfs'] === undefined ? '' : JSON.stringify(details['pdfs']))
 
       details = body
     } else if (name === 'company') {
@@ -141,8 +141,7 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         'owner',
         details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
       )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
-
+      body.append('pdfs', details['pdfs'] === undefined ? '' : JSON.stringify(details['pdfs']))
       details = body
     } else if (name === 'excel-company') {
       config = {
@@ -246,7 +245,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
           ? ''
           : JSON.stringify(details['banker']),
       )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+      body.append('pdfs', details['pdfs'] === undefined ? '' : JSON.stringify(details['pdfs']))
 
       details = body
     } else if (name === 'company') {
@@ -300,7 +299,7 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
         body.append('owner', JSON.stringify(details['owner']))
       }
       if (details['pdfs']) {
-        body.append('pdfs', details['pdfs'])
+        body.append('pdfs', JSON.stringify(details['pdfs']))
       }
 
       details = body

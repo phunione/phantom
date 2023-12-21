@@ -133,7 +133,7 @@ function Form({ fields, name, data }) {
                   onChange={(e) => {
                     setVals({
                       ...vals,
-                      [inpName]: e.target.files[0],
+                      [inpName]: e.target.files,
                     })
                   }}
                   inpTitle={inpTitle}
