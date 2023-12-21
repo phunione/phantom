@@ -19,14 +19,14 @@ function App() {
   const { userInfo } = userLogin
 
   return (
-    <div className="min-h-screen max-w-full overflow-y-hidden overflow-x-visible">
-      <div className="flex items-start">
+    <div className="min-h-screen max-w-full overflow-hidden overflow-x-visible">
+      <div className="flex items-start overflow-hidden">
         {!userInfo ? (
           <LoginScreen className={'w-full'} />
         ) : (
           <Router>
             <SideNavBar />
-            <div className="w-4/5">
+            <div className="w-4/5 overflow-hidden">
               <Routes>
                 <Route path={'/'} element={<Navigate to={'/actor'} />} />
                 <Route
@@ -105,7 +105,8 @@ function App() {
 }
 
 export async function getOptions(dataFor) {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+  const BACKEND_URL =
+    import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
 
   const url = `${BACKEND_URL}/${dataFor}/all/`
 
@@ -123,6 +124,5 @@ export async function getOptions(dataFor) {
     return []
   }
 }
-
 
 export default App

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
 
 const Table = ({ keys, titles, data, forUniqueRelation }) => {
-  console.log(data)
   const BACKEND_URL =
     import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
   const dispatch = useDispatch()
@@ -65,7 +64,6 @@ const Table = ({ keys, titles, data, forUniqueRelation }) => {
                   : item[keys[0]].toString()}
               </th>
               {keys.slice(1).map((key, index) => {
-                console.log(key, item[key], typeof item[key])
                 return (
                   <td
                     key={index}
@@ -105,6 +103,7 @@ const Table = ({ keys, titles, data, forUniqueRelation }) => {
                             }`
                           ) : it.pdf_url ? (
                             <a
+                              key={idx}
                               href={
                                 import.meta.env.PROD
                                   ? it.pdf_url

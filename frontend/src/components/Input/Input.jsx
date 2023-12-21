@@ -11,18 +11,20 @@ export default function Input(props) {
         placeholder=" "
         required={props.required}
         value={
-          props.vals[props.name] === undefined
+          props.type === 'search-text'
+            ? props.vals
+            : props.vals[props.name] === undefined
             ? ''
             : props.type === 'date'
             ? props.s
             : props.vals[props.name]
         }
         onChange={props.onChange}
-        onWheel={props.onWheel}
+        onWheel={props?.onWheel}
       />
       <label
         htmlFor={props.id}
-        className="bg-base-100 absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform px-2 text-sm capitalize text-amber-100 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-amber-200"
+        className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform cursor-text bg-base-100 px-2 text-sm capitalize text-amber-100 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-amber-200"
       >
         {props.inpTitle}
         {props.required && <sup className="font-bold text-red-600">*</sup>}
