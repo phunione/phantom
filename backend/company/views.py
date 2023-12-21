@@ -162,12 +162,11 @@ def edit(req, id):
 				actor_obj = Actor.objects.get(id=d['id'])
 				company.actor.add(actor_obj)
 
+		company.bank.clear()
 		if parsed_bank_data:
 			bank_obj = Bank.objects.get(id=int(parsed_bank_data))
-			company.bank = bank_obj
-		else:
-			company.bank = None
-
+			company.bank.append(bank_obj)
+			
 		if parsed_banker_data and parsed_banker_data.isnumeric():
 			banker = Banker.objects.get(id=int(parsed_banker_data))
 			company.banker = banker

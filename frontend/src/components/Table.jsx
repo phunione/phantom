@@ -3,7 +3,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
 
-const Table = ({ keys, titles, data }) => {
+const Table = ({ keys, titles, data, forUniqueRelation }) => {
   console.log(data)
   const BACKEND_URL =
     import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
@@ -41,9 +41,11 @@ const Table = ({ keys, titles, data }) => {
                 {title}
               </td>
             ))}
-            <th colSpan={2} className={'border border-amber-200 text-center'}>
-              Actions
-            </th>
+            {forUniqueRelation === undefined && (
+              <th colSpan={2} className={'border border-amber-200 text-center'}>
+                Actions
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -122,29 +124,31 @@ const Table = ({ keys, titles, data }) => {
                   }
                 </td>
               ))}
-              <th
-                colSpan={2}
-                className="sticky right-0 top-0 border border-amber-200 px-1 py-2"
-              >
-                <div
-                  className={
-                    'justify ju flex flex-wrap items-center justify-center'
-                  }
+              {forUniqueRelation === undefined && (
+                <th
+                  colSpan={2}
+                  className="sticky right-0 top-0 border border-amber-200 px-1 py-2"
                 >
-                  <Link
-                    to={`/edit${path}?id=${item.id}`}
-                    className="mr-1 inline rounded bg-blue-500 px-2 py-1 text-white transition-colors hover:bg-blue-600"
+                  <div
+                    className={
+                      'justify ju flex flex-wrap items-center justify-center'
+                    }
                   >
-                    <i className="fal fa-pencil"></i>
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(path, item.id)}
-                    className="inline rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
-                  >
-                    <i className="fal fa-trash"></i>
-                  </button>
-                </div>
-              </th>
+                    <Link
+                      to={`/edit${path}?id=${item.id}`}
+                      className="mr-1 inline rounded bg-blue-500 px-2 py-1 text-white transition-colors hover:bg-blue-600"
+                    >
+                      <i className="fal fa-pencil"></i>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(path, item.id)}
+                      className="inline rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
+                    >
+                      <i className="fal fa-trash"></i>
+                    </button>
+                  </div>
+                </th>
+              )}
             </tr>
           ))}
         </tbody>
@@ -156,9 +160,11 @@ const Table = ({ keys, titles, data }) => {
                 {title}
               </td>
             ))}
-            <th colSpan={2} className={'text-center'}>
-              Actions
-            </th>
+            {forUniqueRelation === undefined && (
+              <th colSpan={2} className={'text-center'}>
+                Actions
+              </th>
+            )}
           </tr>
         </tfoot>
       </table>
