@@ -40,7 +40,7 @@ const fields = {
       id: 'sim_number_id',
       name: 'sim_number',
       required: true,
-      type: 'number',
+      type: 'text',
     },
     {
       title: 'email',
@@ -228,7 +228,7 @@ const fields = {
       id: 'sim_number',
       name: 'sim_number',
       required: true,
-      type: 'number',
+      type: 'text',
     },
     {
       title: 'per phone',
