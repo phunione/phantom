@@ -131,7 +131,9 @@ def edit(req, id):
 		for key, value in data.items():
 			setattr(owner, key, value)
 
+		print("pdfs", pdfs)
 		if pdfs != '':
+			print("updating pdfs")
 			owner.pdfs = pdfs
 
 		owner.actor_set.clear()

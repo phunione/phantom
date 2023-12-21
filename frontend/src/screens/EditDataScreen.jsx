@@ -13,8 +13,6 @@ function EditDataScreen({ formType }) {
   const dispatch = useDispatch()
   const { loading, data, error } = useSelector((state) => state.data)
 
-  console.log(data)
-
   useEffect(() => {
     dispatch(getData(formType, id))
   }, [dispatch, formType, id])

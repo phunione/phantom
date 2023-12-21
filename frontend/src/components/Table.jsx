@@ -2,14 +2,21 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
+import { BACKEND_URL } from '../main.jsx'
 
 const Table = ({ keys, titles, data }) => {
+  console.log(data)
   const dispatch = useDispatch()
 
   const path = window.location.pathname
 
   const handleDelete = (path, id) => {
     dispatch(deleteData(path, id))
+  }
+
+  const getNameForFile = (fileName) => {
+    const arr = fileName.split('/')
+    return arr[arr.length - 1]
   }
 
   const isValidDate = (dateString) => {
@@ -78,6 +85,19 @@ const Table = ({ keys, titles, data }) => {
                         'null'
                       ) : isValidDate(item[key]) ? ( // if the item[key] is a valid date
                         moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
+                      ) : key === 'pdfs' && item[key] ? (
+                        <a
+                          href={`${BACKEND_URL}${item[key]}`}
+                          target={'_blank'}
+                          rel="noreferrer"
+                          className={
+                            'flex w-56 flex-wrap items-center justify-center font-bold underline hover:text-amber-300'
+                          }
+                        >
+                          <p className={'truncate'}>
+                            {getNameForFile(item[key])}
+                          </p>
+                        </a>
                       ) : (
                         item[key]
                       ) // else show the string only

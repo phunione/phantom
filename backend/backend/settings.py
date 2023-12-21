@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+import environ
+
+env = environ.Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,17 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--+onsm)*7#*y3cl_clp1kv6)2_d@!p)khhi$nc@h-=n!k&3na-'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG') == 'true'
 
-ALLOWED_HOSTS = ['*']  # SECURITY WARNING: Change in Prod
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'phantom.vercel.app']  # SECURITY WARNING: Change in Prod
 
 # Whitelist Origin Sites for CORS Policy
 CORS_ALLOWED_ORIGINS = [
 	'http://127.0.0.1:5173',
 	'http://localhost:5173',
+	'https://phantom.vercel.app',
 ]
 
 # Application definition
@@ -60,6 +65,9 @@ INSTALLED_APPS = [
 
 	# corsheaders
 	'corsheaders',
+
+	# Django Storages
+	'storages',
 ]
 
 # Simple JWT Authentication Backend for sending tokens when a user sends a post request
@@ -144,8 +152,8 @@ DATABASES = {
 		'ENGINE': 'django.db.backends.postgresql',
 		'NAME': 'phantom',
 		'USER': 'postgres',
-		'PASSWORD': '12345',
-		'PORT': '54321'
+		'PASSWORD': '0347',
+		'PORT': '5432'
 	}
 }
 
@@ -185,10 +193,33 @@ DATETIME_FORMAT = '%d-%m-%Y %H:%M'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+USE_S3 = not DEBUG
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Configuration For CDN
+if USE_S3:  # In Production Use CDN(Amazon CloudFront in this case)
+	# AWS Settings
+	AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+	AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+	AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+	AWS_DEFAULT_ACL = 'public-read'
+	AWS_CLOUDFRONT_DOMAIN = env('AWS_CLOUDFRONT_DOMAIN')
+	AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+	AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+	# s3 static settings
+	STATIC_LOCATION = 'static'
+	STATIC_URL = f'https://{AWS_CLOUDFRONT_DOMAIN}/{STATIC_LOCATION}/'
+	STATICFILES_STORAGE = 'backend.storage_backends.StaticStorage'
+
+	# media settings
+	PUBLIC_MEDIA_LOCATION = 'media'
+	MEDIA_URL = f'https://{AWS_CLOUDFRONT_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+	DEFAULT_FILE_STORAGE = 'backend.storage_backends.PublicMediaStorage'
+else:  # In Development use local storage
+	STATIC_URL = '/static/'
+	STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+	MEDIA_URL = '/media/'
+	MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

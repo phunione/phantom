@@ -203,15 +203,14 @@ def editRelation(req, id):
 		parsed_owner_data.actor_set.add(parsed_actor_data)
 		parsed_owner_data.save()
 
+		banker = Banker.objects.get(id=data['banker'])
+		banker.actor_set.add(parsed_actor_data)
+		banker.save()
+
 		company.actor.add(parsed_actor_data)
 		company.owner.add(parsed_owner_data)
-		banker = Banker.objects.get(id = data['banker'])
-		actor = Actor.objects.get(name = parsed_actor_data)
-		print(banker,"data in edit")
-		print(parsed_actor_data)
-		actor.banker.add(banker)
-		actor.save()
 		company.save()
+
 		message = {'success': True, 'message': "Banker edited successfully"}
 		return Response(message, status=status.HTTP_200_OK)
 	except Exception as e:

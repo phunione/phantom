@@ -30,9 +30,6 @@ const Form = () => {
         },
       }
 
-      console.log('owner', owner)
-      console.log('banker', banker)
-
       if (owner && banker) {
         const requestData = {
           owner_id: owner,
@@ -47,14 +44,12 @@ const Form = () => {
           config,
         )
 
-        console.log(data)
         setActorOptions(data)
       } else {
         // noinspection ExceptionCaughtLocallyJS
         alert(Error('Please select banker and owner'))
       }
     } catch (e) {
-      console.log(e)
       alert(
         e.response && e.response.data.error ? e.response.data.error : e.message,
       )
@@ -86,7 +81,6 @@ const Form = () => {
 
       alert(data.message)
     } catch (e) {
-      console.log(e)
       alert(
         e.response && e.response.data.error ? e.response.data.error : e.message,
       )
