@@ -1,8 +1,9 @@
 import json
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .models import Owner, PDF_File
 from actor.models import Actor
@@ -13,6 +14,7 @@ from .serializers import OwnerSerializer
 
 
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
 def add(req):
 	data = req.data
 	try:
@@ -103,14 +105,15 @@ def delete(request, id):
 
 
 @api_view(['PUT'])
+@parser_classes([MultiPartParser, FormParser])
 def edit(req, id):
 	req_data = req.data
 	data = req_data.copy()
 	print(data)
 	try:
-		pdfs = ''
+		pdfs = []
 		if 'pdfs' in data:
-			pdfs = data['pdfs']
+			pdfs = data.getlist('pdfs')
 			del data['pdfs']
 
 		parsed_actor_data = []
@@ -134,9 +137,11 @@ def edit(req, id):
 			setattr(owner, key, value)
 
 		print("pdfs", pdfs)
-		if pdfs != '':
-			print("updating pdfs")
-			owner.pdfs = pdfs
+		if len(pdfs) > 0:
+			for pdf in pdfs:
+				pdf_file = PDF_File.objects.create(pdf=pdf, owner=owner)
+				pdf_file.save()
+				print(owner.pdfs)
 
 		owner.actor_set.clear()
 		if parsed_actor_data:

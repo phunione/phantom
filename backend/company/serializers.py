@@ -53,7 +53,6 @@ class CompanySerializer(serializers.ModelSerializer):
 	@staticmethod
 	def get_pdfs(obj):
 		pdfs = obj.pdfs.all()
-		print(pdfs)
 		data = []
 		for pdf in pdfs:
 			data.append({'pdf_url': pdf.pdf.url})

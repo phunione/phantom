@@ -1,7 +1,8 @@
 import json
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .serializers import CompanySerializer
 from .models import Company, PDF_File
@@ -12,6 +13,7 @@ from owner.models import Owner
 
 
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
 def add(req):
 	data = req.data
 	print(data)
@@ -101,13 +103,14 @@ def delete(request, id):
 
 
 @api_view(['PUT'])
+@parser_classes([MultiPartParser, FormParser])
 def edit(req, id):
 	req_data = req.data
 	data = req_data.copy()
 	try:
-		pdfs = ''
+		pdfs = []
 		if 'pdfs' in data:
-			pdfs = data['pdfs']
+			pdfs = data.getlist('pdfs')
 			del data['pdfs']
 
 		parsed_actor_data = []
@@ -147,8 +150,11 @@ def edit(req, id):
 			else:
 				company.isMaharashtra = False
 
-		if pdfs != '':
-			company.pdfs = data['pdfs']
+		if len(pdfs) > 0:
+			for pdf in pdfs:
+				pdf_file = PDF_File.objects.create(pdf=pdf, company=company)
+				pdf_file.save()
+				print(company.pdfs)
 
 		company.actor.clear()
 		if len(parsed_actor_data) > 0:
