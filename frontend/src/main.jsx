@@ -19,5 +19,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>,
 )
-
-export const BACKEND_URL = 'http://127.0.0.1:8000'

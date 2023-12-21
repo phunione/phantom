@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { getAllData } from '../../redux/actions/dataActions.js'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Loader.jsx'
-import { BACKEND_URL } from '../../main.jsx'
 import axios from 'axios'
 import Message from '../Message.jsx'
 
 const Form = () => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+
   const [company, setCompany] = useState()
   const [banker, setBanker] = useState()
   const [owner, setOwner] = useState()

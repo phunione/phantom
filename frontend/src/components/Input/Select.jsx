@@ -42,7 +42,7 @@ export default function Select(props) {
         required={props.inpRequired}
         className="bg-base-100 block w-48 rounded-lg border border-amber-300 pt-2 text-center text-sm capitalize text-amber-200 focus:border-amber-300 focus:ring-0"
       >
-        {props.options.map((option, idx) => (
+        {props.options?.map((option, idx) => (
           <option
             value={getValue(option?.id === undefined ? option : option?.id)}
             className="capitalize"

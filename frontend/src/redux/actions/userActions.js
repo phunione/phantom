@@ -9,7 +9,8 @@ import {
   USER_REGISTER_SUCCESS,
 } from '../constants/user'
 
-const url = 'http://127.0.0.1:8000/user/'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+const url = `${BACKEND_URL}/user/`
 
 export const login = (email, password) => async (dispatch) => {
   try {

@@ -59,7 +59,9 @@ const ExcelCompanyScreen = () => {
       ) : data && data.length > 0 ? (
         <Table keys={keys} data={data} titles={titles} />
       ) : (
-        <>No Data Found</>
+          <div className={'flex h-screen items-center justify-center'}>
+            No Data Found
+          </div>
       )}
     </div>
   )

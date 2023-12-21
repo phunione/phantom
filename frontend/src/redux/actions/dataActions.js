@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { BACKEND_URL } from '../../main'
 import {
   ADD_DATA_ERROR,
   ADD_DATA_REQUEST,
@@ -20,6 +19,9 @@ import {
   GET_EXCEL_COMPANY_DATA_REQUEST,
   GET_EXCEL_COMPANY_DATA_SUCCESS,
 } from '../constants/data'
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+
 
 export const addDataToTheForm = (details, name) => async (dispatch) => {
   try {

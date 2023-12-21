@@ -2,10 +2,9 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
-import { BACKEND_URL } from '../main.jsx'
 
 const Table = ({ keys, titles, data }) => {
-  console.log(data)
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
   const dispatch = useDispatch()
 
   const path = window.location.pathname
@@ -87,7 +86,7 @@ const Table = ({ keys, titles, data }) => {
                         moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
                       ) : key === 'pdfs' && item[key] ? (
                         <a
-                          href={`${BACKEND_URL}${item[key]}`}
+                          href={import.meta.env.PROD ? item[key] : `${BACKEND_URL}${item[key]}`}
                           target={'_blank'}
                           rel="noreferrer"
                           className={
