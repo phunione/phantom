@@ -19,14 +19,14 @@ function App() {
   const { userInfo } = userLogin
 
   return (
-    <div className="min-h-screen max-w-full overflow-hidden overflow-x-visible">
-      <div className="flex items-start overflow-hidden">
+    <div className="min-h-screen max-w-full overflow-x-visible">
+      <div className="flex items-start">
         {!userInfo ? (
           <LoginScreen className={'w-full'} />
         ) : (
           <Router>
             <SideNavBar />
-            <div className="w-4/5 overflow-hidden">
+            <div className="w-4/5">
               <Routes>
                 <Route path={'/'} element={<Navigate to={'/actor'} />} />
                 <Route
