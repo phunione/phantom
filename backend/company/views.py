@@ -1,10 +1,11 @@
 import json
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .serializers import CompanySerializer
-from .models import Company
+from .models import Company, PDF_File
 from actor.models import Actor
 from bank.models import Bank
 from banker.models import Banker
@@ -12,6 +13,7 @@ from owner.models import Owner
 
 
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
 def add(req):
 	data = req.data
 	print(data)
@@ -25,8 +27,11 @@ def add(req):
 		else:
 			company.isMaharashtra = False
 
-		if data['pdfs'] != '':
-			company.pdfs = data['pdfs']
+		if 'pdfs' in data:
+			for pdf in data.getlist('pdfs'):
+				pdf_file = PDF_File.objects.create(pdf=pdf, company=company)
+				pdf_file.save()
+				print(company.pdfs)
 
 		if data['actor'] != '':
 			parsed_data = json.loads(data['actor'])
@@ -98,13 +103,14 @@ def delete(request, id):
 
 
 @api_view(['PUT'])
+@parser_classes([MultiPartParser, FormParser])
 def edit(req, id):
 	req_data = req.data
 	data = req_data.copy()
 	try:
-		pdfs = ''
+		pdfs = []
 		if 'pdfs' in data:
-			pdfs = data['pdfs']
+			pdfs = data.getlist('pdfs')
 			del data['pdfs']
 
 		parsed_actor_data = []
@@ -144,8 +150,11 @@ def edit(req, id):
 			else:
 				company.isMaharashtra = False
 
-		if pdfs != '':
-			company.pdfs = data['pdfs']
+		if len(pdfs) > 0:
+			for pdf in pdfs:
+				pdf_file = PDF_File.objects.create(pdf=pdf, company=company)
+				pdf_file.save()
+				print(company.pdfs)
 
 		company.actor.clear()
 		if len(parsed_actor_data) > 0:
@@ -153,12 +162,11 @@ def edit(req, id):
 				actor_obj = Actor.objects.get(id=d['id'])
 				company.actor.add(actor_obj)
 
+		company.bank.clear()
 		if parsed_bank_data:
 			bank_obj = Bank.objects.get(id=int(parsed_bank_data))
-			company.bank = bank_obj
-		else:
-			company.bank = None
-
+			company.bank.append(bank_obj)
+			
 		if parsed_banker_data and parsed_banker_data.isnumeric():
 			banker = Banker.objects.get(id=int(parsed_banker_data))
 			company.banker = banker

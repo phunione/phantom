@@ -17,6 +17,8 @@ function Form({ fields: fieldsInProps, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
   const [fields, setFields] = useState(fieldsInProps)
 
+  console.log(vals)
+
   const dispatch = useDispatch()
 
   const addData = useSelector((state) => state.addData)
@@ -256,22 +258,10 @@ function Form({ fields: fieldsInProps, name, data }) {
                     }
                     onChange={(e) => {
                       if (inpName === 'pdfs') {
-                        const file = e.target.files[0]
-                        console.log('selectd file', file)
-                        let fileName = file.name
-                        let fileExtension = fileName
-                          .split('.')
-                          .pop()
-                          .toLowerCase()
-
-                        if (fileExtension === 'pdf') {
-                          setVals((vals) => ({
-                            ...vals,
-                            [inpName]: e.target.files[0],
-                          }))
-                        } else {
-                          alert('Please select only pdfs')
-                        }
+                        setVals((vals) => ({
+                          ...vals,
+                          [inpName]: e.target.files,
+                        }))
                       } else if (inpName === 'excel') {
                         const file = e.target.files[0]
                         let fileName = file.name

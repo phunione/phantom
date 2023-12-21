@@ -23,11 +23,19 @@ const UniqueRelationScreen = () => {
   return (
     <div className="overflow-x-auto">
       {loading ? (
-        <div className={'flex h-screen items-center justify-center'}>
+        <div
+          className={
+            'flex h-screen items-center justify-center overflow-hidden'
+          }
+        >
           <Loader className={'loading-lg'} />
         </div>
       ) : error ? (
-        <div className={'flex h-screen items-center justify-center'}>
+        <div
+          className={
+            'flex h-screen items-center justify-center overflow-hidden'
+          }
+        >
           <Message
             variant={'error'}
             message={error}
@@ -36,9 +44,17 @@ const UniqueRelationScreen = () => {
           />
         </div>
       ) : data && data.length > 0 ? (
-        <Table keys={keys} data={data} titles={titles} />
+        <div className={'h-screen w-full overflow-y-scroll'}>
+          <Table keys={keys} data={data} titles={titles} forUniqueRelation />
+        </div>
       ) : (
-        <>No Data Found</>
+        <div
+          className={
+            'flex h-screen items-center justify-center overflow-hidden'
+          }
+        >
+          No Data Found
+        </div>
       )}
     </div>
   )

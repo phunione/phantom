@@ -25,7 +25,7 @@ const fields = {
       title: 'din number',
       id: 'din_number_id',
       name: 'din_number',
-      required: true,
+      required: false,
       type: 'number',
     },
     {
@@ -40,7 +40,7 @@ const fields = {
       id: 'sim_number_id',
       name: 'sim_number',
       required: true,
-      type: 'number',
+      type: 'text',
     },
     {
       title: 'email',
@@ -213,7 +213,7 @@ const fields = {
       title: 'din number',
       id: 'din_number',
       name: 'din_number',
-      required: true,
+      required: false,
       type: 'number',
     },
     {
@@ -228,7 +228,7 @@ const fields = {
       id: 'sim_number',
       name: 'sim_number',
       required: true,
-      type: 'number',
+      type: 'text',
     },
     {
       title: 'per phone',

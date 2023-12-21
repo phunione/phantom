@@ -22,7 +22,6 @@ import {
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
 
-
 export const addDataToTheForm = (details, name) => async (dispatch) => {
   try {
     dispatch({ type: ADD_DATA_REQUEST })
@@ -97,7 +96,12 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
           ? ''
           : JSON.stringify(details['banker']),
       )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+      if (details['pdfs']) {
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
+        }
+      }
 
       details = body
     } else if (name === 'company') {
@@ -143,7 +147,12 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         'owner',
         details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
       )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+      if (details['pdfs']) {
+        var pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
+        }
+      }
 
       details = body
     } else if (name === 'excel-company') {
@@ -205,50 +214,54 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
 
       const body = new FormData()
 
-      body.append('name', details['name'])
-      body.append('adhar_number', details['adhar_number'])
-      body.append('pan_number', details['pan_number'])
-      body.append('din_number', details['din_number'])
-      body.append('sim_number', details['sim_number'])
-      body.append('type', details['type'])
-      body.append(
-        'otp_phoneNr',
-        details['otp_phoneNr'] === undefined ? '' : details['otp_phoneNr'],
-      )
-      body.append(
-        'per_phone',
-        details['per_phone'] === undefined ? '' : details['per_phone'],
-      )
-      body.append(
-        'email',
-        details['email'] === undefined ? '' : details['email'],
-      )
-      body.append(
-        'mother_name',
-        details['mother_name'] === undefined ? '' : details['mother_name'],
-      )
-      body.append(
-        'address',
-        details['address'] === undefined ? '' : details['address'],
-      )
-
-      body.append(
-        'actor',
-        details['actor'] === undefined ? '' : JSON.stringify(details['actor']),
-      )
-      body.append(
-        'company',
-        details['company'] === undefined
-          ? ''
-          : JSON.stringify(details['company']),
-      )
-      body.append(
-        'banker',
-        details['banker'] === undefined
-          ? ''
-          : JSON.stringify(details['banker']),
-      )
-      body.append('pdfs', details['pdfs'] === undefined ? '' : details['pdfs'])
+      if (details['name']) {
+        body.append('name', details['name'])
+      }
+      if (details['adhar_number']) {
+        body.append('adhar_number', details['adhar_number'])
+      }
+      if (details['pan_number']) {
+        body.append('pan_number', details['pan_number'])
+      }
+      if (details['din_number']) {
+        body.append('din_number', details['din_number'])
+      }
+      if (details['sim_number']) {
+        body.append('sim_number', details['sim_number'])
+      }
+      if (details['type']) {
+        body.append('type', details['type'])
+      }
+      if (details['otp_phoneNr']) {
+        body.append('otp_phoneNr', details['otp_phoneNr'])
+      }
+      if (details['per_phone']) {
+        body.append('per_phone', details['per_phone'])
+      }
+      if (details['email']) {
+        body.append('email', details['email'])
+      }
+      if (details['mother_name']) {
+        body.append('mother_name', details['mother_name'])
+      }
+      if (details['address']) {
+        body.append('address', details['address'])
+      }
+      if (details['actor']) {
+        body.append('actor', JSON.stringify(details['actor']))
+      }
+      if (details['company']) {
+        body.append('company', JSON.stringify(details['company']))
+      }
+      if (details['banker']) {
+        body.append('banker', JSON.stringify(details['banker']))
+      }
+      if (details['pdfs']) {
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
+        }
+      }
 
       details = body
     } else if (name === 'company') {
@@ -302,11 +315,15 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
         body.append('owner', JSON.stringify(details['owner']))
       }
       if (details['pdfs']) {
-        body.append('pdfs', details['pdfs'])
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
+        }
       }
-
       details = body
     }
+
+    console.log(details)
 
     await axios.put(`${url}/edit/${id}/`, details, config)
 

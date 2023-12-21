@@ -1,10 +1,11 @@
 import json
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
-from .models import Owner
+from .models import Owner, PDF_File
 from actor.models import Actor
 from actor.serializers import ActorSerializer
 from banker.models import Banker
@@ -13,18 +14,21 @@ from .serializers import OwnerSerializer
 
 
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
 def add(req):
 	data = req.data
-	print(data)
-
 	try:
 		owner = Owner.objects.create(name=data['name'], adhar_number=data['adhar_number'], pan_number=data['pan_number'],
 		                             din_number=data['din_number'], otp_phoneNr=data['otp_phoneNr'],
 		                             sim_number=data['sim_number'], email=data['email'], per_phone=data['per_phone'],
 		                             mother_name=data['mother_name'], address=data['address'], type=data['type'],
 		                             )
-		if data['pdfs'] != '':
-			owner.pdfs = data['pdfs']
+
+		if 'pdfs' in data:
+			for pdf in data.getlist('pdfs'):
+				pdf_file = PDF_File.objects.create(pdf=pdf, owner=owner)
+				pdf_file.save()
+				print(owner.pdfs)
 
 		if data['actor'] != '':
 			parsed_data = json.loads(data['actor'])
@@ -101,30 +105,31 @@ def delete(request, id):
 
 
 @api_view(['PUT'])
+@parser_classes([MultiPartParser, FormParser])
 def edit(req, id):
 	req_data = req.data
 	data = req_data.copy()
 	print(data)
 	try:
-		pdfs = ''
-		if data['pdfs'] != '':
-			pdfs = data['pdfs']
-		del data['pdfs']
+		pdfs = []
+		if 'pdfs' in data:
+			pdfs = data.getlist('pdfs')
+			del data['pdfs']
 
 		parsed_actor_data = []
-		if data['actor'] != '':
+		if 'actor' in data:
 			parsed_actor_data = json.loads(data['actor'])
-		del data['actor']
+			del data['actor']
 
 		parsed_company_data = []
-		if data['company'] != '':
+		if 'company' in data:
 			parsed_company_data = json.loads(data['company'])
-		del data['company']
+			del data['company']
 
 		parsed_banker_data = []
-		if data['banker'] != "":
+		if 'banker' in data:
 			parsed_banker_data = json.loads(data['banker'])
-		del data['banker']
+			del data['banker']
 
 		owner = Owner.objects.get(id=id)
 
@@ -132,9 +137,11 @@ def edit(req, id):
 			setattr(owner, key, value)
 
 		print("pdfs", pdfs)
-		if pdfs != '':
-			print("updating pdfs")
-			owner.pdfs = pdfs
+		if len(pdfs) > 0:
+			for pdf in pdfs:
+				pdf_file = PDF_File.objects.create(pdf=pdf, owner=owner)
+				pdf_file.save()
+				print(owner.pdfs)
 
 		owner.actor_set.clear()
 		if parsed_actor_data:

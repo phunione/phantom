@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 def file_path(_, filename):
@@ -25,7 +26,6 @@ class Owner(models.Model):
 	mother_name = models.CharField(max_length=200, null=True, blank=True)
 	address = models.TextField(null=True, blank=True)
 	type = models.CharField(max_length=100, choices=OWNER_TYPE_CHOICES, default='', null=False, blank=False)
-	pdfs = models.FileField(upload_to=file_path)
 
 	# actor = models.ManyToManyField(Actor, blank=True) ## Already added in Actor Model
 	# company = models.ManyToManyField(Company, blank=True)  ## Already added in Company Model
@@ -33,3 +33,8 @@ class Owner(models.Model):
 
 	def __str__(self):
 		return self.name
+
+
+class PDF_File(models.Model):
+	pdf = models.FileField(upload_to=file_path)
+	owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='pdfs')

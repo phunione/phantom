@@ -19,7 +19,7 @@ function App() {
   const { userInfo } = userLogin
 
   return (
-    <div className="min-h-screen max-w-full overflow-y-hidden overflow-x-visible">
+    <div className="min-h-screen max-w-full overflow-x-visible">
       <div className="flex items-start">
         {!userInfo ? (
           <LoginScreen className={'w-full'} />
@@ -105,7 +105,8 @@ function App() {
 }
 
 export async function getOptions(dataFor) {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+  const BACKEND_URL =
+    import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
 
   const url = `${BACKEND_URL}/${dataFor}/all/`
 
@@ -123,6 +124,5 @@ export async function getOptions(dataFor) {
     return []
   }
 }
-
 
 export default App
