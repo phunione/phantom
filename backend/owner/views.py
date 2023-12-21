@@ -107,24 +107,24 @@ def edit(req, id):
 	print(data)
 	try:
 		pdfs = ''
-		if data['pdfs'] != '':
+		if 'pdfs' in data:
 			pdfs = data['pdfs']
-		del data['pdfs']
+			del data['pdfs']
 
 		parsed_actor_data = []
-		if data['actor'] != '':
+		if 'actor' in data:
 			parsed_actor_data = json.loads(data['actor'])
-		del data['actor']
+			del data['actor']
 
 		parsed_company_data = []
-		if data['company'] != '':
+		if 'company' in data:
 			parsed_company_data = json.loads(data['company'])
-		del data['company']
+			del data['company']
 
 		parsed_banker_data = []
-		if data['banker'] != "":
+		if 'banker' in data:
 			parsed_banker_data = json.loads(data['banker'])
-		del data['banker']
+			del data['banker']
 
 		owner = Owner.objects.get(id=id)
 

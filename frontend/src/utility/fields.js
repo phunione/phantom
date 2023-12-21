@@ -25,7 +25,7 @@ const fields = {
       title: 'din number',
       id: 'din_number_id',
       name: 'din_number',
-      required: true,
+      required: false,
       type: 'number',
     },
     {
@@ -213,7 +213,7 @@ const fields = {
       title: 'din number',
       id: 'din_number',
       name: 'din_number',
-      required: true,
+      required: false,
       type: 'number',
     },
     {

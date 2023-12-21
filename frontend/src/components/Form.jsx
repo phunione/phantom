@@ -17,6 +17,8 @@ function Form({ fields: fieldsInProps, name, data }) {
   const [vals, setVals] = useState(data === undefined ? {} : data)
   const [fields, setFields] = useState(fieldsInProps)
 
+  console.log(vals)
+
   const dispatch = useDispatch()
 
   const addData = useSelector((state) => state.addData)
