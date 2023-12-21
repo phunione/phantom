@@ -59,71 +59,78 @@ const Table = ({ keys, titles, data, forUniqueRelation }) => {
                   : typeof item[keys[0]] === 'string'
                   ? isValidDate(item[keys[0]])
                     ? moment(item[keys[0]]).format('MMMM DD, YYYY')
+                    : item[keys[0]] === 'undefined'
+                    ? 'null'
                     : item[keys[0]]
                   : item[keys[0]].toString()}
               </th>
-              {keys.slice(1).map((key, index) => (
-                <td
-                  key={index}
-                  className={`border border-amber-200 text-center`}
-                >
-                  {
-                    key === 'address' ? (
-                      <div
-                        className={`
+              {keys.slice(1).map((key, index) => {
+                console.log(key, item[key], typeof item[key])
+                return (
+                  <td
+                    key={index}
+                    className={`border border-amber-200 text-center`}
+                  >
+                    {
+                      key === 'address' ? (
+                        <div
+                          className={`
                             flex h-full w-96 flex-wrap items-center justify-center
                           `}
-                      >
-                        {item[key] || 'null'}
-                      </div> // Show address
-                    ) : item[key] === null ? (
-                      'null'
-                    ) : (typeof item[key] === 'object' &&
-                        item[key] &&
-                        item[key].length === 0) ||
-                      item[key] === undefined ? (
-                      'null' // Checking If the item[key] is object
-                    ) : typeof item[key] === 'string' ? (
-                      item[key].trim() === '' ? (
+                        >
+                          {item[key] || 'null'}
+                        </div> // Show address
+                      ) : item[key] === null ? (
                         'null'
-                      ) : isValidDate(item[key]) ? ( // if the item[key] is a valid date
-                        moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
-                      ) : (
-                        item[key]
-                      ) // else show the string only
-                    ) : typeof item[key] === 'object' ? (
-                      item[key].map((it, idx) =>
-                        it.name ? (
-                          `${it.name}${
-                            idx !== item[key].length - 1 ? ', ' : ''
-                          }`
-                        ) : it.pdf_url ? (
-                          <a
-                            href={
-                              import.meta.env.PROD
-                                ? it.pdf_url
-                                : `${BACKEND_URL}${it.pdf_url}`
-                            }
-                            target={'_blank'}
-                            rel="noreferrer"
-                            className={
-                              'flex w-56 flex-wrap items-center justify-center font-bold underline hover:text-amber-300'
-                            }
-                          >
-                            <p className={'truncate'}>
-                              {getNameForFile(it.pdf_url)}
-                            </p>
-                          </a>
+                      ) : (typeof item[key] === 'object' &&
+                          item[key] &&
+                          item[key].length === 0) ||
+                        item[key] === undefined ? (
+                        'null' // Checking If the item[key] is object
+                      ) : typeof item[key] === 'string' ? (
+                        item[key].trim() === '' ? (
+                          'null'
+                        ) : isValidDate(item[key]) ? ( // if the item[key] is a valid date
+                          moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
+                        ) : item[key] === 'undefined' ? (
+                          'null'
                         ) : (
-                          `${it}${idx !== item[key].length - 1 ? ', ' : ''}`
-                        ),
-                      )
-                    ) : (
-                      item[key].toString()
-                    ) // if nothing of the above, we just convert the value to a string and show it
-                  }
-                </td>
-              ))}
+                          item[key]
+                        ) // else show the string only
+                      ) : typeof item[key] === 'object' ? (
+                        item[key].map((it, idx) =>
+                          it.name ? (
+                            `${it.name}${
+                              idx !== item[key].length - 1 ? ', ' : ''
+                            }`
+                          ) : it.pdf_url ? (
+                            <a
+                              href={
+                                import.meta.env.PROD
+                                  ? it.pdf_url
+                                  : `${BACKEND_URL}${it.pdf_url}`
+                              }
+                              target={'_blank'}
+                              rel="noreferrer"
+                              className={
+                                'flex w-56 flex-wrap items-center justify-center font-bold underline hover:text-amber-300'
+                              }
+                            >
+                              <p className={'truncate'}>
+                                {getNameForFile(it.pdf_url)}
+                              </p>
+                            </a>
+                          ) : (
+                            `${it}${idx !== item[key].length - 1 ? ', ' : ''}`
+                          ),
+                        )
+                      ) : (
+                        item[key].toString()
+                      ) // if nothing of the above, we just convert the value to a string and show it
+                    }
+                  </td>
+                )
+              })}
               {forUniqueRelation === undefined && (
                 <th
                   colSpan={2}
