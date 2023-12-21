@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 from actor.models import Actor
 from bank.models import Bank
@@ -67,12 +68,12 @@ class Company(models.Model):
 	isMaharashtra = models.BooleanField(default=False, null=True, blank=True)
 	state = models.CharField(max_length=150, choices=STATE_CHOICES, default='', null=False, blank=False)
 
-	pdfs = models.FileField(upload_to=file_path, null=True, blank=True)
+	pdfs = ArrayField(models.FileField(upload_to=file_path, null=True, blank=True), default=list)
 	type = models.CharField(max_length=150, choices=COMPANY_TYPE_CHOICES, default='', null=False, blank=False)
 
 	actor = models.ManyToManyField(Actor, blank=True)
 	owner = models.ManyToManyField(Owner, blank=True)
-	bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, blank=True, null=True)
+	bank = models.ManyToManyField(Bank, blank=True)
 	banker = models.ForeignKey(Banker, on_delete=models.SET_NULL, blank=True, null=True)
 
 	def __str__(self):
