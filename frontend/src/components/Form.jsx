@@ -267,7 +267,7 @@ function Form({ fields: fieldsInProps, name, data }) {
                         if (fileExtension === 'pdf') {
                           setVals((vals) => ({
                             ...vals,
-                            [inpName]: e.target.files[0],
+                            [inpName]: e.target.files,
                           }))
                         } else {
                           alert('Please select only pdfs')
