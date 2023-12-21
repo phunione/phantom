@@ -9,9 +9,11 @@ class OwnerSerializer(serializers.ModelSerializer):
 	actor = serializers.SerializerMethodField(read_only=True)
 	banker = serializers.SerializerMethodField(read_only=True)
 	company = serializers.SerializerMethodField(read_only=True)
+	pdfs = serializers.SerializerMethodField(read_only=True)
 
 	@staticmethod
 	def get_actor(obj):
+
 		actor_obj = obj.actor_set.all()
 		data = []
 		for actor in actor_obj:
@@ -32,6 +34,14 @@ class OwnerSerializer(serializers.ModelSerializer):
 		data = []
 		for company in company_obj:
 			data.append({'id': company.id, 'name': company.name})
+		return data
+
+	@staticmethod
+	def get_pdfs(obj):
+		pdfs = obj.pdfs.all()
+		data = []
+		for pdf in pdfs:
+			data.append({'pdf_url': pdf.pdf.url})
 		return data
 
 	class Meta:

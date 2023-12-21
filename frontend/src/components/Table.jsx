@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import { deleteData } from '../redux/actions/dataActions.js'
 
 const Table = ({ keys, titles, data }) => {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
+  console.log(data)
+  const BACKEND_URL =
+    import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
   const dispatch = useDispatch()
 
   const path = window.location.pathname
@@ -84,29 +86,35 @@ const Table = ({ keys, titles, data }) => {
                         'null'
                       ) : isValidDate(item[key]) ? ( // if the item[key] is a valid date
                         moment(item[key]).format('MMMM DD, YYYY') // show the date in a format
-                      ) : key === 'pdfs' && item[key] ? (
-                        <a
-                          href={import.meta.env.PROD ? item[key] : `${BACKEND_URL}${item[key]}`}
-                          target={'_blank'}
-                          rel="noreferrer"
-                          className={
-                            'flex w-56 flex-wrap items-center justify-center font-bold underline hover:text-amber-300'
-                          }
-                        >
-                          <p className={'truncate'}>
-                            {getNameForFile(item[key])}
-                          </p>
-                        </a>
                       ) : (
                         item[key]
                       ) // else show the string only
                     ) : typeof item[key] === 'object' ? (
                       item[key].map((it, idx) =>
-                        it.name
-                          ? `${it.name}${
-                              idx !== item[key].length - 1 ? ', ' : ''
-                            }`
-                          : `${it}${idx !== item[key].length - 1 ? ', ' : ''}`,
+                        it.name ? (
+                          `${it.name}${
+                            idx !== item[key].length - 1 ? ', ' : ''
+                          }`
+                        ) : it.pdf_url ? (
+                          <a
+                            href={
+                              import.meta.env.PROD
+                                ? it.pdf_url
+                                : `${BACKEND_URL}${it.pdf_url}`
+                            }
+                            target={'_blank'}
+                            rel="noreferrer"
+                            className={
+                              'flex w-56 flex-wrap items-center justify-center font-bold underline hover:text-amber-300'
+                            }
+                          >
+                            <p className={'truncate'}>
+                              {getNameForFile(it.pdf_url)}
+                            </p>
+                          </a>
+                        ) : (
+                          `${it}${idx !== item[key].length - 1 ? ', ' : ''}`
+                        ),
                       )
                     ) : (
                       item[key].toString()

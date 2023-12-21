@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 from .serializers import CompanySerializer
-from .models import Company
+from .models import Company, PDF_File
 from actor.models import Actor
 from bank.models import Bank
 from banker.models import Banker
@@ -25,8 +25,11 @@ def add(req):
 		else:
 			company.isMaharashtra = False
 
-		if data['pdfs'] != '':
-			company.pdfs = data['pdfs']
+		if 'pdfs' in data:
+			for pdf in data.getlist('pdfs'):
+				pdf_file = PDF_File.objects.create(pdf=pdf, company=company)
+				pdf_file.save()
+				print(company.pdfs)
 
 		if data['actor'] != '':
 			parsed_data = json.loads(data['actor'])

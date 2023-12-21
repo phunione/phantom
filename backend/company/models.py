@@ -68,7 +68,6 @@ class Company(models.Model):
 	isMaharashtra = models.BooleanField(default=False, null=True, blank=True)
 	state = models.CharField(max_length=150, choices=STATE_CHOICES, default='', null=False, blank=False)
 
-	pdfs = ArrayField(models.FileField(upload_to=file_path, null=True, blank=True), default=list)
 	type = models.CharField(max_length=150, choices=COMPANY_TYPE_CHOICES, default='', null=False, blank=False)
 
 	actor = models.ManyToManyField(Actor, blank=True)
@@ -78,3 +77,8 @@ class Company(models.Model):
 
 	def __str__(self):
 		return self.name
+
+
+class PDF_File(models.Model):
+	pdf = models.FileField(upload_to=file_path)
+	company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='pdfs')

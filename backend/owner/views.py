@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import Owner
+from .models import Owner, PDF_File
 from actor.models import Actor
 from actor.serializers import ActorSerializer
 from banker.models import Banker
@@ -15,22 +15,18 @@ from .serializers import OwnerSerializer
 @api_view(['POST'])
 def add(req):
 	data = req.data
-	print(data)
-	print(data.getlist('pdfs'))
 	try:
 		owner = Owner.objects.create(name=data['name'], adhar_number=data['adhar_number'], pan_number=data['pan_number'],
 		                             din_number=data['din_number'], otp_phoneNr=data['otp_phoneNr'],
 		                             sim_number=data['sim_number'], email=data['email'], per_phone=data['per_phone'],
 		                             mother_name=data['mother_name'], address=data['address'], type=data['type'],
 		                             )
-		
-		if data['pdfs'] != []:
-			arr = []
-			for i in range(0,len(data.getlist('pdfs'))):
-				owner.pdfs = data.getlist('pdfs')[i]
-				owner.save()
-			# 	print(type(data.getlist('pdfs')[i]))
-			# owner.pdfs = arr
+
+		if 'pdfs' in data:
+			for pdf in data.getlist('pdfs'):
+				pdf_file = PDF_File.objects.create(pdf=pdf, owner=owner)
+				pdf_file.save()
+				print(owner.pdfs)
 
 		if data['actor'] != '':
 			parsed_data = json.loads(data['actor'])

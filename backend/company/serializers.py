@@ -8,6 +8,7 @@ class CompanySerializer(serializers.ModelSerializer):
 	bank = serializers.SerializerMethodField(read_only=True)
 	banker = serializers.SerializerMethodField(read_only=True)
 	owner = serializers.SerializerMethodField(read_only=True)
+	pdfs = serializers.SerializerMethodField(read_only=True)
 
 	@staticmethod
 	def get_actor(obj):
@@ -49,8 +50,17 @@ class CompanySerializer(serializers.ModelSerializer):
 		except Exception as e:
 			print(e)
 
+	@staticmethod
+	def get_pdfs(obj):
+		pdfs = obj.pdfs.all()
+		print(pdfs)
+		data = []
+		for pdf in pdfs:
+			data.append({'pdf_url': pdf.pdf.url})
+		return data
+
 	class Meta:
 		model = Company
 		fields = (
 			'id', 'name', 'pan_number', 'pan_dob', 'company_status', 'isMaharashtra', 'state',
-			'type', 'querry_filled', 'actor', 'bank', 'banker', 'owner')
+			'type', 'querry_filled', 'actor', 'bank', 'banker', 'owner', 'pdfs')
