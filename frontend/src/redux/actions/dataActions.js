@@ -97,8 +97,9 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
           : JSON.stringify(details['banker']),
       )
       if (details['pdfs']) {
-        for (const pdf in details['pdfs']) {
-          body.append('pdfs', pdf)
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
         }
       }
 
@@ -147,11 +148,12 @@ export const addDataToTheForm = (details, name) => async (dispatch) => {
         details['owner'] === undefined ? '' : JSON.stringify(details['owner']),
       )
       if (details['pdfs']) {
-        for (const pdf in details['pdfs']) {
-          body.append('pdfs', pdf)
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
         }
       }
-      
+
       details = body
     } else if (name === 'excel-company') {
       config = {
@@ -255,8 +257,9 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
         body.append('banker', JSON.stringify(details['banker']))
       }
       if (details['pdfs']) {
-        for (const pdf in details['pdfs']) {
-          body.append('pdfs', pdf)
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
         }
       }
 
@@ -312,8 +315,9 @@ export const editDataForm = (id, details, name) => async (dispatch) => {
         body.append('owner', JSON.stringify(details['owner']))
       }
       if (details['pdfs']) {
-        for (const pdf in details['pdfs']) {
-          body.append('pdfs', pdf)
+        const pdfs = details['pdfs']
+        for (let i = 0; i < pdfs.length; i++) {
+          body.append('pdfs', pdfs[i])
         }
       }
       details = body
