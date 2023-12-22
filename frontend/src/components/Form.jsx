@@ -102,7 +102,7 @@ function Form({ fields: fieldsInProps, name, data }) {
               field.options = actorOptions
             }
             if (field.name === 'bank') {
-              field.options = ['Select Bank', ...bankOptions]
+              field.options = bankOptions
             }
             if (field.name === 'banker') {
               field.options = ['Select Banker', ...bankerOptions]

@@ -46,7 +46,7 @@ function ShowDataScreen({ dataFor }) {
           <input
             type={'text'}
             id={'search'}
-            name={'search'}
+            name={'search-by-name'}
             className="peer block w-5/6 appearance-none rounded-lg border border-amber-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-amber-200 focus:border-yellow-200 focus:outline-none focus:ring-0"
             placeholder=" "
             value={searchTerm}
