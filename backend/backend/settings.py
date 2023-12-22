@@ -30,7 +30,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG') == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'phantom-7es7.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '15.206.122.191', 'ec2-15-206-122-191.ap-south-1.compute.amazonaws.com',
+                 'phantom-7es7.onrender.com']
 
 # Whitelist Origin Sites for CORS Policy
 CORS_ALLOWED_ORIGINS = [
