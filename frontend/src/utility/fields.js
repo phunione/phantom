@@ -413,7 +413,7 @@ const fields = {
       id: 'bank',
       name: 'bank',
       required: false,
-      type: 'select',
+      type: 'multiselect',
       // options: ['Select Bank', ...bankOptions],
     },
     {
