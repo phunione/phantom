@@ -118,12 +118,12 @@ def edit(req, id):
 			parsed_actor_data = json.loads(data['actor'])
 			del data['actor']
 
-		parsed_bank_data = ''
+		parsed_bank_data = []
 		if 'bank' in data:
 			parsed_bank_data = json.loads(data['bank'])
 			if type(parsed_bank_data) == list:
-				print("in bank")
-				parsed_bank_data = str(parsed_bank_data[0]['id'])
+				print(parsed_bank_data)
+				parsed_bank_data = [str(d['id']) for d in parsed_bank_data]
 			del data['bank']
 
 		parsed_banker_data = ''
@@ -164,8 +164,12 @@ def edit(req, id):
 
 		company.bank.clear()
 		if parsed_bank_data:
-			bank_obj = Bank.objects.get(id=int(parsed_bank_data))
-			company.bank.append(bank_obj)
+			for i in range(0,len(parsed_bank_data)):
+				bank_obj = Bank.objects.get(id = int(parsed_bank_data[i]))
+				print(bank_obj)
+				company.bank.add(bank_obj)
+				company.save()
+			print(parsed_bank_data)
 			
 		if parsed_banker_data and parsed_banker_data.isnumeric():
 			banker = Banker.objects.get(id=int(parsed_banker_data))
