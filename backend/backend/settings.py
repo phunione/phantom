@@ -30,11 +30,11 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG') == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ] if DEBUG else ['13.234.250.47', 'backend.phunione02020.shop']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] if DEBUG else ['13.234.250.47', 'backend.phunione02020.shop']
 
 # Whitelist Origin Sites for CORS Policy
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173', 'http://localhost:5173', ] if DEBUG else [
-	'https://phantomm.vercel.app', 'https://phunione02020.shop']
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173', 'http://localhost:5173'] if DEBUG else [
+	'https://phantomm.vercel.app', 'https://phunione02020.shop', 'https://backend.phunione02020.shop']
 
 # Application definition
 INSTALLED_APPS = [
