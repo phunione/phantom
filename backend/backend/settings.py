@@ -30,15 +30,12 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG') == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '15.206.122.191', 'ec2-15-206-122-191.ap-south-1.compute.amazonaws.com',
-                 'phantom-7es7.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ] if DEBUG else ['13.234.250.47',
+                                                            'ec2-15-206-122-191.ap-south-1.compute.amazonaws.com', ]
 
 # Whitelist Origin Sites for CORS Policy
-CORS_ALLOWED_ORIGINS = [
-	'http://127.0.0.1:5173',
-	'http://localhost:5173',
-	'https://phantomm.vercel.app',
-]
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173', 'http://localhost:5173', ] if DEBUG else [
+	'https://phantomm.vercel.app', ]
 
 # Application definition
 INSTALLED_APPS = [
