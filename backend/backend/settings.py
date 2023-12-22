@@ -31,7 +31,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG') == 'true'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ] if DEBUG else ['13.234.250.47',
-                                                            'ec2-15-206-122-191.ap-south-1.compute.amazonaws.com', ]
+                                                            'ec2-13-234-250-47.ap-south-1.compute.amazonaws.com', ]
 
 # Whitelist Origin Sites for CORS Policy
 CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173', 'http://localhost:5173', ] if DEBUG else [
