@@ -24,7 +24,7 @@ def add(req):
 
 		if (data['state'] == 'Maharashtra'):
 			data['isMaharashtra'] = 'true'
-		
+
 		if data['isMaharashtra'] == 'true':
 			company.isMaharashtra = True
 		else:
