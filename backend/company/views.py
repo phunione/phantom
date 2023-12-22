@@ -22,6 +22,9 @@ def add(req):
 		                                 querry_filled=data['querry_filled'], company_status=data['company_status'],
 		                                 type=data['type'], address=data['address'], state=data['state'])
 
+		if (data['state'] == 'Maharashtra'):
+			data['isMaharashtra'] = 'true'
+
 		if data['isMaharashtra'] == 'true':
 			company.isMaharashtra = True
 		else:
@@ -41,8 +44,9 @@ def add(req):
 
 		if data['bank'] != '':
 			parsed_data = json.loads(data['bank'])
-			bank_obj = Bank.objects.get(id=int(parsed_data))
-			company.bank = bank_obj
+			for d in parsed_data:
+				bank_obj = Bank.objects.get(id=d['id'])
+				company.bank.add(bank_obj)
 
 		if data['banker'] != '':
 			parsed_data = json.loads(data['banker'])
@@ -118,12 +122,12 @@ def edit(req, id):
 			parsed_actor_data = json.loads(data['actor'])
 			del data['actor']
 
-		parsed_bank_data = ''
+		parsed_bank_data = []
 		if 'bank' in data:
 			parsed_bank_data = json.loads(data['bank'])
 			if type(parsed_bank_data) == list:
-				print("in bank")
-				parsed_bank_data = str(parsed_bank_data[0]['id'])
+				print(parsed_bank_data)
+				parsed_bank_data = [str(d['id']) for d in parsed_bank_data]
 			del data['bank']
 
 		parsed_banker_data = ''
@@ -164,9 +168,10 @@ def edit(req, id):
 
 		company.bank.clear()
 		if parsed_bank_data:
-			bank_obj = Bank.objects.get(id=int(parsed_bank_data))
-			company.bank.append(bank_obj)
-			
+			for i in range(0, len(parsed_bank_data)):
+				bank_obj = Bank.objects.get(id=int(parsed_bank_data[i]))
+				company.bank.add(bank_obj)
+
 		if parsed_banker_data and parsed_banker_data.isnumeric():
 			banker = Banker.objects.get(id=int(parsed_banker_data))
 			company.banker = banker

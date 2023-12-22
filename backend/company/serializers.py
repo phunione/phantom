@@ -24,8 +24,10 @@ class CompanySerializer(serializers.ModelSerializer):
 	@staticmethod
 	def get_bank(obj):
 		try:
-			bank = obj.bank
-			data = [{'id': bank.id, 'name': bank.name}]
+			bank_obj = obj.bank.all()
+			data = []
+			for bank in bank_obj:
+				data.append({'id': bank.id, 'name': bank.name})
 			return data
 		except Exception as e:
 			print(e)

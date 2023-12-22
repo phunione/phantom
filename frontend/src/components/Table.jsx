@@ -11,7 +11,8 @@ const Table = ({ keys, titles, data, forUniqueRelation }) => {
   const path = window.location.pathname
 
   const handleDelete = (path, id) => {
-    dispatch(deleteData(path, id))
+    if(window.confirm("Delete?")) dispatch(deleteData(path, id))
+    else return;
   }
 
   const getNameForFile = (fileName) => {
